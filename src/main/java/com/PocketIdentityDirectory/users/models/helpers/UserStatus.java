@@ -1,6 +1,6 @@
 package com.PocketIdentityDirectory.users.models.helpers;
 
-public enum userStatus {
+public enum UserStatus {
     ACTIVE,
     INACTIVE
 }

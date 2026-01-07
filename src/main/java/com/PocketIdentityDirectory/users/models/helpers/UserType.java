@@ -1,6 +1,6 @@
 package com.PocketIdentityDirectory.users.models.helpers;
 
-public enum userType {
+public enum UserType {
 
     PUBLIC,
     EMPLOYEE

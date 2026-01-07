@@ -1,9 +1,6 @@
 package com.PocketIdentityDirectory.users.models;
 
-import com.PocketIdentityDirectory.users.models.helpers.Address;
-import com.PocketIdentityDirectory.users.models.helpers.Name;
-import com.PocketIdentityDirectory.users.models.helpers.userStatus;
-import com.PocketIdentityDirectory.users.models.helpers.userType;
+import com.PocketIdentityDirectory.users.models.helpers.*;
 import jakarta.persistence.*;
 
 import java.util.UUID;
@@ -14,8 +11,8 @@ public class IASUser {
     @Id
     private UUID id;
 
-    @Column(unique = true, nullable = false)
-    private String email;
+    @Embedded
+    private Email email;
 
     @Column
     @Embedded
@@ -25,12 +22,11 @@ public class IASUser {
     private String loginName;
 
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private userStatus userStatus;
+    private boolean userStatus;
 
     @Column
     @Enumerated(EnumType.STRING)
-    private userType userType;
+    private UserType userType;
 
     @Column
     private String company;
@@ -39,11 +35,11 @@ public class IASUser {
     @Embedded
     private Address address;
 
-    public userType getUserType() {
+    public UserType getUserType() {
         return userType;
     }
 
-    public void setUserType(userType userType) {
+    public void setUserType(UserType userType) {
         this.userType = userType;
     }
 
@@ -55,11 +51,11 @@ public class IASUser {
         this.id = id;
     }
 
-    public String getEmail() {
+    public Email getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(Email email) {
         this.email = email;
     }
 
@@ -79,11 +75,11 @@ public class IASUser {
         this.loginName = loginName;
     }
 
-    public userStatus getUserStatus() {
+    public boolean isUserStatus() {
         return userStatus;
     }
 
-    public void setUserStatus(userStatus userStatus) {
+    public void setUserStatus(boolean userStatus) {
         this.userStatus = userStatus;
     }
 

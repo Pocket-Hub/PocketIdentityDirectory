@@ -1,7 +1,6 @@
 package com.PocketIdentityDirectory.feign;
 
 import feign.RequestInterceptor;
-import feign.RequestTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,10 +11,10 @@ import java.util.Base64;
 @Configuration
 public class BasicAuthConfig {
 
-    @Value("${IAS_ID}")
+    @Value("${ias.id}")
     private String clientId;
 
-    @Value("${IAS_SECRET}")
+    @Value("${ias.secret}")
     private String clientSecret;
 
     @Bean
@@ -27,6 +26,4 @@ public class BasicAuthConfig {
             requestTemplate.header("Authorization", "Basic " + encodedAuth);
         };
     }
-
-
 }
