@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/pocket_identity_directory?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
+    username: root
+    password: HG3yahEuSn5yvWNhaFrc
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQLDialect
+    show-sql: true
