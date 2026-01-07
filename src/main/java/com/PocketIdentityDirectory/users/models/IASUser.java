@@ -1,6 +1,7 @@
 package com.PocketIdentityDirectory.users.models;
 
 import com.PocketIdentityDirectory.users.models.helpers.Address;
+import com.PocketIdentityDirectory.users.models.helpers.Name;
 import com.PocketIdentityDirectory.users.models.helpers.userStatus;
 import com.PocketIdentityDirectory.users.models.helpers.userType;
 import jakarta.persistence.*;
@@ -16,11 +17,9 @@ public class IASUser {
     @Column(unique = true, nullable = false)
     private String email;
 
-    @Column(nullable = false)
-    private String lastName;
-
     @Column
-    private String firstName;
+    @Embedded
+    private Name name;
 
     @Column(unique = true, nullable = false)
     private String loginName;
@@ -64,20 +63,12 @@ public class IASUser {
         this.email = email;
     }
 
-    public String getLastName() {
-        return lastName;
+    public Name getName() {
+        return name;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setName(Name name) {
+        this.name = name;
     }
 
     public String getLoginName() {
