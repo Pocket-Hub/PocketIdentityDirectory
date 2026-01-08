@@ -45,10 +45,9 @@ public class UserService {
         feignUser.setEmails(new FeignEmail[]{email});
         feignUser.setSchemas(new String[]{"urn:ietf:params:scim:schemas:core:2.0:User"});
 
-        return feignService.createIASUser(feignUser);
+        return repository.save(feignService.createIASUser(feignUser));
     }
 
-    @Transactional
     public void deleteUser(UUID id){
         feignService.deleteUser(id);
         repository.deleteById(id);
