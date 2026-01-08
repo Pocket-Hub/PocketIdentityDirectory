@@ -7,7 +7,6 @@ public class FeignEmail {
 
     private boolean primary;
 
-
     public String getValue() {
         return value;
     }

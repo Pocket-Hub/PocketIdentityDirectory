@@ -4,6 +4,7 @@ import com.PocketIdentityDirectory.users.models.User;
 import com.PocketIdentityDirectory.users.services.UserService;
 import com.PocketIdentityDirectory.web.dtos.mappers.UsersDTOMapper;
 import com.PocketIdentityDirectory.web.dtos.requests.CreateUserRequest;
+import com.PocketIdentityDirectory.web.dtos.requests.UpdateUserRequest;
 import com.PocketIdentityDirectory.web.dtos.responses.GetAllUsersResponse;
 import com.PocketIdentityDirectory.web.dtos.responses.GetUserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,11 @@ public class UsersController {
     public ResponseEntity<Void> deleteUser(@PathVariable UUID id){
         userService.deleteUser(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<GetUserResponse> updateUser(@RequestBody UpdateUserRequest dto){
+
     }
 
 }

@@ -20,4 +20,7 @@ public interface IASFeignClient {
     @DeleteMapping("/Users/{id}")
     void deleteUser (@PathVariable UUID id);
 
+//    @PutMapping("/Users/{id}")
+//    IASUserResponse updateUser(@RequestBody UpdateIASUserRequest dto);
+
 }

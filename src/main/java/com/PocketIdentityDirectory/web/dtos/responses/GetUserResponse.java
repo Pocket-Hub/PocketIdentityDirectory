@@ -1,22 +1,20 @@
 package com.PocketIdentityDirectory.web.dtos.responses;
 
-import com.PocketIdentityDirectory.users.models.helpers.Address;
-import com.PocketIdentityDirectory.users.models.helpers.Email;
-import com.PocketIdentityDirectory.users.models.helpers.Name;
-import com.PocketIdentityDirectory.users.models.helpers.UserType;
+import com.PocketIdentityDirectory.web.dtos.helpers.DTOCompanyAddress;
+import com.PocketIdentityDirectory.web.dtos.helpers.DTOName;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.time.Instant;
 import java.util.UUID;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class GetUserResponse {
 
     private UUID id;
 
-    private Email email;
+    private String email;
 
-    private Name name;
+    private DTOName name;
 
     private String loginName;
 
@@ -24,42 +22,21 @@ public class GetUserResponse {
 
     private String userType;
 
-    private String company;
-
-    private Address address;
+    private DTOCompanyAddress companyInfo;
 
     private Instant validFrom;
 
     private Instant validTo;
 
-
-
-    public GetUserResponse(UUID id, Email email, Name name, String loginName, boolean active, String userType, String company, Address address, Instant validFrom, Instant validTo) {
+    public GetUserResponse(UUID id, String email, DTOName name, String loginName, boolean active, String userType, DTOCompanyAddress companyInfo, Instant validFrom, Instant validTo) {
         this.id = id;
         this.email = email;
         this.name = name;
         this.loginName = loginName;
         this.active = active;
         this.userType = userType;
-        this.company = company;
-        this.address = address;
+        this.companyInfo = companyInfo;
         this.validFrom = validFrom;
-        this.validTo = validTo;
-    }
-
-    public Instant getValidFrom() {
-        return validFrom;
-    }
-
-    public void setValidFrom(Instant validFrom) {
-        this.validFrom = validFrom;
-    }
-
-    public Instant getValidTo() {
-        return validTo;
-    }
-
-    public void setValidTo(Instant validTo) {
         this.validTo = validTo;
     }
 
@@ -71,19 +48,19 @@ public class GetUserResponse {
         this.id = id;
     }
 
-    public Email getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    public void setEmail(Email email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
-    public Name getName() {
+    public DTOName getName() {
         return name;
     }
 
-    public void setName(Name name) {
+    public void setName(DTOName name) {
         this.name = name;
     }
 
@@ -111,19 +88,27 @@ public class GetUserResponse {
         this.userType = userType;
     }
 
-    public String getCompany() {
-        return company;
+    public DTOCompanyAddress getCompanyInfo() {
+        return companyInfo;
     }
 
-    public void setCompany(String company) {
-        this.company = company;
+    public void setCompanyInfo(DTOCompanyAddress companyInfo) {
+        this.companyInfo = companyInfo;
     }
 
-    public Address getAddress() {
-        return address;
+    public Instant getValidFrom() {
+        return validFrom;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setValidFrom(Instant validFrom) {
+        this.validFrom = validFrom;
+    }
+
+    public Instant getValidTo() {
+        return validTo;
+    }
+
+    public void setValidTo(Instant validTo) {
+        this.validTo = validTo;
     }
 }

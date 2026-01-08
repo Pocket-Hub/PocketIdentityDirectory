@@ -1,50 +1,39 @@
-package com.PocketIdentityDirectory.users.models;
+package com.PocketIdentityDirectory.web.dtos.requests;
 
+import com.PocketIdentityDirectory.feign.dtos.helpers.FeignEmail;
+import com.PocketIdentityDirectory.feign.dtos.helpers.FeignName;
+import com.PocketIdentityDirectory.feign.dtos.helpers.SAPExtensionHelper;
 import com.PocketIdentityDirectory.users.models.helpers.UserType;
-import jakarta.persistence.*;
+import com.PocketIdentityDirectory.web.dtos.helpers.DTOCompanyAddress;
+import com.PocketIdentityDirectory.web.dtos.helpers.DTOName;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Id;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
-@Entity
-@Table(name = "users")
-public class User {
+public class UpdateUserRequest {
 
-    @Id
     private UUID id;
 
-    @Column
     private String email;
 
-    @Column
     private String lastName;
 
-    @Column
-    private String firstName;
+    private DTOName name;
 
-    @Column(unique = true, nullable = false)
-    private String loginName;
-
-    @Column(nullable = false)
     private boolean userStatus;
 
-    @Column
-    @Enumerated(EnumType.STRING)
     private UserType userType;
 
-    @Column
-    private String company;
+    private DTOCompanyAddress companyInfo;
 
-    @Column
-    private String city;
-
-    @Column
-    private String country;
-
-    @Column
     private Instant validFrom;
 
-    @Column
     private Instant validTo;
 
     public UUID getId() {
@@ -71,20 +60,12 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public DTOName getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLoginName() {
-        return loginName;
-    }
-
-    public void setLoginName(String loginName) {
-        this.loginName = loginName;
+    public void setName(DTOName name) {
+        this.name = name;
     }
 
     public boolean isUserStatus() {
@@ -103,28 +84,12 @@ public class User {
         this.userType = userType;
     }
 
-    public String getCompany() {
-        return company;
+    public DTOCompanyAddress getCompanyInfo() {
+        return companyInfo;
     }
 
-    public void setCompany(String company) {
-        this.company = company;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
+    public void setCompanyInfo(DTOCompanyAddress companyInfo) {
+        this.companyInfo = companyInfo;
     }
 
     public Instant getValidFrom() {

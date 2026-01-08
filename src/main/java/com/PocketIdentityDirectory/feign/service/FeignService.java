@@ -2,6 +2,7 @@ package com.PocketIdentityDirectory.feign.service;
 
 import com.PocketIdentityDirectory.feign.dtos.mappers.FeignDTOMapper;
 import com.PocketIdentityDirectory.feign.dtos.requests.CreateIASUserRequest;
+import com.PocketIdentityDirectory.feign.dtos.requests.UpdateIASUserRequest;
 import com.PocketIdentityDirectory.feign.dtos.responses.IASUserResponse;
 import com.PocketIdentityDirectory.feign.feignClient.IASFeignClient;
 import com.PocketIdentityDirectory.users.models.User;
@@ -42,6 +43,12 @@ public class FeignService {
     public void deleteUser(UUID id){
         client.deleteUser(id);
     }
+
+//    public User updateUser(UpdateIASUserRequest dto){
+//        IASUserResponse user = client.updateUser(dto);
+//
+//        return FeignDTOMapper.mapFeignIASUserResponseToIASUser(user);
+//    }
 
 
 }
