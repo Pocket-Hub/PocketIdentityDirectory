@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class FeignService {
@@ -36,6 +37,10 @@ public class FeignService {
         IASUserResponse user = client.createUser(dto);
 
         return FeignDTOMapper.mapFeignIASUserResponseToIASUser(user);
+    }
+
+    public void deleteUser(UUID id){
+        client.deleteUser(id);
     }
 
 

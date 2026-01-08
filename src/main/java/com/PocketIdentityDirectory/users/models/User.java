@@ -4,9 +4,9 @@ import com.PocketIdentityDirectory.users.models.helpers.Address;
 import com.PocketIdentityDirectory.users.models.helpers.Email;
 import com.PocketIdentityDirectory.users.models.helpers.Name;
 import com.PocketIdentityDirectory.users.models.helpers.UserType;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 
+import java.time.Instant;
 import java.util.UUID;
 
 @Entity
@@ -40,6 +40,27 @@ public class User {
     @Embedded
     private Address address;
 
+    @Column
+    private Instant validFrom;
+
+    @Column
+    private Instant validTo;
+
+    public Instant getValidFrom() {
+        return validFrom;
+    }
+
+    public void setValidFrom(Instant validFrom) {
+        this.validFrom = validFrom;
+    }
+
+    public Instant getValidTo() {
+        return validTo;
+    }
+
+    public void setValidTo(Instant validTo) {
+        this.validTo = validTo;
+    }
 
     public UserType getUserType() {
         return userType;

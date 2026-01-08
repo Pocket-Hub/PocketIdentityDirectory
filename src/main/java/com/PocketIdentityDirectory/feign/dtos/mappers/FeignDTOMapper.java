@@ -24,7 +24,8 @@ public class FeignDTOMapper {
         email.setEmailPrimary(feignEmail.isPrimary());
         email.setEmailValue(feignEmail.getValue());
         user.setEmail(email);
-
+        user.setValidFrom(dto.getExtension().getValidFrom());
+        user.setValidTo(dto.getExtension().getValidTo());
         return user;
     }
 

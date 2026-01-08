@@ -1,9 +1,12 @@
 package com.PocketIdentityDirectory.feign.dtos.responses;
 
 
+import com.PocketIdentityDirectory.feign.dtos.helpers.ExtensionHelper;
 import com.PocketIdentityDirectory.feign.dtos.helpers.FeignEmail;
 import com.PocketIdentityDirectory.feign.dtos.helpers.FeignName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,6 +24,17 @@ public class IASUserResponse {
 
     private List<FeignEmail> emails;
 
+    @JsonProperty("urn:ietf:params:scim:schemas:extension:sap:2.0:User")
+    private ExtensionHelper extension;
+
+
+    public ExtensionHelper getExtension() {
+        return extension;
+    }
+
+    public void setExtension(ExtensionHelper extension) {
+        this.extension = extension;
+    }
 
     public UUID getId() {
         return id;

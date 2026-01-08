@@ -9,8 +9,10 @@ import com.PocketIdentityDirectory.users.repositories.UserRepository;
 import com.PocketIdentityDirectory.web.dtos.requests.CreateUserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -44,5 +46,11 @@ public class UserService {
         feignUser.setSchemas(new String[]{"urn:ietf:params:scim:schemas:core:2.0:User"});
 
         return feignService.createIASUser(feignUser);
+    }
+
+    @Transactional
+    public void deleteUser(UUID id){
+        feignService.deleteUser(id);
+        repository.deleteById(id);
     }
 }

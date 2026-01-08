@@ -14,7 +14,9 @@ public class UsersDTOMapper {
                 user.isUserStatus(),
                 user.getUserType().toString().toLowerCase(),
                 user.getCompany(),
-                user.getAddress()
+                user.getAddress(),
+                user.getValidFrom(),
+                user.getValidTo()
                 );
     }
 

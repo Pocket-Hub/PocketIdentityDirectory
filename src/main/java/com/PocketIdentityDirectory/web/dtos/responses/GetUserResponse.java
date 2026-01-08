@@ -6,6 +6,7 @@ import com.PocketIdentityDirectory.users.models.helpers.Name;
 import com.PocketIdentityDirectory.users.models.helpers.UserType;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.time.Instant;
 import java.util.UUID;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -27,7 +28,13 @@ public class GetUserResponse {
 
     private Address address;
 
-    public GetUserResponse(UUID id, Email email, Name name, String loginName, boolean active, String userType, String company, Address address) {
+    private Instant validFrom;
+
+    private Instant validTo;
+
+
+
+    public GetUserResponse(UUID id, Email email, Name name, String loginName, boolean active, String userType, String company, Address address, Instant validFrom, Instant validTo) {
         this.id = id;
         this.email = email;
         this.name = name;
@@ -36,6 +43,24 @@ public class GetUserResponse {
         this.userType = userType;
         this.company = company;
         this.address = address;
+        this.validFrom = validFrom;
+        this.validTo = validTo;
+    }
+
+    public Instant getValidFrom() {
+        return validFrom;
+    }
+
+    public void setValidFrom(Instant validFrom) {
+        this.validFrom = validFrom;
+    }
+
+    public Instant getValidTo() {
+        return validTo;
+    }
+
+    public void setValidTo(Instant validTo) {
+        this.validTo = validTo;
     }
 
     public UUID getId() {
