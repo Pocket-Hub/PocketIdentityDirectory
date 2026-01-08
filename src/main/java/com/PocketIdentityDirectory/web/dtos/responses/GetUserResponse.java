@@ -1,52 +1,41 @@
-package com.PocketIdentityDirectory.users.models;
+package com.PocketIdentityDirectory.web.dtos.responses;
 
 import com.PocketIdentityDirectory.users.models.helpers.Address;
 import com.PocketIdentityDirectory.users.models.helpers.Email;
 import com.PocketIdentityDirectory.users.models.helpers.Name;
 import com.PocketIdentityDirectory.users.models.helpers.UserType;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import jakarta.persistence.*;
 
 import java.util.UUID;
 
-@Entity
-@Table(name = "users")
-public class User {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class GetUserResponse {
 
-    @Id
     private UUID id;
 
-    @Embedded
     private Email email;
 
-    @Column
-    @Embedded
     private Name name;
 
-    @Column(unique = true, nullable = false)
     private String loginName;
 
-    @Column(nullable = false)
-    private boolean userStatus;
+    private boolean active;
 
-    @Column
-    @Enumerated(EnumType.STRING)
-    private UserType userType;
+    private String userType;
 
-    @Column
     private String company;
 
-    @Column
-    @Embedded
     private Address address;
 
-
-    public UserType getUserType() {
-        return userType;
-    }
-
-    public void setUserType(UserType userType) {
+    public GetUserResponse(UUID id, Email email, Name name, String loginName, boolean active, String userType, String company, Address address) {
+        this.id = id;
+        this.email = email;
+        this.name = name;
+        this.loginName = loginName;
+        this.active = active;
         this.userType = userType;
+        this.company = company;
+        this.address = address;
     }
 
     public UUID getId() {
@@ -81,12 +70,20 @@ public class User {
         this.loginName = loginName;
     }
 
-    public boolean isUserStatus() {
-        return userStatus;
+    public boolean isActive() {
+        return active;
     }
 
-    public void setUserStatus(boolean userStatus) {
-        this.userStatus = userStatus;
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
 
     public String getCompany() {

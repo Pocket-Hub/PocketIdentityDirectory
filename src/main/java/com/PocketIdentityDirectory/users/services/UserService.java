@@ -29,7 +29,7 @@ public class UserService {
         return repository.findAll();
     }
 
-    public User createUser(CreateUserRequest dto){
+    public User createUser(CreateUserRequest dto) {
         CreateIASUserRequest feignUser = new CreateIASUserRequest();
         feignUser.setUserName(dto.getLoginName());
         feignUser.setUserType(dto.getUserType());

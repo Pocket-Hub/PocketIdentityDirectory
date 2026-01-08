@@ -8,8 +8,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @SpringBootApplication
 public class PocketIdentityDirectoryApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(PocketIdentityDirectoryApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(PocketIdentityDirectoryApplication.class, args);
+    }
 
 }

@@ -22,8 +22,6 @@ public class IASUserResponse {
     private List<FeignEmail> emails;
 
 
-
-
     public UUID getId() {
         return id;
     }

@@ -1,9 +1,9 @@
 package com.PocketIdentityDirectory.feign.service;
 
+import com.PocketIdentityDirectory.feign.dtos.mappers.FeignDTOMapper;
 import com.PocketIdentityDirectory.feign.dtos.requests.CreateIASUserRequest;
 import com.PocketIdentityDirectory.feign.dtos.responses.IASUserResponse;
 import com.PocketIdentityDirectory.feign.feignClient.IASFeignClient;
-import com.PocketIdentityDirectory.feign.mappers.FeignDTOMapper;
 import com.PocketIdentityDirectory.users.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ public class FeignService {
         this.client = client;
     }
 
-    public List<User> getIASUsers(){
+    public List<User> getIASUsers() {
         List<IASUserResponse> feignUsers = client.getUsers().getResources();
         System.out.println(feignUsers);
         List<User> users = new ArrayList<>();
@@ -32,12 +32,11 @@ public class FeignService {
         return users;
     }
 
-    public User createIASUser(CreateIASUserRequest dto){
+    public User createIASUser(CreateIASUserRequest dto) {
         IASUserResponse user = client.createUser(dto);
 
         return FeignDTOMapper.mapFeignIASUserResponseToIASUser(user);
     }
-
 
 
 }
