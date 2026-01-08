@@ -1,4 +1,4 @@
-package com.PocketIdentityDirectory.feign;
+package com.PocketIdentityDirectory.feign.feignClient;
 
 import feign.RequestInterceptor;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,7 +9,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 @Configuration
-public class BasicAuthConfig {
+public class FeignAuthConfig {
 
     @Value("${ias.id}")
     private String clientId;

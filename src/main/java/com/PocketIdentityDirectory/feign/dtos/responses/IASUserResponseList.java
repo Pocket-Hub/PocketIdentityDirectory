@@ -4,13 +4,13 @@ import java.util.List;
 
 public class IASUserResponseList {
 
-    private List<IASUserRsponse> Resources;
+    private List<IASUserResponse> Resources;
 
-    public List<IASUserRsponse> getResources() {
+    public List<IASUserResponse> getResources() {
         return Resources;
     }
 
-    public void setResources(List<IASUserRsponse> resources) {
+    public void setResources(List<IASUserResponse> resources) {
         this.Resources = resources;
     }
 }

@@ -1,10 +1,8 @@
 package com.PocketIdentityDirectory.feign.dtos.helpers;
 
-import jakarta.persistence.Column;
 
 public class FeignEmail {
 
-    @Column(unique = true, nullable = false)
     private String value;
 
     private boolean primary;

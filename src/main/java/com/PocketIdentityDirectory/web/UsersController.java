@@ -1,7 +1,7 @@
 package com.PocketIdentityDirectory.web;
 
-import com.PocketIdentityDirectory.users.models.IASUser;
-import com.PocketIdentityDirectory.users.services.IASUserService;
+import com.PocketIdentityDirectory.users.models.User;
+import com.PocketIdentityDirectory.users.services.UserService;
 import com.PocketIdentityDirectory.web.dtos.requests.CreateUserRequest;
 import com.PocketIdentityDirectory.web.dtos.responses.GetUsersResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/users")
 public class UsersController {
 
-    private final IASUserService userService;
+    private final UserService userService;
 
     @Autowired
-    public UsersController(IASUserService userService) {
+    public UsersController(UserService userService) {
         this.userService = userService;
     }
 
@@ -30,7 +30,7 @@ public class UsersController {
     }
 
     @PostMapping
-    public ResponseEntity<IASUser> createUser(@RequestBody CreateUserRequest dto){
+    public ResponseEntity<User> createUser(@RequestBody CreateUserRequest dto){
 
         return new ResponseEntity<>(userService.createUser(dto), HttpStatus.CREATED);
     }

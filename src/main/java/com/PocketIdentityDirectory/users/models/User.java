@@ -7,8 +7,9 @@ import jakarta.persistence.*;
 import java.util.UUID;
 
 @Entity
+@Table(name = "users")
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class IASUser {
+public class User {
 
     @Id
     private UUID id;

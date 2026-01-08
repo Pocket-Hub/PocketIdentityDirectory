@@ -2,8 +2,7 @@ package com.PocketIdentityDirectory.feign.dtos.requests;
 
 
 import com.PocketIdentityDirectory.feign.dtos.helpers.FeignEmail;
-import com.PocketIdentityDirectory.feign.dtos.helpers.Name;
-import com.PocketIdentityDirectory.users.models.helpers.Email;
+import com.PocketIdentityDirectory.feign.dtos.helpers.FeignName;
 
 public class CreateIASUserRequest {
 
@@ -11,7 +10,7 @@ public class CreateIASUserRequest {
 
     private String userName;
 
-    private Name name;
+    private FeignName name;
 
     private FeignEmail[] emails;
 
@@ -43,11 +42,11 @@ public class CreateIASUserRequest {
         this.userName = userName;
     }
 
-    public Name getName() {
+    public FeignName getName() {
         return name;
     }
 
-    public void setName(Name name) {
+    public void setName(FeignName name) {
         this.name = name;
     }
 

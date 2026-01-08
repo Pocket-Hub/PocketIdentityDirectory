@@ -1,6 +1,6 @@
 package com.PocketIdentityDirectory.feign.dtos.helpers;
 
-public class Name {
+public class FeignName {
 
     private String familyName;
 

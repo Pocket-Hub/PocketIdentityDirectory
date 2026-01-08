@@ -1,16 +1,16 @@
-package com.PocketIdentityDirectory.web.mappers;
+package com.PocketIdentityDirectory.feign.mappers;
 
-import com.PocketIdentityDirectory.feign.dtos.responses.IASUserRsponse;
+import com.PocketIdentityDirectory.feign.dtos.responses.IASUserResponse;
 import com.PocketIdentityDirectory.feign.dtos.helpers.FeignEmail;
-import com.PocketIdentityDirectory.users.models.IASUser;
+import com.PocketIdentityDirectory.users.models.User;
 import com.PocketIdentityDirectory.users.models.helpers.Email;
 import com.PocketIdentityDirectory.users.models.helpers.Name;
 import com.PocketIdentityDirectory.users.models.helpers.UserType;
 
 public class FeignDTOMapper {
 
-    public static IASUser mapFeignIASUserResponseToIASUser(IASUserRsponse dto){
-         IASUser user = new IASUser();
+    public static User mapFeignIASUserResponseToIASUser(IASUserResponse dto){
+         User user = new User();
          user.setId(dto.getId());
          user.setLoginName(dto.getUserName());
          Name name = new Name();

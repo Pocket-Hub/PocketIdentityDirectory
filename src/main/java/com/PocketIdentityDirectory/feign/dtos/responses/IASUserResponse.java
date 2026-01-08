@@ -2,18 +2,18 @@ package com.PocketIdentityDirectory.feign.dtos.responses;
 
 
 import com.PocketIdentityDirectory.feign.dtos.helpers.FeignEmail;
-import com.PocketIdentityDirectory.feign.dtos.helpers.Name;
+import com.PocketIdentityDirectory.feign.dtos.helpers.FeignName;
 
 import java.util.List;
 import java.util.UUID;
 
-public class IASUserRsponse {
+public class IASUserResponse {
 
     private UUID id;
 
     private String userName;
 
-    private Name name;
+    private FeignName name;
 
     private String userType;
 
@@ -40,11 +40,11 @@ public class IASUserRsponse {
         this.userName = userName;
     }
 
-    public Name getName() {
+    public FeignName getName() {
         return name;
     }
 
-    public void setName(Name name) {
+    public void setName(FeignName name) {
         this.name = name;
     }
 
