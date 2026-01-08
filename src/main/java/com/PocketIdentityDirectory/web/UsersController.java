@@ -55,7 +55,7 @@ public class UsersController {
 
     @PutMapping("/{id}")
     public ResponseEntity<GetUserResponse> updateUser(@RequestBody UpdateUserRequest dto){
-
+        return null;
     }
 
 }

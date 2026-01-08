@@ -28,8 +28,7 @@ public class UserService {
     }
 
     public List<User> getUsers() {
-        repository.saveAll(feignService.getIASUsers());
-        return repository.findAll();
+        return repository.saveAll(feignService.getIASUsers());
     }
 
     public User createUser(CreateUserRequest dto) {

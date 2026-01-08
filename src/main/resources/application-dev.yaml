@@ -17,8 +17,6 @@ logging:
     feign.Logger: DEBUG
     com.your.package: DEBUG
 
-
-
 ias:
   id: ${IAS_ID}
   secret: ${IAS_SECRET}
