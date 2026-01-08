@@ -1,11 +1,13 @@
 package com.PocketIdentityDirectory.users.models;
 
 import com.PocketIdentityDirectory.users.models.helpers.*;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 
 import java.util.UUID;
 
 @Entity
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class IASUser {
 
     @Id

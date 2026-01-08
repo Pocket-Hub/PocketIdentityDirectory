@@ -1,4 +1,4 @@
-package com.PocketIdentityDirectory.web.dtos;
+package com.PocketIdentityDirectory.web.dtos.responses;
 
 import com.PocketIdentityDirectory.users.models.IASUser;
 

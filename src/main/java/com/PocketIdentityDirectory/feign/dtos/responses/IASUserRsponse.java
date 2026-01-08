@@ -1,14 +1,13 @@
-package com.PocketIdentityDirectory.feign.dtos;
+package com.PocketIdentityDirectory.feign.dtos.responses;
 
 
 import com.PocketIdentityDirectory.feign.dtos.helpers.FeignEmail;
 import com.PocketIdentityDirectory.feign.dtos.helpers.Name;
-import com.PocketIdentityDirectory.users.models.helpers.UserType;
 
 import java.util.List;
 import java.util.UUID;
 
-public class IASUserRequest {
+public class IASUserRsponse {
 
     private UUID id;
 
