@@ -41,7 +41,7 @@ public class UsersController {
                 userType == null ? null : UserType.valueOf(userType.toUpperCase());
 
         if (status != null || userType != null || lastName != null){
-            users.addAll(userService.filterUsersByLastName(lastName, statusEnum, userTypeEnum));
+            users.addAll(userService.filterUsers(lastName, statusEnum, userTypeEnum));
         }else {
             users.addAll(userService.getUsers());
         }
@@ -53,6 +53,11 @@ public class UsersController {
         }
 
         return ResponseEntity.ok(dto);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<GetUserResponse> getSpecificUser(@PathVariable UUID id){
+        return ResponseEntity.ok(UsersDTOMapper.mapUserToGetUserResponse(userService.getUserById(id)));
     }
 
     @PostMapping

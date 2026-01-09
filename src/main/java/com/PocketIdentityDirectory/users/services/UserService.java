@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -31,6 +32,17 @@ public class UserService {
         return repository.saveAll(IASUsersFeignService.getIASUsers());
     }
 
+    public List<User> filterUsers(String lastName, Status status, UserType type){
+
+        return repository.filterUsersByUserStatusOrUserTypeOrLastName(type, lastName, status);
+    }
+
+    public User getUserById(UUID id){
+        Optional<User> optUser = repository.findById(id);
+
+        return optUser.orElseThrow();
+    }
+
     public User createUser(CreateUserRequest dto) {
 
         return IASUsersFeignService.createIASUser(IASUsersDTOMapper.mapCreateUserRequestToCreateIASUserRequest(dto));
@@ -45,10 +57,5 @@ public class UserService {
         UpdateIASUserRequest feignUser = IASUsersDTOMapper.mapUpdateUserRequestToUpdateIASUserRequest(dto);
 
         return IASUsersFeignService.updateUser(feignUser);
-    }
-
-    public List<User> filterUsersByLastName (String lastName, Status status, UserType type){
-
-        return repository.filterUsersByUserStatusOrUserTypeOrLastName(type, lastName, status);
     }
 }
