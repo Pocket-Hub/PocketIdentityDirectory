@@ -17,8 +17,6 @@ public class UpdateUserRequest {
 
     private String loginName;
 
-    private boolean userStatus;
-
     private String userType;
 
     private DTOCompanyAddress companyInfo;
@@ -68,14 +66,6 @@ public class UpdateUserRequest {
 
     public void setName(DTOName name) {
         this.name = name;
-    }
-
-    public boolean isUserStatus() {
-        return userStatus;
-    }
-
-    public void setUserStatus(boolean userStatus) {
-        this.userStatus = userStatus;
     }
 
     public String getUserType() {

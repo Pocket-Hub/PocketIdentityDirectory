@@ -43,7 +43,7 @@ public class IASUsersDTOMapper {
     public static UpdateIASUserRequest mapUpdateUserRequestToUpdateIASUserRequest(UpdateUserRequest dto){
         UpdateIASUserRequest iasUser = new UpdateIASUserRequest();
 
-        iasUser.setActive(dto.isUserStatus());
+
         iasUser.setId(dto.getId());
         iasUser.setName(new IASName(dto.getName().getFirstName(), dto.getName().getLastName()));
         iasUser.setAddresses(List.of(new IASAddress(dto.getCompanyInfo().getCountry(), dto.getCompanyInfo().getCity(), "work")));
@@ -51,7 +51,15 @@ public class IASUsersDTOMapper {
         iasUser.setEmails(List.of(new IASEmail(dto.getEmail(), true)));
         iasUser.setUserType(dto.getUserType());
         iasUser.setEntExtension(new EnterpriseExtensionHelper(dto.getCompanyInfo().getCompany()));
-        iasUser.setExtension(new SAPExtensionHelper(dto.getValidFrom(), dto.getValidTo(), dto.getStatus(), List.of(new IASAddress(dto.getCompanyInfo().getCountry(), dto.getCompanyInfo().getCity(), "work"))));
+
+        if ("active".equalsIgnoreCase(dto.getStatus())){
+            iasUser.setActive(true);
+            iasUser.setExtension(new SAPExtensionHelper(dto.getValidFrom(), dto.getValidTo(), null, List.of(new IASAddress(dto.getCompanyInfo().getCountry(), dto.getCompanyInfo().getCity(), "work"))));
+
+
+        }else {
+            iasUser.setExtension(new SAPExtensionHelper(dto.getValidFrom(), dto.getValidTo(), dto.getStatus(), List.of(new IASAddress(dto.getCompanyInfo().getCountry(), dto.getCompanyInfo().getCity(), "work"))));
+        }
 
         return iasUser;
 
