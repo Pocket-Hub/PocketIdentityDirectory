@@ -27,6 +27,7 @@ public class User {
     private String loginName;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Status userStatus;
 
     @Column

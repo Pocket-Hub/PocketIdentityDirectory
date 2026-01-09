@@ -4,6 +4,8 @@ import com.PocketIdentityDirectory.mappers.IASUsersDTOMapper;
 import com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.requests.UpdateIASUserRequest;
 import com.PocketIdentityDirectory.feign.service.IASUsersFeignService;
 import com.PocketIdentityDirectory.users.models.User;
+import com.PocketIdentityDirectory.users.models.helpers.Status;
+import com.PocketIdentityDirectory.users.models.helpers.UserType;
 import com.PocketIdentityDirectory.users.repositories.UserRepository;
 import com.PocketIdentityDirectory.users.web.dtos.requests.CreateUserRequest;
 import com.PocketIdentityDirectory.users.web.dtos.requests.UpdateUserRequest;
@@ -43,5 +45,10 @@ public class UserService {
         UpdateIASUserRequest feignUser = IASUsersDTOMapper.mapUpdateUserRequestToUpdateIASUserRequest(dto);
 
         return IASUsersFeignService.updateUser(feignUser);
+    }
+
+    public List<User> filterUsersByLastName (String lastName, Status status, UserType type){
+
+        return repository.filterUsersByUserStatusOrUserTypeOrLastName(type, lastName, status);
     }
 }
