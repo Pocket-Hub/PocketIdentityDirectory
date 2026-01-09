@@ -1,9 +1,11 @@
 package com.PocketIdentityDirectory.users.services;
 
-import com.PocketIdentityDirectory.feign.dtos.helpers.*;
-import com.PocketIdentityDirectory.feign.dtos.requests.CreateIASUserRequest;
-import com.PocketIdentityDirectory.feign.dtos.requests.UpdateIASUserRequest;
-import com.PocketIdentityDirectory.feign.service.FeignService;
+import com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.helpers.IASEmail;
+import com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.helpers.IASName;
+import com.PocketIdentityDirectory.mappers.IASUsersDTOMapper;
+import com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.requests.CreateIASUserRequest;
+import com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.requests.UpdateIASUserRequest;
+import com.PocketIdentityDirectory.feign.service.IASUsersFeignService;
 import com.PocketIdentityDirectory.users.models.User;
 import com.PocketIdentityDirectory.users.repositories.UserRepository;
 import com.PocketIdentityDirectory.web.dtos.requests.CreateUserRequest;
@@ -18,54 +20,31 @@ import java.util.UUID;
 public class UserService {
 
     private final UserRepository repository;
-    private final FeignService feignService;
+    private final IASUsersFeignService IASUsersFeignService;
 
     @Autowired
-    public UserService(UserRepository repository, FeignService feignService) {
+    public UserService(UserRepository repository, IASUsersFeignService IASUsersFeignService) {
         this.repository = repository;
-        this.feignService = feignService;
+        this.IASUsersFeignService = IASUsersFeignService;
     }
 
     public List<User> getUsers() {
-        return repository.saveAll(feignService.getIASUsers());
+        return repository.saveAll(IASUsersFeignService.getIASUsers());
     }
 
     public User createUser(CreateUserRequest dto) {
-        CreateIASUserRequest iasUser = new CreateIASUserRequest();
 
-        IASEmail email = new IASEmail(dto.getEmail(), true);
-
-        IASName name = new IASName("", dto.getLastName());
-        name.setFamilyName(dto.getLastName());
-
-        iasUser.setUserName(dto.getLoginName());
-        iasUser.setUserType(dto.getUserType());
-        iasUser.setActive(true);
-        iasUser.setName(name);
-        iasUser.setEmails(new IASEmail[]{email});
-        iasUser.setSchemas(new String[]{"urn:ietf:params:scim:schemas:core:2.0:User"});
-
-        return feignService.createIASUser(iasUser);
+        return IASUsersFeignService.createIASUser(IASUsersDTOMapper.mapCreateUserRequestToCreateIASUserRequest(dto));
     }
 
     public void deleteUser(UUID id) {
         repository.deleteById(id);
-        feignService.deleteUser(id);
+        IASUsersFeignService.deleteUser(id);
     }
 
     public User updateUser(UpdateUserRequest dto) {
-        UpdateIASUserRequest feignUser = new UpdateIASUserRequest();
+        UpdateIASUserRequest feignUser = IASUsersDTOMapper.mapUpdateUserRequestToUpdateIASUserRequest(dto);
 
-        feignUser.setActive(dto.isUserStatus());
-        feignUser.setId(dto.getId());
-        feignUser.setName(new IASName(dto.getName().getFirstName(), dto.getName().getLastName()));
-        feignUser.setAddresses(List.of(new IASAddress(dto.getCompanyInfo().getCountry(), dto.getCompanyInfo().getCity(), "work")));
-        feignUser.setUserName(dto.getLoginName());
-        feignUser.setEmails(List.of(new IASEmail(dto.getEmail(), true)));
-        feignUser.setUserType(dto.getUserType());
-        feignUser.setEntExtension(new EnterpriseExtensionHelper(dto.getCompanyInfo().getCompany()));
-        feignUser.setExtension(new SAPExtensionHelper(dto.getValidFrom(), dto.getValidTo(), dto.getStatus(), List.of(new IASAddress(dto.getCompanyInfo().getCountry(), dto.getCompanyInfo().getCity(), "work"))));
-
-        return feignService.updateUser(feignUser);
+        return IASUsersFeignService.updateUser(feignUser);
     }
 }

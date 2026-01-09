@@ -1,9 +1,9 @@
 package com.PocketIdentityDirectory.feign.feignClient;
 
-import com.PocketIdentityDirectory.feign.dtos.requests.CreateIASUserRequest;
-import com.PocketIdentityDirectory.feign.dtos.requests.UpdateIASUserRequest;
-import com.PocketIdentityDirectory.feign.dtos.responses.IASUserResponse;
-import com.PocketIdentityDirectory.feign.dtos.responses.IASUserResponseList;
+import com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.requests.CreateIASUserRequest;
+import com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.requests.UpdateIASUserRequest;
+import com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.responses.IASUserResponse;
+import com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.responses.IASUserResponseList;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 

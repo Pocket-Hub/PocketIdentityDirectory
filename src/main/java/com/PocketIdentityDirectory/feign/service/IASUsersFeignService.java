@@ -1,9 +1,9 @@
 package com.PocketIdentityDirectory.feign.service;
 
-import com.PocketIdentityDirectory.feign.dtos.mappers.FeignDTOMapper;
-import com.PocketIdentityDirectory.feign.dtos.requests.CreateIASUserRequest;
-import com.PocketIdentityDirectory.feign.dtos.requests.UpdateIASUserRequest;
-import com.PocketIdentityDirectory.feign.dtos.responses.IASUserResponse;
+import com.PocketIdentityDirectory.mappers.IASUsersDTOMapper;
+import com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.requests.CreateIASUserRequest;
+import com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.requests.UpdateIASUserRequest;
+import com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.responses.IASUserResponse;
 import com.PocketIdentityDirectory.feign.feignClient.IASFeignClient;
 import com.PocketIdentityDirectory.users.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +14,12 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class FeignService {
+public class IASUsersFeignService {
 
     private final IASFeignClient client;
 
     @Autowired
-    public FeignService(IASFeignClient client) {
+    public IASUsersFeignService(IASFeignClient client) {
         this.client = client;
     }
 
@@ -29,7 +29,7 @@ public class FeignService {
         List<User> users = new ArrayList<>();
         for (IASUserResponse feignUser : feignUsers) {
 
-            users.add(FeignDTOMapper.mapFeignIASUserResponseToIASUser(feignUser));
+            users.add(IASUsersDTOMapper.mapFeignIASUserResponseToIASUser(feignUser));
         }
         return users;
     }
@@ -37,7 +37,7 @@ public class FeignService {
     public User createIASUser(CreateIASUserRequest dto) {
         IASUserResponse user = client.createUser(dto);
 
-        return FeignDTOMapper.mapFeignIASUserResponseToIASUser(user);
+        return IASUsersDTOMapper.mapFeignIASUserResponseToIASUser(user);
     }
 
     public void deleteUser(UUID id) {
@@ -45,12 +45,9 @@ public class FeignService {
     }
 
     public User updateUser(UpdateIASUserRequest dto){
-
-
-
         IASUserResponse user = client.updateUser(dto, dto.getId());
 
-        return FeignDTOMapper.mapFeignIASUserResponseToIASUser(user);
+        return IASUsersDTOMapper.mapFeignIASUserResponseToIASUser(user);
     }
 
 

@@ -1,9 +1,9 @@
-package com.PocketIdentityDirectory.feign.dtos.responses;
+package com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.responses;
 
-import com.PocketIdentityDirectory.feign.dtos.helpers.EnterpriseExtensionHelper;
-import com.PocketIdentityDirectory.feign.dtos.helpers.IASEmail;
-import com.PocketIdentityDirectory.feign.dtos.helpers.IASName;
-import com.PocketIdentityDirectory.feign.dtos.helpers.SAPExtensionHelper;
+import com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.helpers.EnterpriseExtensionHelper;
+import com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.helpers.IASEmail;
+import com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.helpers.IASName;
+import com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.helpers.SAPExtensionHelper;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;

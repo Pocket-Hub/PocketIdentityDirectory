@@ -1,4 +1,4 @@
-package com.PocketIdentityDirectory.web.dtos.mappers;
+package com.PocketIdentityDirectory.mappers;
 
 import com.PocketIdentityDirectory.users.models.User;
 import com.PocketIdentityDirectory.web.dtos.helpers.DTOCompanyAddress;

@@ -1,4 +1,4 @@
-package com.PocketIdentityDirectory.feign.dtos.helpers;
+package com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.helpers;
 
 import java.time.Instant;
 import java.util.List;

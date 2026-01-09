@@ -1,4 +1,4 @@
-package com.PocketIdentityDirectory.feign.dtos.responses;
+package com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.responses;
 
 import java.util.List;
 

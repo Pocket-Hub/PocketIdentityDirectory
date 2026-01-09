@@ -2,7 +2,7 @@ package com.PocketIdentityDirectory.web;
 
 import com.PocketIdentityDirectory.users.models.User;
 import com.PocketIdentityDirectory.users.services.UserService;
-import com.PocketIdentityDirectory.web.dtos.mappers.UsersDTOMapper;
+import com.PocketIdentityDirectory.mappers.UsersDTOMapper;
 import com.PocketIdentityDirectory.web.dtos.requests.CreateUserRequest;
 import com.PocketIdentityDirectory.web.dtos.requests.UpdateUserRequest;
 import com.PocketIdentityDirectory.web.dtos.responses.GetAllUsersResponse;

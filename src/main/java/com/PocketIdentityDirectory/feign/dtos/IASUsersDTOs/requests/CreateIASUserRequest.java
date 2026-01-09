@@ -1,12 +1,12 @@
-package com.PocketIdentityDirectory.feign.dtos.requests;
+package com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.requests;
 
 
-import com.PocketIdentityDirectory.feign.dtos.helpers.IASEmail;
-import com.PocketIdentityDirectory.feign.dtos.helpers.IASName;
+import com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.helpers.IASEmail;
+import com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.helpers.IASName;
 
 public class CreateIASUserRequest {
 
-    private String[] schemas;
+    private final String[] schemas = new String[]{"urn:ietf:params:scim:schemas:core:2.0:User"};
 
     private String userName;
 
@@ -14,7 +14,7 @@ public class CreateIASUserRequest {
 
     private IASEmail[] emails;
 
-    private boolean active;
+    private final boolean active = true;
 
     private String userType;
 
@@ -28,10 +28,6 @@ public class CreateIASUserRequest {
 
     public String[] getSchemas() {
         return schemas;
-    }
-
-    public void setSchemas(String[] schemas) {
-        this.schemas = schemas;
     }
 
     public String getUserName() {
@@ -62,7 +58,4 @@ public class CreateIASUserRequest {
         return active;
     }
 
-    public void setActive(boolean active) {
-        this.active = active;
-    }
 }

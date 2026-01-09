@@ -1,6 +1,6 @@
-package com.PocketIdentityDirectory.feign.dtos.requests;
+package com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.requests;
 
-import com.PocketIdentityDirectory.feign.dtos.helpers.*;
+import com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.helpers.*;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public class UpdateIASUserRequest {
 
-    private String[] schemas = new String[]{"urn:ietf:params:scim:schemas:core:2.0:User", "urn:ietf:params:scim:schemas:extension:sap:2.0:User", "urn:ietf:params:scim:schemas:extension:enterprise:2.0:User"};
+    private final String[] schemas = new String[]{"urn:ietf:params:scim:schemas:core:2.0:User", "urn:ietf:params:scim:schemas:extension:sap:2.0:User", "urn:ietf:params:scim:schemas:extension:enterprise:2.0:User"};
 
     private UUID id;
 
@@ -29,7 +29,6 @@ public class UpdateIASUserRequest {
 
     @JsonProperty("urn:ietf:params:scim:schemas:extension:sap:2.0:User")
     private SAPExtensionHelper extension;
-
 
     public EnterpriseExtensionHelper getEntExtension() {
         return entExtension;
@@ -79,8 +78,6 @@ public class UpdateIASUserRequest {
         return active;
     }
 
-
-
     public void setActive(boolean active) {
         this.active = active;
     }
@@ -92,9 +89,6 @@ public class UpdateIASUserRequest {
     public void setUserType(String userType) {
         this.userType = userType;
     }
-
-
-
 
     public List<IASAddress> getAddresses() {
         return addresses;
