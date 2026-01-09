@@ -1,4 +1,4 @@
-package com.PocketIdentityDirectory.web.dtos.helpers;
+package com.PocketIdentityDirectory.users.web.dtos.helpers;
 
 public class ResponseEmailHelper {
 

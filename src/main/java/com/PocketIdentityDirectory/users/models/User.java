@@ -1,5 +1,6 @@
 package com.PocketIdentityDirectory.users.models;
 
+import com.PocketIdentityDirectory.users.models.helpers.Status;
 import com.PocketIdentityDirectory.users.models.helpers.UserType;
 import jakarta.persistence.*;
 
@@ -26,7 +27,7 @@ public class User {
     private String loginName;
 
     @Column(nullable = false)
-    private boolean userStatus;
+    private Status userStatus;
 
     @Column
     @Enumerated(EnumType.STRING)
@@ -87,11 +88,11 @@ public class User {
         this.loginName = loginName;
     }
 
-    public boolean isUserStatus() {
+    public Status getUserStatus() {
         return userStatus;
     }
 
-    public void setUserStatus(boolean userStatus) {
+    public void setUserStatus(Status userStatus) {
         this.userStatus = userStatus;
     }
 

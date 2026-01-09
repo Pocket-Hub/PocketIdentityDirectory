@@ -1,4 +1,4 @@
-package com.PocketIdentityDirectory.web.dtos.responses;
+package com.PocketIdentityDirectory.users.web.dtos.responses;
 
 import java.util.ArrayList;
 import java.util.List;

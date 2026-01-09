@@ -1,15 +1,12 @@
 package com.PocketIdentityDirectory.users.services;
 
-import com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.helpers.IASEmail;
-import com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.helpers.IASName;
 import com.PocketIdentityDirectory.mappers.IASUsersDTOMapper;
-import com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.requests.CreateIASUserRequest;
 import com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.requests.UpdateIASUserRequest;
 import com.PocketIdentityDirectory.feign.service.IASUsersFeignService;
 import com.PocketIdentityDirectory.users.models.User;
 import com.PocketIdentityDirectory.users.repositories.UserRepository;
-import com.PocketIdentityDirectory.web.dtos.requests.CreateUserRequest;
-import com.PocketIdentityDirectory.web.dtos.requests.UpdateUserRequest;
+import com.PocketIdentityDirectory.users.web.dtos.requests.CreateUserRequest;
+import com.PocketIdentityDirectory.users.web.dtos.requests.UpdateUserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

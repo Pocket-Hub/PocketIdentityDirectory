@@ -1,4 +1,4 @@
-package com.PocketIdentityDirectory.web.dtos.requests;
+package com.PocketIdentityDirectory.users.web.dtos.requests;
 
 public class CreateUserRequest {
 

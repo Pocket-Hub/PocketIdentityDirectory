@@ -1,7 +1,7 @@
-package com.PocketIdentityDirectory.web.dtos.responses;
+package com.PocketIdentityDirectory.users.web.dtos.responses;
 
-import com.PocketIdentityDirectory.web.dtos.helpers.DTOCompanyAddress;
-import com.PocketIdentityDirectory.web.dtos.helpers.DTOName;
+import com.PocketIdentityDirectory.users.web.dtos.helpers.DTOCompanyAddress;
+import com.PocketIdentityDirectory.users.web.dtos.helpers.DTOName;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.time.Instant;
@@ -18,7 +18,7 @@ public class GetUserResponse {
 
     private String loginName;
 
-    private boolean active;
+    private String status;
 
     private String userType;
 
@@ -28,12 +28,12 @@ public class GetUserResponse {
 
     private Instant validTo;
 
-    public GetUserResponse(UUID id, String email, DTOName name, String loginName, boolean active, String userType, DTOCompanyAddress companyInfo, Instant validFrom, Instant validTo) {
+    public GetUserResponse(UUID id, String email, DTOName name, String loginName, String status, String userType, DTOCompanyAddress companyInfo, Instant validFrom, Instant validTo) {
         this.id = id;
         this.email = email;
         this.name = name;
         this.loginName = loginName;
-        this.active = active;
+        this.status = status;
         this.userType = userType;
         this.companyInfo = companyInfo;
         this.validFrom = validFrom;
@@ -72,12 +72,12 @@ public class GetUserResponse {
         this.loginName = loginName;
     }
 
-    public boolean isActive() {
-        return active;
+    public String getStatus() {
+        return status;
     }
 
-    public void setActive(boolean active) {
-        this.active = active;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getUserType() {

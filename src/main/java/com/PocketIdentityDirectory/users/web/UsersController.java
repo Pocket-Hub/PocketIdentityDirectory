@@ -1,12 +1,12 @@
-package com.PocketIdentityDirectory.web;
+package com.PocketIdentityDirectory.users.web;
 
 import com.PocketIdentityDirectory.users.models.User;
 import com.PocketIdentityDirectory.users.services.UserService;
 import com.PocketIdentityDirectory.mappers.UsersDTOMapper;
-import com.PocketIdentityDirectory.web.dtos.requests.CreateUserRequest;
-import com.PocketIdentityDirectory.web.dtos.requests.UpdateUserRequest;
-import com.PocketIdentityDirectory.web.dtos.responses.GetAllUsersResponse;
-import com.PocketIdentityDirectory.web.dtos.responses.GetUserResponse;
+import com.PocketIdentityDirectory.users.web.dtos.requests.CreateUserRequest;
+import com.PocketIdentityDirectory.users.web.dtos.requests.UpdateUserRequest;
+import com.PocketIdentityDirectory.users.web.dtos.responses.GetAllUsersResponse;
+import com.PocketIdentityDirectory.users.web.dtos.responses.GetUserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

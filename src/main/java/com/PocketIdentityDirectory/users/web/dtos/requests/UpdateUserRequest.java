@@ -1,8 +1,7 @@
-package com.PocketIdentityDirectory.web.dtos.requests;
+package com.PocketIdentityDirectory.users.web.dtos.requests;
 
-import com.PocketIdentityDirectory.users.models.helpers.UserType;
-import com.PocketIdentityDirectory.web.dtos.helpers.DTOCompanyAddress;
-import com.PocketIdentityDirectory.web.dtos.helpers.DTOName;
+import com.PocketIdentityDirectory.users.web.dtos.helpers.DTOCompanyAddress;
+import com.PocketIdentityDirectory.users.web.dtos.helpers.DTOName;
 
 import java.time.Instant;
 import java.util.UUID;

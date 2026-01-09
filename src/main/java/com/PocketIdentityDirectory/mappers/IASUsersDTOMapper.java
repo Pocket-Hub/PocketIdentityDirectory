@@ -5,9 +5,10 @@ import com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.requests.CreateIASUse
 import com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.requests.UpdateIASUserRequest;
 import com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.responses.IASUserResponse;
 import com.PocketIdentityDirectory.users.models.User;
+import com.PocketIdentityDirectory.users.models.helpers.Status;
 import com.PocketIdentityDirectory.users.models.helpers.UserType;
-import com.PocketIdentityDirectory.web.dtos.requests.CreateUserRequest;
-import com.PocketIdentityDirectory.web.dtos.requests.UpdateUserRequest;
+import com.PocketIdentityDirectory.users.web.dtos.requests.CreateUserRequest;
+import com.PocketIdentityDirectory.users.web.dtos.requests.UpdateUserRequest;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class IASUsersDTOMapper {
         user.setFirstName(dto.getName().getGivenName());
         user.setLastName(dto.getName().getFamilyName());
         user.setUserType(UserType.valueOf(dto.getUserType().toUpperCase()));
-        user.setUserStatus(dto.isActive());
+        user.setUserStatus(Status.valueOf(dto.getExtension().getStatus().toUpperCase()));
         user.setEmail(dto.getEmails().stream().filter(IASEmail::isPrimary).toList().get(0).getValue());
         user.setValidFrom(dto.getExtension().getValidFrom());
         user.setValidTo(dto.getExtension().getValidTo());
@@ -43,7 +44,6 @@ public class IASUsersDTOMapper {
     public static UpdateIASUserRequest mapUpdateUserRequestToUpdateIASUserRequest(UpdateUserRequest dto){
         UpdateIASUserRequest iasUser = new UpdateIASUserRequest();
 
-
         iasUser.setId(dto.getId());
         iasUser.setName(new IASName(dto.getName().getFirstName(), dto.getName().getLastName()));
         iasUser.setAddresses(List.of(new IASAddress(dto.getCompanyInfo().getCountry(), dto.getCompanyInfo().getCity(), "work")));
@@ -55,8 +55,6 @@ public class IASUsersDTOMapper {
         if ("active".equalsIgnoreCase(dto.getStatus())){
             iasUser.setActive(true);
             iasUser.setExtension(new SAPExtensionHelper(dto.getValidFrom(), dto.getValidTo(), null, List.of(new IASAddress(dto.getCompanyInfo().getCountry(), dto.getCompanyInfo().getCity(), "work"))));
-
-
         }else {
             iasUser.setExtension(new SAPExtensionHelper(dto.getValidFrom(), dto.getValidTo(), dto.getStatus(), List.of(new IASAddress(dto.getCompanyInfo().getCountry(), dto.getCompanyInfo().getCity(), "work"))));
         }
