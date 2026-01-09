@@ -1,8 +1,8 @@
 package com.PocketIdentityDirectory.feign.dtos.requests;
 
 
-import com.PocketIdentityDirectory.feign.dtos.helpers.FeignEmail;
-import com.PocketIdentityDirectory.feign.dtos.helpers.FeignName;
+import com.PocketIdentityDirectory.feign.dtos.helpers.IASEmail;
+import com.PocketIdentityDirectory.feign.dtos.helpers.IASName;
 
 public class CreateIASUserRequest {
 
@@ -10,9 +10,9 @@ public class CreateIASUserRequest {
 
     private String userName;
 
-    private FeignName name;
+    private IASName name;
 
-    private FeignEmail[] emails;
+    private IASEmail[] emails;
 
     private boolean active;
 
@@ -42,19 +42,19 @@ public class CreateIASUserRequest {
         this.userName = userName;
     }
 
-    public FeignName getName() {
+    public IASName getName() {
         return name;
     }
 
-    public void setName(FeignName name) {
+    public void setName(IASName name) {
         this.name = name;
     }
 
-    public FeignEmail[] getEmails() {
+    public IASEmail[] getEmails() {
         return emails;
     }
 
-    public void setEmails(FeignEmail[] emails) {
+    public void setEmails(IASEmail[] emails) {
         this.emails = emails;
     }
 

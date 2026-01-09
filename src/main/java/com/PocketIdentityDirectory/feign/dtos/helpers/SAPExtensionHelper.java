@@ -1,10 +1,6 @@
 package com.PocketIdentityDirectory.feign.dtos.helpers;
 
-import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
-
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 
 public class SAPExtensionHelper {
@@ -17,6 +13,12 @@ public class SAPExtensionHelper {
 
     private List<IASAddress> addresses;
 
+    public SAPExtensionHelper(Instant validFrom, Instant validTo, String status, List<IASAddress> addresses) {
+        this.validFrom = validFrom;
+        this.validTo = validTo;
+        this.status = status;
+        this.addresses = addresses;
+    }
 
     public Instant getValidFrom() {
         return validFrom;

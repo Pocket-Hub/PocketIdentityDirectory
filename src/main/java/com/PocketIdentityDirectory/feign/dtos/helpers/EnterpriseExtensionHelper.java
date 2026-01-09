@@ -7,6 +7,10 @@ public class EnterpriseExtensionHelper {
         return organization;
     }
 
+    public EnterpriseExtensionHelper(String organization) {
+        this.organization = organization;
+    }
+
     public void setOrganization(String organization) {
         this.organization = organization;
     }

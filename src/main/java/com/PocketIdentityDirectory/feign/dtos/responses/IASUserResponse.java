@@ -1,9 +1,9 @@
 package com.PocketIdentityDirectory.feign.dtos.responses;
 
 import com.PocketIdentityDirectory.feign.dtos.helpers.EnterpriseExtensionHelper;
+import com.PocketIdentityDirectory.feign.dtos.helpers.IASEmail;
+import com.PocketIdentityDirectory.feign.dtos.helpers.IASName;
 import com.PocketIdentityDirectory.feign.dtos.helpers.SAPExtensionHelper;
-import com.PocketIdentityDirectory.feign.dtos.helpers.FeignEmail;
-import com.PocketIdentityDirectory.feign.dtos.helpers.FeignName;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
@@ -15,11 +15,11 @@ public class IASUserResponse {
 
     private String userName;
 
-    private FeignName name;
+    private IASName name;
 
     private String userType;
 
-    private List<FeignEmail> emails;
+    private List<IASEmail> emails;
 
     private List<Object> groups;
 
@@ -56,11 +56,11 @@ public class IASUserResponse {
         this.userName = userName;
     }
 
-    public FeignName getName() {
+    public IASName getName() {
         return name;
     }
 
-    public void setName(FeignName name) {
+    public void setName(IASName name) {
         this.name = name;
     }
 
@@ -72,11 +72,11 @@ public class IASUserResponse {
         this.userType = userType;
     }
 
-    public List<FeignEmail> getEmails() {
+    public List<IASEmail> getEmails() {
         return emails;
     }
 
-    public void setEmails(List<FeignEmail> emails) {
+    public void setEmails(List<IASEmail> emails) {
         this.emails = emails;
     }
 

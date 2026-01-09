@@ -1,6 +1,7 @@
 package com.PocketIdentityDirectory.feign.feignClient;
 
 import com.PocketIdentityDirectory.feign.dtos.requests.CreateIASUserRequest;
+import com.PocketIdentityDirectory.feign.dtos.requests.UpdateIASUserRequest;
 import com.PocketIdentityDirectory.feign.dtos.responses.IASUserResponse;
 import com.PocketIdentityDirectory.feign.dtos.responses.IASUserResponseList;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -18,9 +19,9 @@ public interface IASFeignClient {
     IASUserResponse createUser(@RequestBody CreateIASUserRequest dto);
 
     @DeleteMapping("/Users/{id}")
-    void deleteUser (@PathVariable UUID id);
+    void deleteUser(@PathVariable UUID id);
 
-//    @PutMapping("/Users/{id}")
-//    IASUserResponse updateUser(@RequestBody UpdateIASUserRequest dto);
+    @PutMapping(value = "/Users/{id}", consumes = "application/scim+json")
+    IASUserResponse updateUser(@RequestBody UpdateIASUserRequest dto, @PathVariable UUID id);
 
 }

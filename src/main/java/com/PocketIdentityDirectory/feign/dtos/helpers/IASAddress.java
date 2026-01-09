@@ -8,6 +8,11 @@ public class IASAddress {
 
     private String type;
 
+    public IASAddress(String country, String locality, String type) {
+        this.country = country;
+        this.locality = locality;
+        this.type = type;
+    }
 
     public String getCountry() {
         return country;

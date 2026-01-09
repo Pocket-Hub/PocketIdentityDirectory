@@ -40,15 +40,18 @@ public class FeignService {
         return FeignDTOMapper.mapFeignIASUserResponseToIASUser(user);
     }
 
-    public void deleteUser(UUID id){
+    public void deleteUser(UUID id) {
         client.deleteUser(id);
     }
 
-//    public User updateUser(UpdateIASUserRequest dto){
-//        IASUserResponse user = client.updateUser(dto);
-//
-//        return FeignDTOMapper.mapFeignIASUserResponseToIASUser(user);
-//    }
+    public User updateUser(UpdateIASUserRequest dto){
+
+
+
+        IASUserResponse user = client.updateUser(dto, dto.getId());
+
+        return FeignDTOMapper.mapFeignIASUserResponseToIASUser(user);
+    }
 
 
 }

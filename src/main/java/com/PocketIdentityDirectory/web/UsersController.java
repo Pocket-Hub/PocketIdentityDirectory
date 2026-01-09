@@ -48,14 +48,16 @@ public class UsersController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable UUID id){
+    public ResponseEntity<Void> deleteUser(@PathVariable UUID id) {
         userService.deleteUser(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<GetUserResponse> updateUser(@RequestBody UpdateUserRequest dto){
-        return null;
+    public ResponseEntity<GetUserResponse> updateUser(@RequestBody UpdateUserRequest dto) {
+
+        return ResponseEntity.ok(UsersDTOMapper.mapUserToGetUserResponse(userService.updateUser(dto)));
     }
+
 
 }

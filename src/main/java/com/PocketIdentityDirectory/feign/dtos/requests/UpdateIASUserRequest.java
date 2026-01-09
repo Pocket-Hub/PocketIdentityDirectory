@@ -1,18 +1,20 @@
 package com.PocketIdentityDirectory.feign.dtos.requests;
 
-import com.PocketIdentityDirectory.feign.dtos.helpers.FeignEmail;
-import com.PocketIdentityDirectory.feign.dtos.helpers.FeignName;
-import com.PocketIdentityDirectory.feign.dtos.helpers.SAPExtensionHelper;
+import com.PocketIdentityDirectory.feign.dtos.helpers.*;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
+import java.util.UUID;
 
 public class UpdateIASUserRequest {
 
+    private String[] schemas = new String[]{"urn:ietf:params:scim:schemas:core:2.0:User", "urn:ietf:params:scim:schemas:extension:sap:2.0:User", "urn:ietf:params:scim:schemas:extension:enterprise:2.0:User"};
 
-    private List<FeignEmail> emails;
+    private UUID id;
 
-    private FeignName name;
+    private List<IASEmail> emails;
+
+    private IASName name;
 
     private String userName;
 
@@ -20,28 +22,48 @@ public class UpdateIASUserRequest {
 
     private String userType;
 
-    private String company;
+    @JsonProperty("urn:ietf:params:scim:schemas:extension:enterprise:2.0:User")
+    private EnterpriseExtensionHelper entExtension;
 
-//    private List<Address> addresses;
+    private List<IASAddress> addresses;
 
     @JsonProperty("urn:ietf:params:scim:schemas:extension:sap:2.0:User")
     private SAPExtensionHelper extension;
 
 
+    public EnterpriseExtensionHelper getEntExtension() {
+        return entExtension;
+    }
 
-    public List<FeignEmail> getEmails() {
+    public void setEntExtension(EnterpriseExtensionHelper entExtension) {
+        this.entExtension = entExtension;
+    }
+
+    public String[] getSchemas() {
+        return schemas;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public List<IASEmail> getEmails() {
         return emails;
     }
 
-    public void setEmails(List<FeignEmail> emails) {
+    public void setEmails(List<IASEmail> emails) {
         this.emails = emails;
     }
 
-    public FeignName getName() {
+    public IASName getName() {
         return name;
     }
 
-    public void setName(FeignName name) {
+    public void setName(IASName name) {
         this.name = name;
     }
 
@@ -57,6 +79,8 @@ public class UpdateIASUserRequest {
         return active;
     }
 
+
+
     public void setActive(boolean active) {
         this.active = active;
     }
@@ -69,21 +93,16 @@ public class UpdateIASUserRequest {
         this.userType = userType;
     }
 
-    public String getCompany() {
-        return company;
+
+
+
+    public List<IASAddress> getAddresses() {
+        return addresses;
     }
 
-    public void setCompany(String company) {
-        this.company = company;
+    public void setAddresses(List<IASAddress> addresses) {
+        this.addresses = addresses;
     }
-
-//    public List<Address> getAddresses() {
-//        return addresses;
-//    }
-//
-//    public void setAddresses(List<Address> addresses) {
-//        this.addresses = addresses;
-//    }
 
     public SAPExtensionHelper getExtension() {
         return extension;

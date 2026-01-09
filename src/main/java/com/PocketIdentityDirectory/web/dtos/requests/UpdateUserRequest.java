@@ -1,19 +1,10 @@
 package com.PocketIdentityDirectory.web.dtos.requests;
 
-import com.PocketIdentityDirectory.feign.dtos.helpers.FeignEmail;
-import com.PocketIdentityDirectory.feign.dtos.helpers.FeignName;
-import com.PocketIdentityDirectory.feign.dtos.helpers.SAPExtensionHelper;
 import com.PocketIdentityDirectory.users.models.helpers.UserType;
 import com.PocketIdentityDirectory.web.dtos.helpers.DTOCompanyAddress;
 import com.PocketIdentityDirectory.web.dtos.helpers.DTOName;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
 
 import java.time.Instant;
-import java.util.List;
 import java.util.UUID;
 
 public class UpdateUserRequest {
@@ -22,19 +13,38 @@ public class UpdateUserRequest {
 
     private String email;
 
-    private String lastName;
-
     private DTOName name;
+
+    private String loginName;
 
     private boolean userStatus;
 
-    private UserType userType;
+    private String userType;
 
     private DTOCompanyAddress companyInfo;
 
     private Instant validFrom;
 
     private Instant validTo;
+
+    private String status;
+
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getLoginName() {
+        return loginName;
+    }
+
+    public void setLoginName(String loginName) {
+        this.loginName = loginName;
+    }
 
     public UUID getId() {
         return id;
@@ -50,14 +60,6 @@ public class UpdateUserRequest {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public DTOName getName() {
@@ -76,11 +78,11 @@ public class UpdateUserRequest {
         this.userStatus = userStatus;
     }
 
-    public UserType getUserType() {
+    public String getUserType() {
         return userType;
     }
 
-    public void setUserType(UserType userType) {
+    public void setUserType(String userType) {
         this.userType = userType;
     }
 

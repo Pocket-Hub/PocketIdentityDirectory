@@ -1,11 +1,16 @@
 package com.PocketIdentityDirectory.feign.dtos.helpers;
 
 
-public class FeignEmail {
+public class IASEmail {
 
     private String value;
 
     private boolean primary;
+
+    public IASEmail(String value, boolean primary) {
+        this.value = value;
+        this.primary = primary;
+    }
 
     public String getValue() {
         return value;

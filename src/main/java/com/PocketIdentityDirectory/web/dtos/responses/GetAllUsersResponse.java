@@ -1,7 +1,5 @@
 package com.PocketIdentityDirectory.web.dtos.responses;
 
-import com.PocketIdentityDirectory.users.models.User;
-
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,10 +1,15 @@
 package com.PocketIdentityDirectory.feign.dtos.helpers;
 
-public class FeignName {
+public class IASName {
 
     private String familyName;
 
     private String givenName;
+
+    public IASName(String familyName, String givenName) {
+        this.familyName = familyName;
+        this.givenName = givenName;
+    }
 
     public String getFamilyName() {
         return familyName;
