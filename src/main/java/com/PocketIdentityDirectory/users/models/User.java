@@ -1,7 +1,10 @@
 package com.PocketIdentityDirectory.users.models;
 
+import com.PocketIdentityDirectory.users.models.helpers.CompanyInfo;
+import com.PocketIdentityDirectory.users.models.helpers.Name;
 import com.PocketIdentityDirectory.users.models.helpers.Status;
 import com.PocketIdentityDirectory.users.models.helpers.UserType;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 
 import java.time.Instant;
@@ -9,6 +12,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "users")
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 public class User {
 
     @Id
@@ -17,37 +21,39 @@ public class User {
     @Column
     private String email;
 
-    @Column
-    private String lastName;
-
-    @Column
-    private String firstName;
+    @Embedded
+    private Name name;
 
     @Column(unique = true, nullable = false)
     private String loginName;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Status userStatus;
-
     @Column
     @Enumerated(EnumType.STRING)
-    private UserType userType;
+    private Status status;
 
     @Column
-    private String company;
+    private boolean active;
 
     @Column
-    private String city;
+    @Enumerated(EnumType.STRING)
+    private UserType type;
 
-    @Column
-    private String country;
+    @Embedded
+    private CompanyInfo companyInfo = new CompanyInfo();
 
     @Column
     private Instant validFrom;
 
     @Column
     private Instant validTo;
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 
     public UUID getId() {
         return id;
@@ -65,20 +71,12 @@ public class User {
         this.email = email;
     }
 
-    public String getLastName() {
-        return lastName;
+    public Name getName() {
+        return name;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setName(Name name) {
+        this.name = name;
     }
 
     public String getLoginName() {
@@ -89,44 +87,28 @@ public class User {
         this.loginName = loginName;
     }
 
-    public Status getUserStatus() {
-        return userStatus;
+    public Status getStatus() {
+        return status;
     }
 
-    public void setUserStatus(Status userStatus) {
-        this.userStatus = userStatus;
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
-    public UserType getUserType() {
-        return userType;
+    public UserType getType() {
+        return type;
     }
 
-    public void setUserType(UserType userType) {
-        this.userType = userType;
+    public void setType(UserType type) {
+        this.type = type;
     }
 
-    public String getCompany() {
-        return company;
+    public CompanyInfo getCompanyInfo() {
+        return companyInfo;
     }
 
-    public void setCompany(String company) {
-        this.company = company;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
+    public void setCompanyInfo(CompanyInfo companyInfo) {
+        this.companyInfo = companyInfo;
     }
 
     public Instant getValidFrom() {

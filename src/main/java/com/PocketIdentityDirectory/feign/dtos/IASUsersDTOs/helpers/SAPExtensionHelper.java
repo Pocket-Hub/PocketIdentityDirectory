@@ -1,5 +1,7 @@
 package com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.helpers;
 
+import com.PocketIdentityDirectory.users.models.helpers.Status;
+
 import java.time.Instant;
 import java.util.List;
 
@@ -9,15 +11,12 @@ public class SAPExtensionHelper {
 
     private Instant validTo;
 
-    private String status;
+    private Status status;
 
-    private List<IASAddress> addresses;
-
-    public SAPExtensionHelper(Instant validFrom, Instant validTo, String status, List<IASAddress> addresses) {
+    public SAPExtensionHelper(Instant validFrom, Instant validTo, Status status) {
         this.validFrom = validFrom;
         this.validTo = validTo;
         this.status = status;
-        this.addresses = addresses;
     }
 
     public Instant getValidFrom() {
@@ -36,19 +35,11 @@ public class SAPExtensionHelper {
         this.validTo = validTo;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
-    }
-
-    public List<IASAddress> getAddresses() {
-        return addresses;
-    }
-
-    public void setAddresses(List<IASAddress> addresses) {
-        this.addresses = addresses;
     }
 }

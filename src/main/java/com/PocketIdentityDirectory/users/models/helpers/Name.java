@@ -1,16 +1,19 @@
-package com.PocketIdentityDirectory.users.web.dtos.helpers;
+package com.PocketIdentityDirectory.users.models.helpers;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class DTOName {
+public class Name {
 
     private String firstName;
 
     private String lastName;
 
-    public DTOName(String firstName, String lastName) {
+    public Name() {
+    }
+
+    public Name(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
     }

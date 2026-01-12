@@ -15,11 +15,11 @@ import java.util.UUID;
 public interface UserRepository extends JpaRepository<User, UUID> {
 
     @Query("""
-    SELECT e FROM User e
-    WHERE (:lastName IS NULL OR e.lastName = :lastName)
-      AND (:type IS NULL OR e.userType = :type)
-      AND (:status IS NULL OR e.userStatus = :status)
-""")
+                SELECT e FROM User e
+                WHERE (:lastName IS NULL OR e.name.lastName = :lastName)
+                  AND (:type IS NULL OR e.type = :type)
+                  AND (:status IS NULL OR e.status = :status)
+            """)
     List<User> filterUsersByUserStatusOrUserTypeOrLastName(@Param("type") UserType userType,
                                                            @Param("lastName") String lastName,
                                                            @Param("status") Status status);

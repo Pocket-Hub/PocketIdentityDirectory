@@ -1,10 +1,10 @@
-package com.PocketIdentityDirectory.users.web.dtos.helpers;
+package com.PocketIdentityDirectory.users.models.helpers;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class DTOCompanyAddress {
+public class CompanyInfo {
 
     private String company;
 
@@ -12,7 +12,10 @@ public class DTOCompanyAddress {
 
     private String city;
 
-    public DTOCompanyAddress(String company, String country, String city) {
+    public CompanyInfo() {
+    }
+
+    public CompanyInfo(String company, String country, String city) {
         this.company = company;
         this.country = country;
         this.city = city;

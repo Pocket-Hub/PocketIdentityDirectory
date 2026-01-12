@@ -1,15 +1,15 @@
 package com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.responses;
 
-import com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.helpers.EnterpriseExtensionHelper;
-import com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.helpers.IASEmail;
-import com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.helpers.IASName;
-import com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.helpers.SAPExtensionHelper;
+import com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.helpers.*;
+import com.PocketIdentityDirectory.users.models.helpers.UserType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 import java.util.UUID;
 
-public class IASUserResponse {
+public class IASUser {
+
+    private final String[] schemas = new String[]{"urn:ietf:params:scim:schemas:core:2.0:User", "urn:ietf:params:scim:schemas:extension:sap:2.0:User", "urn:ietf:params:scim:schemas:extension:enterprise:2.0:User"};
 
     private UUID id;
 
@@ -17,7 +17,7 @@ public class IASUserResponse {
 
     private IASName name;
 
-    private String userType;
+    private UserType userType;
 
     private List<IASEmail> emails;
 
@@ -25,6 +25,7 @@ public class IASUserResponse {
 
     private boolean active;
 
+    private List<IASAddress> addresses;
 
     @JsonProperty("urn:ietf:params:scim:schemas:extension:sap:2.0:User")
     private SAPExtensionHelper extension;
@@ -32,12 +33,24 @@ public class IASUserResponse {
     @JsonProperty("urn:ietf:params:scim:schemas:extension:enterprise:2.0:User")
     private EnterpriseExtensionHelper enterpriseExtension;
 
+    public String[] getSchemas() {
+        return schemas;
+    }
+
     public EnterpriseExtensionHelper getEnterpriseExtension() {
         return enterpriseExtension;
     }
 
     public void setEnterpriseExtension(EnterpriseExtensionHelper enterpriseExtension) {
         this.enterpriseExtension = enterpriseExtension;
+    }
+
+    public List<IASAddress> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<IASAddress> addresses) {
+        this.addresses = addresses;
     }
 
     public UUID getId() {
@@ -64,11 +77,11 @@ public class IASUserResponse {
         this.name = name;
     }
 
-    public String getUserType() {
+    public UserType getUserType() {
         return userType;
     }
 
-    public void setUserType(String userType) {
+    public void setUserType(UserType userType) {
         this.userType = userType;
     }
 

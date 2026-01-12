@@ -4,11 +4,7 @@ import com.PocketIdentityDirectory.users.models.User;
 import com.PocketIdentityDirectory.users.models.helpers.Status;
 import com.PocketIdentityDirectory.users.models.helpers.UserType;
 import com.PocketIdentityDirectory.users.services.UserService;
-import com.PocketIdentityDirectory.mappers.UsersDTOMapper;
-import com.PocketIdentityDirectory.users.web.dtos.requests.CreateUserRequest;
-import com.PocketIdentityDirectory.users.web.dtos.requests.UpdateUserRequest;
 import com.PocketIdentityDirectory.users.web.dtos.responses.GetAllUsersResponse;
-import com.PocketIdentityDirectory.users.web.dtos.responses.GetUserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,27 +36,22 @@ public class UsersController {
         UserType userTypeEnum =
                 userType == null ? null : UserType.valueOf(userType.toUpperCase());
 
-        List<User> users = new ArrayList<>(userService.filterUsers(lastName, statusEnum, userTypeEnum));
+        List<User> users = new ArrayList<>(userService.getUsersWithOptionalFilters(lastName, statusEnum, userTypeEnum));
 
-        GetAllUsersResponse dto = new GetAllUsersResponse();
-
-        for (User user : users) {
-            dto.getResources().add(UsersDTOMapper.mapUserToGetUserResponse(user));
-        }
+        GetAllUsersResponse dto = new GetAllUsersResponse(users, users.size());
 
         return ResponseEntity.ok(dto);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GetUserResponse> getSpecificUser(@PathVariable UUID id){
-        return ResponseEntity.ok(UsersDTOMapper.mapUserToGetUserResponse(userService.getUserById(id)));
+    public ResponseEntity<User> getSpecificUser(@PathVariable UUID id) {
+        return ResponseEntity.ok(userService.getUserById(id));
     }
 
     @PostMapping
-    public ResponseEntity<GetUserResponse> createUser(@RequestBody @Validated CreateUserRequest dto) {
+    public ResponseEntity<User> createUser(@RequestBody @Validated User user) {
 
-        return new ResponseEntity<>(
-                UsersDTOMapper.mapUserToGetUserResponse(userService.createUser(dto)),
+        return new ResponseEntity<>(userService.createUser(user),
                 HttpStatus.CREATED);
     }
 
@@ -71,24 +62,20 @@ public class UsersController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<GetUserResponse> updateUser(@RequestBody @Validated UpdateUserRequest dto, @PathVariable UUID id) {
+    public ResponseEntity<User> updateUser(@RequestBody @Validated User user, @PathVariable UUID id) {
 
-        return ResponseEntity.ok(UsersDTOMapper.mapUserToGetUserResponse(userService.updateUser(dto, id)));
+        user.setId(id);
+        return ResponseEntity.ok(userService.updateUser(user));
     }
 
     @GetMapping("/sync")
-    public ResponseEntity<GetAllUsersResponse> syncUsers(){
+    public ResponseEntity<GetAllUsersResponse> syncUsers() {
 
         List<User> users = new ArrayList<>(userService.syncUsers());
 
-        GetAllUsersResponse dto = new GetAllUsersResponse();
+        GetAllUsersResponse dto = new GetAllUsersResponse(users, users.size());
 
-        for (User user : users) {
-            dto.getResources().add(UsersDTOMapper.mapUserToGetUserResponse(user));
-        }
 
         return ResponseEntity.ok(dto);
-
     }
-
 }

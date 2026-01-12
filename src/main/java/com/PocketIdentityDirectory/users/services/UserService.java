@@ -1,14 +1,12 @@
 package com.PocketIdentityDirectory.users.services;
 
-import com.PocketIdentityDirectory.mappers.IASUsersDTOMapper;
-import com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.requests.UpdateIASUserRequest;
+import com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.responses.IASUser;
 import com.PocketIdentityDirectory.feign.service.IASUsersFeignService;
+import com.PocketIdentityDirectory.mappers.IASUsersDTOMapper;
 import com.PocketIdentityDirectory.users.models.User;
 import com.PocketIdentityDirectory.users.models.helpers.Status;
 import com.PocketIdentityDirectory.users.models.helpers.UserType;
 import com.PocketIdentityDirectory.users.repositories.UserRepository;
-import com.PocketIdentityDirectory.users.web.dtos.requests.CreateUserRequest;
-import com.PocketIdentityDirectory.users.web.dtos.requests.UpdateUserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,20 +30,22 @@ public class UserService {
         return repository.saveAll(IASUsersFeignService.getIASUsers());
     }
 
-    public List<User> filterUsers(String lastName, Status status, UserType type){
+    public List<User> getUsersWithOptionalFilters(String lastName, Status status, UserType type) {
 
         return repository.filterUsersByUserStatusOrUserTypeOrLastName(type, lastName, status);
     }
 
-    public User getUserById(UUID id){
+    public User getUserById(UUID id) {
         Optional<User> optUser = repository.findById(id);
 
         return optUser.orElseThrow();
     }
 
-    public User createUser(CreateUserRequest dto) {
+    public User createUser(User user) {
 
-        return IASUsersFeignService.createIASUser(IASUsersDTOMapper.mapCreateUserRequestToCreateIASUserRequest(dto));
+        user.setStatus(Status.ACTIVE);
+
+        return IASUsersFeignService.createIASUser(IASUsersDTOMapper.mapUserToIASUser(user));
     }
 
     public void deleteUser(UUID id) {
@@ -53,9 +53,9 @@ public class UserService {
         IASUsersFeignService.deleteUser(id);
     }
 
-    public User updateUser(UpdateUserRequest dto, UUID id) {
-        UpdateIASUserRequest feignUser = IASUsersDTOMapper.mapUpdateUserRequestToUpdateIASUserRequest(dto, id);
+    public User updateUser(User user) {
+        IASUser iasUser = IASUsersDTOMapper.mapUserToIASUser(user);
 
-        return IASUsersFeignService.updateUser(feignUser);
+        return IASUsersFeignService.updateUser(iasUser);
     }
 }
