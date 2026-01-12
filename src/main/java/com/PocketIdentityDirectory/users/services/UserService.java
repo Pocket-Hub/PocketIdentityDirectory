@@ -1,6 +1,6 @@
 package com.PocketIdentityDirectory.users.services;
 
-import com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.responses.IASUser;
+import com.PocketIdentityDirectory.feign.dtos.models.users.IASUser;
 import com.PocketIdentityDirectory.feign.service.IASUsersFeignService;
 import com.PocketIdentityDirectory.mappers.IASUsersDTOMapper;
 import com.PocketIdentityDirectory.users.models.User;

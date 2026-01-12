@@ -1,4 +1,4 @@
-package com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.helpers;
+package com.PocketIdentityDirectory.feign.dtos.models.users.helpers;
 
 public class IASName {
 

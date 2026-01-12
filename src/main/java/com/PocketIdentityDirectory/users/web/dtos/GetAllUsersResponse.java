@@ -1,8 +1,7 @@
-package com.PocketIdentityDirectory.users.web.dtos.responses;
+package com.PocketIdentityDirectory.users.web.dtos;
 
 import com.PocketIdentityDirectory.users.models.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class GetAllUsersResponse {

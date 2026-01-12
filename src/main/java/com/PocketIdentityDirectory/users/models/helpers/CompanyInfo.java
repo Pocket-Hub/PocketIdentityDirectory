@@ -1,6 +1,5 @@
 package com.PocketIdentityDirectory.users.models.helpers;
 
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)

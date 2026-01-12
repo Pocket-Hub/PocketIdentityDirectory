@@ -1,7 +1,7 @@
 package com.PocketIdentityDirectory.mappers;
 
-import com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.helpers.*;
-import com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.responses.IASUser;
+import com.PocketIdentityDirectory.feign.dtos.models.users.IASUser;
+import com.PocketIdentityDirectory.feign.dtos.models.users.helpers.*;
 import com.PocketIdentityDirectory.users.models.User;
 import com.PocketIdentityDirectory.users.models.helpers.CompanyInfo;
 import com.PocketIdentityDirectory.users.models.helpers.Name;
@@ -43,8 +43,7 @@ public class IASUsersDTOMapper {
     }
 
 
-
-    public static IASUser mapUserToIASUser(User user){
+    public static IASUser mapUserToIASUser(User user) {
         IASUser iasUser = new IASUser();
 
         iasUser.setId(user.getId());
@@ -71,7 +70,7 @@ public class IASUsersDTOMapper {
                 user.getStatus());
         iasUser.setExtension(ext);
 
-        iasUser.setEnterpriseExtension(new EnterpriseExtensionHelper(user.getCompanyInfo().getCountry()));
+        iasUser.setEnterpriseExtension(new EnterpriseExtensionHelper(user.getCompanyInfo().getCompany()));
 
         return iasUser;
     }

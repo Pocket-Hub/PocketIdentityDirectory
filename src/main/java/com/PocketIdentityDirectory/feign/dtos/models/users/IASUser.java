@@ -1,6 +1,6 @@
-package com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.responses;
+package com.PocketIdentityDirectory.feign.dtos.models.users;
 
-import com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.helpers.*;
+import com.PocketIdentityDirectory.feign.dtos.models.users.helpers.*;
 import com.PocketIdentityDirectory.users.models.helpers.UserType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 

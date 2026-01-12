@@ -1,9 +1,8 @@
-package com.PocketIdentityDirectory.feign.dtos.IASUsersDTOs.helpers;
+package com.PocketIdentityDirectory.feign.dtos.models.users.helpers;
 
 import com.PocketIdentityDirectory.users.models.helpers.Status;
 
 import java.time.Instant;
-import java.util.List;
 
 public class SAPExtensionHelper {
 
@@ -13,10 +12,16 @@ public class SAPExtensionHelper {
 
     private Status status;
 
+    private final boolean mailVerified = true;
+
     public SAPExtensionHelper(Instant validFrom, Instant validTo, Status status) {
         this.validFrom = validFrom;
         this.validTo = validTo;
         this.status = status;
+    }
+
+    public boolean isMailVerified() {
+        return mailVerified;
     }
 
     public Instant getValidFrom() {

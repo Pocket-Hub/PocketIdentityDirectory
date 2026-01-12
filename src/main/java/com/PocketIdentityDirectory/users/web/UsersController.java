@@ -4,7 +4,7 @@ import com.PocketIdentityDirectory.users.models.User;
 import com.PocketIdentityDirectory.users.models.helpers.Status;
 import com.PocketIdentityDirectory.users.models.helpers.UserType;
 import com.PocketIdentityDirectory.users.services.UserService;
-import com.PocketIdentityDirectory.users.web.dtos.responses.GetAllUsersResponse;
+import com.PocketIdentityDirectory.users.web.dtos.GetAllUsersResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

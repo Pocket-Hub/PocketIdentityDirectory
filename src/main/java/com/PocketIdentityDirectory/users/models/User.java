@@ -6,6 +6,7 @@ import com.PocketIdentityDirectory.users.models.helpers.Status;
 import com.PocketIdentityDirectory.users.models.helpers.UserType;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -19,6 +20,7 @@ public class User {
     private UUID id;
 
     @Column
+    @Email(message = "Please enter a valid email!")
     private String email;
 
     @Embedded
