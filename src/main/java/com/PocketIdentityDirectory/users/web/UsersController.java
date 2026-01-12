@@ -12,6 +12,7 @@ import com.PocketIdentityDirectory.users.web.dtos.responses.GetUserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ import java.util.UUID;
 
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/v1/users")
 public class UsersController {
 
     private final UserService userService;
@@ -32,7 +33,6 @@ public class UsersController {
 
     @GetMapping
     public ResponseEntity<GetAllUsersResponse> getUsers(@RequestParam(required = false) String status, @RequestParam(required = false) String userType, @RequestParam(required = false) String lastName) {
-        List<User> users = new ArrayList<>();
 
         Status statusEnum =
                 status == null ? null : Status.valueOf(status.toUpperCase());
@@ -40,11 +40,7 @@ public class UsersController {
         UserType userTypeEnum =
                 userType == null ? null : UserType.valueOf(userType.toUpperCase());
 
-        if (status != null || userType != null || lastName != null){
-            users.addAll(userService.filterUsers(lastName, statusEnum, userTypeEnum));
-        }else {
-            users.addAll(userService.getUsers());
-        }
+        List<User> users = new ArrayList<>(userService.filterUsers(lastName, statusEnum, userTypeEnum));
 
         GetAllUsersResponse dto = new GetAllUsersResponse();
 
@@ -61,7 +57,7 @@ public class UsersController {
     }
 
     @PostMapping
-    public ResponseEntity<GetUserResponse> createUser(@RequestBody CreateUserRequest dto) {
+    public ResponseEntity<GetUserResponse> createUser(@RequestBody @Validated CreateUserRequest dto) {
 
         return new ResponseEntity<>(
                 UsersDTOMapper.mapUserToGetUserResponse(userService.createUser(dto)),
@@ -75,10 +71,24 @@ public class UsersController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<GetUserResponse> updateUser(@RequestBody UpdateUserRequest dto) {
+    public ResponseEntity<GetUserResponse> updateUser(@RequestBody @Validated UpdateUserRequest dto, @PathVariable UUID id) {
 
-        return ResponseEntity.ok(UsersDTOMapper.mapUserToGetUserResponse(userService.updateUser(dto)));
+        return ResponseEntity.ok(UsersDTOMapper.mapUserToGetUserResponse(userService.updateUser(dto, id)));
     }
 
+    @GetMapping("/sync")
+    public ResponseEntity<GetAllUsersResponse> syncUsers(){
+
+        List<User> users = new ArrayList<>(userService.syncUsers());
+
+        GetAllUsersResponse dto = new GetAllUsersResponse();
+
+        for (User user : users) {
+            dto.getResources().add(UsersDTOMapper.mapUserToGetUserResponse(user));
+        }
+
+        return ResponseEntity.ok(dto);
+
+    }
 
 }

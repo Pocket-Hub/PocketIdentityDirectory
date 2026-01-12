@@ -11,6 +11,7 @@ import com.PocketIdentityDirectory.users.web.dtos.requests.CreateUserRequest;
 import com.PocketIdentityDirectory.users.web.dtos.requests.UpdateUserRequest;
 
 import java.util.List;
+import java.util.UUID;
 
 public class IASUsersDTOMapper {
 
@@ -41,22 +42,22 @@ public class IASUsersDTOMapper {
         return user;
     }
 
-    public static UpdateIASUserRequest mapUpdateUserRequestToUpdateIASUserRequest(UpdateUserRequest dto){
+    public static UpdateIASUserRequest mapUpdateUserRequestToUpdateIASUserRequest(UpdateUserRequest dto, UUID id){
         UpdateIASUserRequest iasUser = new UpdateIASUserRequest();
 
-        iasUser.setId(dto.getId());
+        iasUser.setId(id);
         iasUser.setName(new IASName(dto.getName().getFirstName(), dto.getName().getLastName()));
         iasUser.setAddresses(List.of(new IASAddress(dto.getCompanyInfo().getCountry(), dto.getCompanyInfo().getCity(), "work")));
         iasUser.setUserName(dto.getLoginName());
         iasUser.setEmails(List.of(new IASEmail(dto.getEmail(), true)));
-        iasUser.setUserType(dto.getUserType());
+        iasUser.setUserType(dto.getUserType().toString());
         iasUser.setEntExtension(new EnterpriseExtensionHelper(dto.getCompanyInfo().getCompany()));
 
-        if ("active".equalsIgnoreCase(dto.getStatus())){
+        if ("active".equalsIgnoreCase(dto.getStatus().toString())){
             iasUser.setActive(true);
             iasUser.setExtension(new SAPExtensionHelper(dto.getValidFrom(), dto.getValidTo(), null, List.of(new IASAddress(dto.getCompanyInfo().getCountry(), dto.getCompanyInfo().getCity(), "work"))));
         }else {
-            iasUser.setExtension(new SAPExtensionHelper(dto.getValidFrom(), dto.getValidTo(), dto.getStatus(), List.of(new IASAddress(dto.getCompanyInfo().getCountry(), dto.getCompanyInfo().getCity(), "work"))));
+            iasUser.setExtension(new SAPExtensionHelper(dto.getValidFrom(), dto.getValidTo(), dto.getStatus().toString().toLowerCase(), List.of(new IASAddress(dto.getCompanyInfo().getCountry(), dto.getCompanyInfo().getCity(), "work"))));
         }
 
         return iasUser;
@@ -67,7 +68,7 @@ public class IASUsersDTOMapper {
         CreateIASUserRequest iasUser = new CreateIASUserRequest();
 
         iasUser.setUserName(dto.getLoginName());
-        iasUser.setUserType(dto.getUserType());
+        iasUser.setUserType(dto.getUserType().toString());
         iasUser.setName(new IASName("", dto.getLastName()));
         iasUser.setEmails(new IASEmail[]{new IASEmail(dto.getEmail(), true)});
 

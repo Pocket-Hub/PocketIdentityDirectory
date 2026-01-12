@@ -1,5 +1,7 @@
 package com.PocketIdentityDirectory.users.web.dtos.requests;
 
+import com.PocketIdentityDirectory.users.models.helpers.Status;
+import com.PocketIdentityDirectory.users.models.helpers.UserType;
 import com.PocketIdentityDirectory.users.web.dtos.helpers.DTOCompanyAddress;
 import com.PocketIdentityDirectory.users.web.dtos.helpers.DTOName;
 
@@ -8,15 +10,13 @@ import java.util.UUID;
 
 public class UpdateUserRequest {
 
-    private UUID id;
-
     private String email;
 
     private DTOName name;
 
     private String loginName;
 
-    private String userType;
+    private UserType userType;
 
     private DTOCompanyAddress companyInfo;
 
@@ -24,14 +24,14 @@ public class UpdateUserRequest {
 
     private Instant validTo;
 
-    private String status;
+    private Status status;
 
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
@@ -41,14 +41,6 @@ public class UpdateUserRequest {
 
     public void setLoginName(String loginName) {
         this.loginName = loginName;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
     }
 
     public String getEmail() {
@@ -67,11 +59,11 @@ public class UpdateUserRequest {
         this.name = name;
     }
 
-    public String getUserType() {
+    public UserType getUserType() {
         return userType;
     }
 
-    public void setUserType(String userType) {
+    public void setUserType(UserType userType) {
         this.userType = userType;
     }
 

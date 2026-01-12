@@ -1,13 +1,22 @@
 package com.PocketIdentityDirectory.users.web.dtos.requests;
 
+import com.PocketIdentityDirectory.users.models.helpers.UserType;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class CreateUserRequest {
 
+    @NotBlank(message = "Last Name cannot be blank!")
     private String lastName;
 
+    @Email(message = "Please provide a valid email.")
     private String email;
 
-    private String userType;
+    @NotNull(message = "User Type cannot be null!")
+    private UserType userType;
 
+    @NotBlank(message = "Login Name cannot be blank!")
     private String loginName;
 
     public String getLastName() {
@@ -26,11 +35,11 @@ public class CreateUserRequest {
         this.email = email;
     }
 
-    public String getUserType() {
+    public UserType getUserType() {
         return userType;
     }
 
-    public void setUserType(String userType) {
+    public void setUserType(UserType userType) {
         this.userType = userType;
     }
 

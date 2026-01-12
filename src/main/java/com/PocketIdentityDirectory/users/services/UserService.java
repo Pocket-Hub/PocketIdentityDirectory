@@ -28,7 +28,7 @@ public class UserService {
         this.IASUsersFeignService = IASUsersFeignService;
     }
 
-    public List<User> getUsers() {
+    public List<User> syncUsers() {
         return repository.saveAll(IASUsersFeignService.getIASUsers());
     }
 
@@ -53,8 +53,8 @@ public class UserService {
         IASUsersFeignService.deleteUser(id);
     }
 
-    public User updateUser(UpdateUserRequest dto) {
-        UpdateIASUserRequest feignUser = IASUsersDTOMapper.mapUpdateUserRequestToUpdateIASUserRequest(dto);
+    public User updateUser(UpdateUserRequest dto, UUID id) {
+        UpdateIASUserRequest feignUser = IASUsersDTOMapper.mapUpdateUserRequestToUpdateIASUserRequest(dto, id);
 
         return IASUsersFeignService.updateUser(feignUser);
     }
