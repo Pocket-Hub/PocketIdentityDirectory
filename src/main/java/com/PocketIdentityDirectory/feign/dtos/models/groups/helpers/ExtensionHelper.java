@@ -6,6 +6,10 @@ public class ExtensionHelper {
 
     private String description;
 
+    public ExtensionHelper(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
 
     public String getDescription() {
         return description;

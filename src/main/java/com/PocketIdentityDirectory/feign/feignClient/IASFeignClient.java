@@ -1,6 +1,5 @@
 package com.PocketIdentityDirectory.feign.feignClient;
 
-import com.PocketIdentityDirectory.feign.dtos.models.groups.IASGroup;
 import com.PocketIdentityDirectory.feign.dtos.models.groups.IASGroupResponseList;
 import com.PocketIdentityDirectory.feign.dtos.models.users.IASUser;
 import com.PocketIdentityDirectory.feign.dtos.models.users.IASUserResponseList;
@@ -25,6 +24,6 @@ public interface IASFeignClient {
     IASUser updateUser(@RequestBody IASUser dto, @PathVariable UUID id);
 
     @GetMapping("/Groups")
-    IASGroupResponseList getGroup();
+    IASGroupResponseList getGroups();
 
 }

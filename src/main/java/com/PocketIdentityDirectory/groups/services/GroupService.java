@@ -2,6 +2,7 @@ package com.PocketIdentityDirectory.groups.services;
 
 import com.PocketIdentityDirectory.feign.dtos.models.groups.IASGroup;
 import com.PocketIdentityDirectory.feign.feignClient.IASFeignClient;
+import com.PocketIdentityDirectory.feign.service.IASGroupFeignService;
 import com.PocketIdentityDirectory.groups.models.Group;
 import com.PocketIdentityDirectory.groups.repositories.GroupRepository;
 import com.PocketIdentityDirectory.mappers.IASGroupDTOMapper;
@@ -15,16 +16,15 @@ import java.util.List;
 public class GroupService {
 
     private final GroupRepository repository;
-    private final IASFeignClient feignClient;
+    private final IASGroupFeignService feignService;
 
-    @Autowired
-    public GroupService(GroupRepository repository, IASFeignClient feignClient) {
+    public GroupService(GroupRepository repository, IASGroupFeignService feignService) {
         this.repository = repository;
-        this.feignClient = feignClient;
+        this.feignService = feignService;
     }
 
     public List<Group> getGroups(){
-        List<IASGroup> iasGroups = feignClient.getGroup().getResources();
+        List<IASGroup> iasGroups = feignService.getAllGroups();
         List<Group> groups = new ArrayList<>();
 
         for (IASGroup iasGroup : iasGroups) {
