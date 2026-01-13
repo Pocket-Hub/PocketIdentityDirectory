@@ -28,7 +28,7 @@ public class UsersController {
     }
 
     @GetMapping
-    public ResponseEntity<GetAllUsersResponse> getUsers(@RequestParam(required = false) String status, @RequestParam(required = false) String userType, @RequestParam(required = false) String lastName, @RequestParam(required = false) UUID groupId) {
+    public ResponseEntity<GetAllUsersResponse> getUsers(@RequestParam(required = false) String status, @RequestParam(required = false) String userType, @RequestParam(required = false) String lastName, @RequestParam(required = false) String groupName) {
 
         Status statusEnum =
                 status == null ? null : Status.valueOf(status.toUpperCase());
@@ -36,7 +36,7 @@ public class UsersController {
         UserType userTypeEnum =
                 userType == null ? null : UserType.valueOf(userType.toUpperCase());
 
-        List<User> users = new ArrayList<>(userService.getUsersWithOptionalFilters(lastName, statusEnum, userTypeEnum, groupId));
+        List<User> users = new ArrayList<>(userService.getUsersWithOptionalFilters(lastName, statusEnum, userTypeEnum, groupName));
 
         GetAllUsersResponse dto = new GetAllUsersResponse(users, users.size());
 

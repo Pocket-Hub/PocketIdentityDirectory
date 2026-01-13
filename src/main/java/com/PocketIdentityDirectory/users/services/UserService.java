@@ -43,9 +43,9 @@ public class UserService {
         return repository.saveAll(users);
     }
 
-    public List<User> getUsersWithOptionalFilters(String lastName, Status status, UserType type, UUID id) {
+    public List<User> getUsersWithOptionalFilters(String lastName, Status status, UserType type, String groupName) {
 
-        return repository.filterUsersByUserStatusOrUserTypeOrLastName(type, lastName, status, id);
+        return repository.filterUsersByUserStatusOrUserTypeOrLastName(type, lastName, status, groupName);
     }
 
     public User getUserById(UUID id) {
