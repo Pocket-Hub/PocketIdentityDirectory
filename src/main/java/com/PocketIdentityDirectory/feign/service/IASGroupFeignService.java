@@ -22,5 +22,8 @@ public class IASGroupFeignService {
         return client.getGroups().getResources();
     }
 
+    public IASGroup createGroup(IASGroup group){
+        return client.createGroup(group);
+    }
 
 }

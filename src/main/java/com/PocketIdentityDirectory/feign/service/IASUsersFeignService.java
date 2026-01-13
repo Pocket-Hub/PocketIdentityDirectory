@@ -26,7 +26,6 @@ public class IASUsersFeignService {
         System.out.println(feignUsers);
         List<User> users = new ArrayList<>();
         for (IASUser feignUser : feignUsers) {
-
             users.add(IASUsersDTOMapper.mapIASUserToUser(feignUser));
         }
         return users;

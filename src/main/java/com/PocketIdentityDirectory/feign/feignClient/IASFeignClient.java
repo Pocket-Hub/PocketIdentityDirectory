@@ -1,5 +1,6 @@
 package com.PocketIdentityDirectory.feign.feignClient;
 
+import com.PocketIdentityDirectory.feign.dtos.models.groups.IASGroup;
 import com.PocketIdentityDirectory.feign.dtos.models.groups.IASGroupResponseList;
 import com.PocketIdentityDirectory.feign.dtos.models.users.IASUser;
 import com.PocketIdentityDirectory.feign.dtos.models.users.IASUserResponseList;
@@ -25,5 +26,8 @@ public interface IASFeignClient {
 
     @GetMapping("/Groups")
     IASGroupResponseList getGroups();
+
+    @PostMapping(value = "/Groups", consumes = "application/scim+json")
+    IASGroup createGroup(IASGroup group);
 
 }

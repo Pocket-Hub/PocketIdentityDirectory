@@ -34,4 +34,10 @@ public class GroupService {
         return repository.saveAll(groups);
     }
 
+    public Group createGroup(Group group){
+        IASGroup iasGroup = IASGroupDTOMapper.mapGroupToIASGroup(group);
+
+        return IASGroupDTOMapper.mapIASGroupToGroup(feignService.createGroup(iasGroup));
+    }
+
 }
