@@ -30,4 +30,10 @@ public interface IASFeignClient {
     @PostMapping(value = "/Groups", consumes = "application/scim+json")
     IASGroup createGroup(IASGroup group);
 
+    @DeleteMapping("/Groups/{id}")
+    void deleteGroup(@PathVariable UUID id);
+
+    @PutMapping(value = "/Groups/{id}", consumes = "application/scim+json")
+    IASGroup updateGroup(@RequestBody IASGroup iasGroup, @PathVariable UUID id);
+
 }

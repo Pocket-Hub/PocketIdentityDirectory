@@ -11,6 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/groups")
@@ -34,6 +35,19 @@ public class GroupsController {
     public ResponseEntity<Group> createGroup(@RequestBody @Validated Group group){
 
         return new ResponseEntity<>(groupService.createGroup(group), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteGroup(@PathVariable UUID id){
+        groupService.deleteGroup(id);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Group> updateGroup(@PathVariable UUID id, @Validated @RequestBody Group group){
+
+        return ResponseEntity.ok(groupService.updateGroup(group, id));
     }
 
 

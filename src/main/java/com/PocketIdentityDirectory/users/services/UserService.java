@@ -49,8 +49,8 @@ public class UserService {
     }
 
     public void deleteUser(UUID id) {
-        repository.deleteById(id);
         IASUsersFeignService.deleteUser(id);
+        repository.deleteById(id);
     }
 
     public User updateUser(User user) {

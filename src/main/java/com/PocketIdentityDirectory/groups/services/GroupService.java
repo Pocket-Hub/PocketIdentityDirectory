@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class GroupService {
@@ -38,6 +39,17 @@ public class GroupService {
         IASGroup iasGroup = IASGroupDTOMapper.mapGroupToIASGroup(group);
 
         return IASGroupDTOMapper.mapIASGroupToGroup(feignService.createGroup(iasGroup));
+    }
+
+    public void deleteGroup(UUID id){
+        feignService.deleteGroup(id);
+        repository.deleteById(id);
+    }
+
+    public Group updateGroup(Group group, UUID id){
+        IASGroup iasGroup = IASGroupDTOMapper.mapGroupToIASGroup(group);
+
+        return IASGroupDTOMapper.mapIASGroupToGroup(feignService.updateGroup(iasGroup, id));
     }
 
 }

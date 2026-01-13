@@ -4,6 +4,7 @@ import com.PocketIdentityDirectory.feign.dtos.models.groups.helpers.ExtensionHel
 import com.PocketIdentityDirectory.feign.dtos.models.groups.helpers.Member;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,7 +20,7 @@ public class IASGroup {
 
     private String displayName;
 
-    private List<Member> members;
+    private List<Member> members = new ArrayList<>();
 
     public String[] getSchemas() {
         return schemas;
