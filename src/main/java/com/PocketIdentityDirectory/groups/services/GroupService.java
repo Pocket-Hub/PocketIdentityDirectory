@@ -1,12 +1,11 @@
 package com.PocketIdentityDirectory.groups.services;
 
 import com.PocketIdentityDirectory.feign.dtos.models.groups.IASGroup;
-import com.PocketIdentityDirectory.feign.feignClient.IASFeignClient;
 import com.PocketIdentityDirectory.feign.service.IASGroupFeignService;
 import com.PocketIdentityDirectory.groups.models.Group;
 import com.PocketIdentityDirectory.groups.repositories.GroupRepository;
 import com.PocketIdentityDirectory.mappers.IASGroupDTOMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.PocketIdentityDirectory.users.models.User;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,7 +23,7 @@ public class GroupService {
         this.feignService = feignService;
     }
 
-    public List<Group> getGroups(){
+    public List<Group> getGroups() {
         List<IASGroup> iasGroups = feignService.getAllGroups();
         List<Group> groups = new ArrayList<>();
 
@@ -35,21 +34,25 @@ public class GroupService {
         return repository.saveAll(groups);
     }
 
-    public Group createGroup(Group group){
+    public Group createGroup(Group group) {
         IASGroup iasGroup = IASGroupDTOMapper.mapGroupToIASGroup(group);
 
         return IASGroupDTOMapper.mapIASGroupToGroup(feignService.createGroup(iasGroup));
     }
 
-    public void deleteGroup(UUID id){
+    public void deleteGroup(UUID id) {
         feignService.deleteGroup(id);
         repository.deleteById(id);
     }
 
-    public Group updateGroup(Group group, UUID id){
+    public Group updateGroup(Group group, UUID id) {
         IASGroup iasGroup = IASGroupDTOMapper.mapGroupToIASGroup(group);
 
         return IASGroupDTOMapper.mapIASGroupToGroup(feignService.updateGroup(iasGroup, id));
+    }
+
+    public List<Group> getGroupsByIds(List<UUID> ids){
+        return repository.findAllById(ids);
     }
 
 }

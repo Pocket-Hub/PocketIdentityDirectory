@@ -6,7 +6,7 @@ import com.PocketIdentityDirectory.groups.models.Group;
 
 public class IASGroupDTOMapper {
 
-    public static Group mapIASGroupToGroup(IASGroup iasGroup){
+    public static Group mapIASGroupToGroup(IASGroup iasGroup) {
         Group group = new Group();
 
         group.setId(iasGroup.getId());
@@ -17,7 +17,7 @@ public class IASGroupDTOMapper {
         return group;
     }
 
-    public static IASGroup mapGroupToIASGroup(Group group){
+    public static IASGroup mapGroupToIASGroup(Group group) {
         IASGroup iasGroup = new IASGroup();
 
         iasGroup.setId(group.getId());

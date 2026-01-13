@@ -1,6 +1,5 @@
 package com.PocketIdentityDirectory.groups.web;
 
-import com.PocketIdentityDirectory.feign.dtos.models.groups.IASGroup;
 import com.PocketIdentityDirectory.groups.models.Group;
 import com.PocketIdentityDirectory.groups.services.GroupService;
 import com.PocketIdentityDirectory.groups.web.dtos.GetAllGroupsResponse;
@@ -25,27 +24,27 @@ public class GroupsController {
     }
 
     @GetMapping
-    public ResponseEntity<GetAllGroupsResponse> getGroups(){
+    public ResponseEntity<GetAllGroupsResponse> getGroups() {
         List<Group> groups = groupService.getGroups();
         GetAllGroupsResponse dto = new GetAllGroupsResponse(groups, groups.size());
         return ResponseEntity.ok(dto);
     }
 
     @PostMapping
-    public ResponseEntity<Group> createGroup(@RequestBody @Validated Group group){
+    public ResponseEntity<Group> createGroup(@RequestBody @Validated Group group) {
 
         return new ResponseEntity<>(groupService.createGroup(group), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteGroup(@PathVariable UUID id){
+    public ResponseEntity<Void> deleteGroup(@PathVariable UUID id) {
         groupService.deleteGroup(id);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Group> updateGroup(@PathVariable UUID id, @RequestBody @Validated Group group){
+    public ResponseEntity<Group> updateGroup(@PathVariable UUID id, @RequestBody @Validated Group group) {
 
         return ResponseEntity.ok(groupService.updateGroup(group, id));
     }

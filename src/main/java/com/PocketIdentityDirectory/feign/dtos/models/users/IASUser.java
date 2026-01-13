@@ -21,7 +21,7 @@ public class IASUser {
 
     private List<IASEmail> emails;
 
-    private List<Object> groups;
+    private List<IASUserGroup> groups;
 
     private boolean active;
 
@@ -93,11 +93,11 @@ public class IASUser {
         this.emails = emails;
     }
 
-    public List<Object> getGroups() {
+    public List<IASUserGroup> getGroups() {
         return groups;
     }
 
-    public void setGroups(List<Object> groups) {
+    public void setGroups(List<IASUserGroup> groups) {
         this.groups = groups;
     }
 

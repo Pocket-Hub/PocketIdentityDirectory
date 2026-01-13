@@ -19,19 +19,19 @@ public class IASGroupFeignService {
         this.client = client;
     }
 
-    public List<IASGroup> getAllGroups(){
+    public List<IASGroup> getAllGroups() {
         return client.getGroups().getResources();
     }
 
-    public IASGroup createGroup(IASGroup group){
+    public IASGroup createGroup(IASGroup group) {
         return client.createGroup(group);
     }
 
-    public void deleteGroup(UUID id){
+    public void deleteGroup(UUID id) {
         client.deleteGroup(id);
     }
 
-    public IASGroup updateGroup(IASGroup iasGroup, UUID id){
+    public IASGroup updateGroup(IASGroup iasGroup, UUID id) {
         return client.updateGroup(iasGroup, id);
     }
 

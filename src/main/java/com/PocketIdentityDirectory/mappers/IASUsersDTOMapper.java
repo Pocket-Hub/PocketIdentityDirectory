@@ -2,15 +2,29 @@ package com.PocketIdentityDirectory.mappers;
 
 import com.PocketIdentityDirectory.feign.dtos.models.users.IASUser;
 import com.PocketIdentityDirectory.feign.dtos.models.users.helpers.*;
+import com.PocketIdentityDirectory.groups.models.Group;
+import com.PocketIdentityDirectory.groups.services.GroupService;
 import com.PocketIdentityDirectory.users.models.User;
 import com.PocketIdentityDirectory.users.models.helpers.CompanyInfo;
 import com.PocketIdentityDirectory.users.models.helpers.Name;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
+@Component
 public class IASUsersDTOMapper {
 
-    public static User mapIASUserToUser(IASUser dto) {
+    private final GroupService groupService;
+
+    @Autowired
+    public IASUsersDTOMapper(GroupService groupService) {
+        this.groupService = groupService;
+    }
+
+    public User mapIASUserToUser(IASUser dto) {
         User user = new User();
         Name name = new Name(dto.getName().getGivenName(), dto.getName().getFamilyName());
 
@@ -24,6 +38,11 @@ public class IASUsersDTOMapper {
         user.setValidTo(dto.getExtension().getValidTo());
         user.setLoginName(dto.getUserName());
         user.setActive(dto.isActive());
+        List<UUID> ids = new ArrayList<>();
+        for (IASUserGroup group : dto.getGroups()) {
+            ids.add(group.getValue());
+        }
+        user.assignGroups(groupService.getGroupsByIds(ids));
 
         CompanyInfo companyInfo = new CompanyInfo();
 
@@ -57,7 +76,7 @@ public class IASUsersDTOMapper {
 
         iasUser.setEmails(List.of(new IASEmail(user.getEmail(), true)));
 
-        iasUser.setGroups(List.of(new Object()));
+        iasUser.setGroups(List.of(new IASUserGroup()));
 
         iasUser.setActive("active".equalsIgnoreCase(user.getStatus().toString()));
 

@@ -1,12 +1,15 @@
 package com.PocketIdentityDirectory.groups.models;
 
+import com.PocketIdentityDirectory.users.models.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.UUID;
 
 
-@Table(name = "user_groups")
+@Table(name = "role_groups")
 @Entity
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 public class Group {
@@ -22,6 +25,18 @@ public class Group {
 
     @Column
     private String description;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "groups")
+    private List<User> members;
+
+    public List<User> getMembers() {
+        return members;
+    }
+
+    public void setMembers(List<User> members) {
+        this.members = members;
+    }
 
     public UUID getId() {
         return id;

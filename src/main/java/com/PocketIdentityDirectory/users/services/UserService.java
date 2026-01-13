@@ -2,6 +2,8 @@ package com.PocketIdentityDirectory.users.services;
 
 import com.PocketIdentityDirectory.feign.dtos.models.users.IASUser;
 import com.PocketIdentityDirectory.feign.service.IASUsersFeignService;
+import com.PocketIdentityDirectory.groups.models.Group;
+import com.PocketIdentityDirectory.groups.services.GroupService;
 import com.PocketIdentityDirectory.mappers.IASUsersDTOMapper;
 import com.PocketIdentityDirectory.users.models.User;
 import com.PocketIdentityDirectory.users.models.helpers.Status;
@@ -20,11 +22,13 @@ public class UserService {
 
     private final UserRepository repository;
     private final IASUsersFeignService iasUserService;
+    private final IASUsersDTOMapper mapper;
 
     @Autowired
-    public UserService(UserRepository repository, IASUsersFeignService iasUserService) {
+    public UserService(UserRepository repository, IASUsersFeignService iasUserService, IASUsersDTOMapper mapper) {
         this.repository = repository;
         this.iasUserService = iasUserService;
+        this.mapper = mapper;
     }
 
     public List<User> syncUsers() {
@@ -32,7 +36,7 @@ public class UserService {
         List<User> users = new ArrayList<>();
 
         for (IASUser iasUser : iasUsers) {
-            users.add(IASUsersDTOMapper.mapIASUserToUser(iasUser));
+            users.add(mapper.mapIASUserToUser(iasUser));
         }
 
 
@@ -54,7 +58,7 @@ public class UserService {
         user.setStatus(Status.ACTIVE);
         IASUser iasUser = IASUsersDTOMapper.mapUserToIASUser(user);
 
-        return IASUsersDTOMapper.mapIASUserToUser(iasUserService.createIASUser(iasUser));
+        return mapper.mapIASUserToUser(iasUserService.createIASUser(iasUser));
     }
 
     public void deleteUser(UUID id) {
@@ -65,6 +69,14 @@ public class UserService {
     public User updateUser(User user, UUID id) {
         IASUser iasUser = IASUsersDTOMapper.mapUserToIASUser(user);
 
-        return IASUsersDTOMapper.mapIASUserToUser(iasUserService.updateUser(iasUser, id));
+        return mapper.mapIASUserToUser(iasUserService.updateUser(iasUser, id));
     }
+
+    public List<User> assignGroups(UUID id, List<UUID> groupIDs){
+
+
+
+        return null;
+    }
+
 }

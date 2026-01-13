@@ -1,5 +1,6 @@
 package com.PocketIdentityDirectory.users.models;
 
+import com.PocketIdentityDirectory.groups.models.Group;
 import com.PocketIdentityDirectory.users.models.helpers.CompanyInfo;
 import com.PocketIdentityDirectory.users.models.helpers.Name;
 import com.PocketIdentityDirectory.users.models.helpers.Status;
@@ -9,6 +10,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -48,6 +51,17 @@ public class User {
 
     @Column
     private Instant validTo;
+
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    private List<Group> groups = new ArrayList<>();
+
+    public List<Group> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(List<Group> groups) {
+        this.groups = groups;
+    }
 
     public boolean isActive() {
         return active;
@@ -127,5 +141,9 @@ public class User {
 
     public void setValidTo(Instant validTo) {
         this.validTo = validTo;
+    }
+
+    public void assignGroups(List<Group> groups){
+        this.groups.addAll(groups);
     }
 }

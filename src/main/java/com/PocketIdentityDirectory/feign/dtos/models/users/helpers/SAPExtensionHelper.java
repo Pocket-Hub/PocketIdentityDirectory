@@ -6,13 +6,10 @@ import java.time.Instant;
 
 public class SAPExtensionHelper {
 
-    private Instant validFrom;
-
-    private Instant validTo;
-
-    private Status status;
-
     private final boolean mailVerified = true;
+    private Instant validFrom;
+    private Instant validTo;
+    private Status status;
 
     public SAPExtensionHelper(Instant validFrom, Instant validTo, Status status) {
         this.validFrom = validFrom;
