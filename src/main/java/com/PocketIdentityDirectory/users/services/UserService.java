@@ -10,6 +10,7 @@ import com.PocketIdentityDirectory.users.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -18,16 +19,24 @@ import java.util.UUID;
 public class UserService {
 
     private final UserRepository repository;
-    private final IASUsersFeignService IASUsersFeignService;
+    private final IASUsersFeignService iasUserService;
 
     @Autowired
-    public UserService(UserRepository repository, IASUsersFeignService IASUsersFeignService) {
+    public UserService(UserRepository repository, IASUsersFeignService iasUserService) {
         this.repository = repository;
-        this.IASUsersFeignService = IASUsersFeignService;
+        this.iasUserService = iasUserService;
     }
 
     public List<User> syncUsers() {
-        return repository.saveAll(IASUsersFeignService.getIASUsers());
+        List<IASUser> iasUsers = iasUserService.getIASUsers();
+        List<User> users = new ArrayList<>();
+
+        for (IASUser iasUser : iasUsers) {
+            users.add(IASUsersDTOMapper.mapIASUserToUser(iasUser));
+        }
+
+
+        return repository.saveAll(users);
     }
 
     public List<User> getUsersWithOptionalFilters(String lastName, Status status, UserType type) {
@@ -42,20 +51,20 @@ public class UserService {
     }
 
     public User createUser(User user) {
-
         user.setStatus(Status.ACTIVE);
+        IASUser iasUser = IASUsersDTOMapper.mapUserToIASUser(user);
 
-        return IASUsersFeignService.createIASUser(IASUsersDTOMapper.mapUserToIASUser(user));
+        return IASUsersDTOMapper.mapIASUserToUser(iasUserService.createIASUser(iasUser));
     }
 
     public void deleteUser(UUID id) {
-        IASUsersFeignService.deleteUser(id);
+        iasUserService.deleteUser(id);
         repository.deleteById(id);
     }
 
-    public User updateUser(User user) {
+    public User updateUser(User user, UUID id) {
         IASUser iasUser = IASUsersDTOMapper.mapUserToIASUser(user);
 
-        return IASUsersFeignService.updateUser(iasUser);
+        return IASUsersDTOMapper.mapIASUserToUser(iasUserService.updateUser(iasUser, id));
     }
 }

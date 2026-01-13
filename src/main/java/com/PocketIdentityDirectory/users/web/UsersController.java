@@ -64,8 +64,7 @@ public class UsersController {
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@RequestBody @Validated User user, @PathVariable UUID id) {
 
-        user.setId(id);
-        return ResponseEntity.ok(userService.updateUser(user));
+        return ResponseEntity.ok(userService.updateUser(user, id));
     }
 
     @GetMapping("/sync")

@@ -45,7 +45,7 @@ public class GroupsController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Group> updateGroup(@PathVariable UUID id, @Validated @RequestBody Group group){
+    public ResponseEntity<Group> updateGroup(@PathVariable UUID id, @RequestBody @Validated Group group){
 
         return ResponseEntity.ok(groupService.updateGroup(group, id));
     }
