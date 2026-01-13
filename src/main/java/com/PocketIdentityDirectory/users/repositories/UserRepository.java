@@ -15,12 +15,15 @@ import java.util.UUID;
 public interface UserRepository extends JpaRepository<User, UUID> {
 
     @Query("""
-                SELECT e FROM User e
-                WHERE (:lastName IS NULL OR e.name.lastName = :lastName)
-                  AND (:type IS NULL OR e.type = :type)
-                  AND (:status IS NULL OR e.status = :status)
-            """)
+    SELECT DISTINCT e FROM User e
+    LEFT JOIN e.groups g
+    WHERE (:lastName IS NULL OR e.name.lastName = :lastName)
+      AND (:type IS NULL OR e.type = :type)
+      AND (:status IS NULL OR e.status = :status)
+      AND (:groupId IS NULL OR g.id = :groupId)
+""")
     List<User> filterUsersByUserStatusOrUserTypeOrLastName(@Param("type") UserType userType,
                                                            @Param("lastName") String lastName,
-                                                           @Param("status") Status status);
+                                                           @Param("status") Status status,
+                                                           @Param("groupId") UUID groupId);
 }

@@ -4,6 +4,7 @@ import com.PocketIdentityDirectory.feign.dtos.models.users.helpers.*;
 import com.PocketIdentityDirectory.users.models.helpers.UserType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,7 +22,7 @@ public class IASUser {
 
     private List<IASEmail> emails;
 
-    private List<IASUserGroup> groups;
+    private List<IASUserGroup> groups = new ArrayList<>();
 
     private boolean active;
 

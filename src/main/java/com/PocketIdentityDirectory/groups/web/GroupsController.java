@@ -49,5 +49,4 @@ public class GroupsController {
         return ResponseEntity.ok(groupService.updateGroup(group, id));
     }
 
-
 }

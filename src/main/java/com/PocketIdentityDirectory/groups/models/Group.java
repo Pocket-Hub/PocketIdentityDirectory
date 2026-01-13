@@ -1,11 +1,14 @@
 package com.PocketIdentityDirectory.groups.models;
 
 import com.PocketIdentityDirectory.users.models.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 
@@ -28,13 +31,13 @@ public class Group {
 
     @JsonIgnore
     @ManyToMany(mappedBy = "groups")
-    private List<User> members;
+    private Set<User> members;
 
-    public List<User> getMembers() {
+    public Set<User> getMembers() {
         return members;
     }
 
-    public void setMembers(List<User> members) {
+    public void setMembers(Set<User> members) {
         this.members = members;
     }
 
