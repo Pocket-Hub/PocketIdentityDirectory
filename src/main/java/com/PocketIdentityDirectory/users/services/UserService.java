@@ -38,7 +38,6 @@ public class UserService {
             users.add(mapper.mapIASUserToUser(iasUser));
         }
 
-
         return repository.saveAll(users);
     }
 
@@ -85,7 +84,6 @@ public class UserService {
         bulk.setOperations(bulkOperations);
 
         iasUserService.assignGroup(bulk);
-
 
     }
 

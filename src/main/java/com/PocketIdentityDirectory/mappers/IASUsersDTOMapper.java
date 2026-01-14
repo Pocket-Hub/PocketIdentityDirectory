@@ -61,7 +61,6 @@ public class IASUsersDTOMapper {
         return user;
     }
 
-
     public static IASUser mapUserToIASUser(User user) {
         IASUser iasUser = new IASUser();
 

@@ -6,7 +6,6 @@ import com.PocketIdentityDirectory.feign.service.IASGroupFeignService;
 import com.PocketIdentityDirectory.groups.models.Group;
 import com.PocketIdentityDirectory.groups.repositories.GroupRepository;
 import com.PocketIdentityDirectory.mappers.IASGroupDTOMapper;
-import jdk.dynalink.Operation;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,7 +23,12 @@ public class GroupService {
         this.feignService = feignService;
     }
 
-    public List<Group> getGroups() {
+    public List<Group> filterGroups(String name, String displayName){
+        return repository.filterGroupsByNameAndDisplayName(name, displayName);
+    }
+
+
+    public List<Group> syncGroups() {
         List<IASGroup> iasGroups = feignService.getAllGroups();
         List<Group> groups = new ArrayList<>();
 
@@ -47,7 +51,10 @@ public class GroupService {
     }
 
     public Group updateGroup(Group group, UUID id) {
-        IASGroup iasGroup = IASGroupDTOMapper.mapGroupToIASGroup(group);
+        Group savedGroup = repository.findById(id).orElseThrow();
+        savedGroup.setDescription(group.getDescription());
+        savedGroup.setDisplayName(group.getDisplayName());
+        IASGroup iasGroup = IASGroupDTOMapper.mapGroupToIASGroup(savedGroup);
 
         return IASGroupDTOMapper.mapIASGroupToGroup(feignService.updateGroup(iasGroup, id));
     }

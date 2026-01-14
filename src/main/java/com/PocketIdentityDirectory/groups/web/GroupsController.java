@@ -25,8 +25,8 @@ public class GroupsController {
     }
 
     @GetMapping
-    public ResponseEntity<GetAllGroupsResponse> getGroups() {
-        List<Group> groups = groupService.getGroups();
+    public ResponseEntity<GetAllGroupsResponse> getGroups(@RequestParam(required = false) String name, @RequestParam(required = false) String displayName) {
+        List<Group> groups = groupService.filterGroups(name, displayName);
         GetAllGroupsResponse dto = new GetAllGroupsResponse(groups, groups.size());
         return ResponseEntity.ok(dto);
     }

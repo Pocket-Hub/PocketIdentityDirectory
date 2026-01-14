@@ -13,6 +13,12 @@ public class Member {
     @JsonProperty("$ref")
     private String ref;
 
+    public Member(UUID value, String type, String ref) {
+        this.value = value;
+        this.type = type;
+        this.ref = ref;
+    }
+
     public UUID getValue() {
         return value;
     }
