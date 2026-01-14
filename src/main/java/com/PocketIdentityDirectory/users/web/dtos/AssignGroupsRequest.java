@@ -7,6 +7,16 @@ public class AssignGroupsRequest {
 
     private List<UUID> groups;
 
+    private String action;
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
+    }
+
     public List<UUID> getGroups() {
         return groups;
     }

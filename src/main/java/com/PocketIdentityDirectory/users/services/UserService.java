@@ -56,7 +56,7 @@ public class UserService {
         user.setStatus(Status.ACTIVE);
         IASUser iasUser = IASUsersDTOMapper.mapUserToIASUser(user);
 
-        return mapper.mapIASUserToUser(iasUserService.createIASUser(iasUser));
+        return repository.save(mapper.mapIASUserToUser(iasUserService.createIASUser(iasUser)));
     }
 
     public void deleteUser(UUID id) {
@@ -67,14 +67,18 @@ public class UserService {
     public User updateUser(User user, UUID id) {
         IASUser iasUser = IASUsersDTOMapper.mapUserToIASUser(user);
 
-        return mapper.mapIASUserToUser(iasUserService.updateUser(iasUser, id));
+        return repository.save(mapper.mapIASUserToUser(iasUserService.updateUser(iasUser, id)));
     }
 
-    public void assignGroups(UUID id, List<UUID> groupIDs){
+    public void assignGroups(UUID id, List<UUID> groupIDs, String action){
         PatchOp patch = new PatchOp();
         Bulk bulk = new Bulk();
         List<BulkOp> bulkOperations = new ArrayList<>();
-        patch.setOperations(List.of(new Operations("add", "members", List.of(new PatchValue(id.toString())))));
+
+            patch.setOperations(List.of(new Operations(action,
+                    "add".equalsIgnoreCase(action)? "members" : "members[value eq \"" + id + "\"]", "add".equalsIgnoreCase(action)? List.of(new PatchValue(id.toString())) : null)));
+
+
 
         for (UUID groupID : groupIDs) {
             BulkOp bulkOp = new BulkOp("PATCH", UUID.randomUUID(), "/Groups/" + groupID, patch);

@@ -63,7 +63,7 @@ public class GroupService {
         return repository.findAllById(ids);
     }
 
-    public void addMembers(UUID groupId, List<UUID> memberIds){
+    public void addMembers(UUID groupId, List<UUID> memberIds, String action){
         PatchOp patch = new PatchOp();
         List<Operations> ops = new ArrayList<>();
         List<PatchValue> ids = new ArrayList<>();
@@ -72,7 +72,7 @@ public class GroupService {
             ids.add(new PatchValue(memberId.toString()));
         }
 
-        ops.add(new Operations("add", "members", ids));
+        ops.add(new Operations(action, "members", "add".equalsIgnoreCase(action)? ids : null));
         patch.setOperations(ops);
 
         Bulk bulk = new Bulk();

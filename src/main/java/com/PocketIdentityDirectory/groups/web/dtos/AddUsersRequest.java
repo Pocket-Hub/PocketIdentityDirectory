@@ -7,6 +7,16 @@ public class AddUsersRequest {
 
     private List<UUID> users;
 
+    private String action;
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
+    }
+
     public List<UUID> getUsers() {
         return users;
     }

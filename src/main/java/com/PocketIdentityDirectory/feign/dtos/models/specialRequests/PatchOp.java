@@ -1,7 +1,10 @@
 package com.PocketIdentityDirectory.feign.dtos.models.specialRequests;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.List;
 
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 public class PatchOp {
 
     private final String[] schemas = new String[]{"urn:ietf:params:scim:api:messages:2.0:PatchOp"};

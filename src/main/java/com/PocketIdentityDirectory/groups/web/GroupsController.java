@@ -52,7 +52,7 @@ public class GroupsController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<Void> addMembers(@PathVariable UUID id, @RequestBody AddUsersRequest dto){
-        groupService.addMembers(id, dto.getUsers());
+        groupService.addMembers(id, dto.getUsers(), dto.getAction());
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
