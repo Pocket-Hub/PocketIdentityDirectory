@@ -1,4 +1,4 @@
-package com.PocketIdentityDirectory.feign.dtos.models.patch;
+package com.PocketIdentityDirectory.feign.dtos.models.specialRequests;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +10,12 @@ public class Operations {
     private String path;
 
     private List<PatchValue> value = new ArrayList<>();
+
+    public Operations(String op, String path, List<PatchValue> value) {
+        this.op = op;
+        this.path = path;
+        this.value = value;
+    }
 
     public String getOp() {
         return op;

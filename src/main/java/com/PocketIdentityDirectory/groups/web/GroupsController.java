@@ -2,6 +2,7 @@ package com.PocketIdentityDirectory.groups.web;
 
 import com.PocketIdentityDirectory.groups.models.Group;
 import com.PocketIdentityDirectory.groups.services.GroupService;
+import com.PocketIdentityDirectory.groups.web.dtos.AddUsersRequest;
 import com.PocketIdentityDirectory.groups.web.dtos.GetAllGroupsResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -47,6 +48,12 @@ public class GroupsController {
     public ResponseEntity<Group> updateGroup(@PathVariable UUID id, @RequestBody @Validated Group group) {
 
         return ResponseEntity.ok(groupService.updateGroup(group, id));
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Void> addMembers(@PathVariable UUID id, @RequestBody AddUsersRequest dto){
+        groupService.addMembers(id, dto.getUsers());
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }

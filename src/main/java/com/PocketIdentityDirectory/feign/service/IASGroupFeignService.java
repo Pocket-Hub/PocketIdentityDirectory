@@ -2,6 +2,8 @@ package com.PocketIdentityDirectory.feign.service;
 
 
 import com.PocketIdentityDirectory.feign.dtos.models.groups.IASGroup;
+import com.PocketIdentityDirectory.feign.dtos.models.specialRequests.Bulk;
+import com.PocketIdentityDirectory.feign.dtos.models.specialRequests.PatchOp;
 import com.PocketIdentityDirectory.feign.feignClient.IASFeignClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,5 +36,10 @@ public class IASGroupFeignService {
     public IASGroup updateGroup(IASGroup iasGroup, UUID id) {
         return client.updateGroup(iasGroup, id);
     }
+
+    public void addUsers(Bulk bulk){
+        client.bulkOp(bulk);
+    }
+
 
 }

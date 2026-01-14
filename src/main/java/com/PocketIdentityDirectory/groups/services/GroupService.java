@@ -1,11 +1,12 @@
 package com.PocketIdentityDirectory.groups.services;
 
 import com.PocketIdentityDirectory.feign.dtos.models.groups.IASGroup;
+import com.PocketIdentityDirectory.feign.dtos.models.specialRequests.*;
 import com.PocketIdentityDirectory.feign.service.IASGroupFeignService;
 import com.PocketIdentityDirectory.groups.models.Group;
 import com.PocketIdentityDirectory.groups.repositories.GroupRepository;
 import com.PocketIdentityDirectory.mappers.IASGroupDTOMapper;
-import com.PocketIdentityDirectory.users.models.User;
+import jdk.dynalink.Operation;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -53,6 +54,25 @@ public class GroupService {
 
     public List<Group> getGroupsByIds(List<UUID> ids){
         return repository.findAllById(ids);
+    }
+
+    public void addMembers(UUID groupId, List<UUID> memberIds){
+        PatchOp patch = new PatchOp();
+        List<Operations> ops = new ArrayList<>();
+        List<PatchValue> ids = new ArrayList<>();
+
+        for (UUID memberId : memberIds) {
+            ids.add(new PatchValue(memberId.toString()));
+        }
+
+        ops.add(new Operations("add", "members", ids));
+        patch.setOperations(ops);
+
+        Bulk bulk = new Bulk();
+        BulkOp bulkOp = new BulkOp("PATCH", UUID.randomUUID(), "/Groups/" + groupId, patch);
+        bulk.setOperations(List.of(bulkOp));
+
+        feignService.addUsers(bulk);
     }
 
 }

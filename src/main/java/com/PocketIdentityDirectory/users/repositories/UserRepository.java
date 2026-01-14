@@ -22,8 +22,8 @@ public interface UserRepository extends JpaRepository<User, UUID> {
       AND (:status IS NULL OR e.status = :status)
       AND (:groupName IS NULL OR g.name = :groupName)
 """)
-    List<User> filterUsersByUserStatusOrUserTypeOrLastName(@Param("type") UserType userType,
-                                                           @Param("lastName") String lastName,
-                                                           @Param("status") Status status,
-                                                           @Param("groupName") String groupName);
+    List<User> filterUsersByUserStatusOrUserTypeOrLastNameOrGroupName(@Param("type") UserType userType,
+                                                                      @Param("lastName") String lastName,
+                                                                      @Param("status") Status status,
+                                                                      @Param("groupName") String groupName);
 }

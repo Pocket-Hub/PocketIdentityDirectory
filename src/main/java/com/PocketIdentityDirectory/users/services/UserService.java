@@ -1,9 +1,8 @@
 package com.PocketIdentityDirectory.users.services;
 
+import com.PocketIdentityDirectory.feign.dtos.models.specialRequests.*;
 import com.PocketIdentityDirectory.feign.dtos.models.users.IASUser;
 import com.PocketIdentityDirectory.feign.service.IASUsersFeignService;
-import com.PocketIdentityDirectory.groups.models.Group;
-import com.PocketIdentityDirectory.groups.services.GroupService;
 import com.PocketIdentityDirectory.mappers.IASUsersDTOMapper;
 import com.PocketIdentityDirectory.users.models.User;
 import com.PocketIdentityDirectory.users.models.helpers.Status;
@@ -45,7 +44,7 @@ public class UserService {
 
     public List<User> getUsersWithOptionalFilters(String lastName, Status status, UserType type, String groupName) {
 
-        return repository.filterUsersByUserStatusOrUserTypeOrLastName(type, lastName, status, groupName);
+        return repository.filterUsersByUserStatusOrUserTypeOrLastNameOrGroupName(type, lastName, status, groupName);
     }
 
     public User getUserById(UUID id) {
@@ -72,11 +71,22 @@ public class UserService {
         return mapper.mapIASUserToUser(iasUserService.updateUser(iasUser, id));
     }
 
-    public List<User> assignGroups(UUID id, List<UUID> groupIDs){
+    public void assignGroups(UUID id, List<UUID> groupIDs){
+        PatchOp patch = new PatchOp();
+        Bulk bulk = new Bulk();
+        List<BulkOp> bulkOperations = new ArrayList<>();
+        patch.setOperations(List.of(new Operations("add", "members", List.of(new PatchValue(id.toString())))));
+
+        for (UUID groupID : groupIDs) {
+            BulkOp bulkOp = new BulkOp("PATCH", UUID.randomUUID(), "/Groups/" + groupID, patch);
+            bulkOperations.add(bulkOp);
+        }
+
+        bulk.setOperations(bulkOperations);
+
+        iasUserService.assignGroup(bulk);
 
 
-
-        return null;
     }
 
 }

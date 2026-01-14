@@ -1,5 +1,6 @@
 package com.PocketIdentityDirectory.feign.service;
 
+import com.PocketIdentityDirectory.feign.dtos.models.specialRequests.Bulk;
 import com.PocketIdentityDirectory.feign.dtos.models.users.IASUser;
 import com.PocketIdentityDirectory.feign.feignClient.IASFeignClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,11 @@ public class IASUsersFeignService {
 
     public IASUser updateUser(IASUser user, UUID id) {
         return client.updateUser(user, id);
+    }
+
+    public void assignGroup(Bulk bulk){
+        client.bulkOp(bulk);
+
     }
 
 

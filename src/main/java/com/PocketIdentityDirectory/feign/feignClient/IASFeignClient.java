@@ -2,6 +2,8 @@ package com.PocketIdentityDirectory.feign.feignClient;
 
 import com.PocketIdentityDirectory.feign.dtos.models.groups.IASGroup;
 import com.PocketIdentityDirectory.feign.dtos.models.groups.IASGroupResponseList;
+import com.PocketIdentityDirectory.feign.dtos.models.specialRequests.Bulk;
+import com.PocketIdentityDirectory.feign.dtos.models.specialRequests.PatchOp;
 import com.PocketIdentityDirectory.feign.dtos.models.users.IASUser;
 import com.PocketIdentityDirectory.feign.dtos.models.users.IASUserResponseList;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -35,5 +37,9 @@ public interface IASFeignClient {
 
     @PutMapping(value = "/Groups/{id}", consumes = "application/scim+json")
     IASGroup updateGroup(@RequestBody IASGroup iasGroup, @PathVariable UUID id);
+
+    @PostMapping(value = "/Bulk", consumes = "application/scim+json")
+    void bulkOp(@RequestBody Bulk bulk);
+
 
 }

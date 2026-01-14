@@ -4,6 +4,7 @@ import com.PocketIdentityDirectory.users.models.User;
 import com.PocketIdentityDirectory.users.models.helpers.Status;
 import com.PocketIdentityDirectory.users.models.helpers.UserType;
 import com.PocketIdentityDirectory.users.services.UserService;
+import com.PocketIdentityDirectory.users.web.dtos.AssignGroupsRequest;
 import com.PocketIdentityDirectory.users.web.dtos.GetAllUsersResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -75,5 +76,11 @@ public class UsersController {
         GetAllUsersResponse dto = new GetAllUsersResponse(users, users.size());
 
         return ResponseEntity.ok(dto);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Void> assignGroups(@RequestBody AssignGroupsRequest dto, @PathVariable UUID id){
+        userService.assignGroups(id, dto.getGroups());
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
