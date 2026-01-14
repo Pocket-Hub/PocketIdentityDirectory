@@ -79,7 +79,7 @@ public class UsersController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Void> assignGroups(@RequestBody AssignGroupsRequest dto, @PathVariable UUID id){
+    public ResponseEntity<Void> assignGroups(@RequestBody AssignGroupsRequest dto, @PathVariable UUID id) {
         userService.assignGroups(id, dto.getGroups(), dto.getAction());
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

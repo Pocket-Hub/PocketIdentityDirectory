@@ -2,7 +2,6 @@ package com.PocketIdentityDirectory.mappers;
 
 import com.PocketIdentityDirectory.feign.dtos.models.users.IASUser;
 import com.PocketIdentityDirectory.feign.dtos.models.users.helpers.*;
-import com.PocketIdentityDirectory.groups.models.Group;
 import com.PocketIdentityDirectory.groups.services.GroupService;
 import com.PocketIdentityDirectory.users.models.User;
 import com.PocketIdentityDirectory.users.models.helpers.CompanyInfo;
@@ -22,6 +21,38 @@ public class IASUsersDTOMapper {
     @Autowired
     public IASUsersDTOMapper(GroupService groupService) {
         this.groupService = groupService;
+    }
+
+    public static IASUser mapUserToIASUser(User user) {
+        IASUser iasUser = new IASUser();
+
+        iasUser.setId(user.getId());
+
+        iasUser.setUserName(user.getLoginName());
+
+        IASName name = new IASName(user.getName().getLastName(), user.getName().getFirstName());
+        iasUser.setName(name);
+
+        iasUser.setUserType(user.getType());
+
+        iasUser.setEmails(List.of(new IASEmail(user.getEmail(), true)));
+
+        iasUser.setGroups(List.of(new IASUserGroup()));
+
+        iasUser.setActive("active".equalsIgnoreCase(user.getStatus().toString()));
+
+        iasUser.setAddresses(List.of(new IASAddress(user.getCompanyInfo().getCountry(),
+                user.getCompanyInfo().getCity(),
+                "work")));
+
+        SAPExtensionHelper ext = new SAPExtensionHelper(user.getValidFrom(),
+                user.getValidTo(),
+                user.getStatus());
+        iasUser.setExtension(ext);
+
+        iasUser.setEnterpriseExtension(new EnterpriseExtensionHelper(user.getCompanyInfo().getCompany()));
+
+        return iasUser;
     }
 
     public User mapIASUserToUser(IASUser dto) {
@@ -59,38 +90,6 @@ public class IASUsersDTOMapper {
         user.setCompanyInfo(companyInfo);
 
         return user;
-    }
-
-    public static IASUser mapUserToIASUser(User user) {
-        IASUser iasUser = new IASUser();
-
-        iasUser.setId(user.getId());
-
-        iasUser.setUserName(user.getLoginName());
-
-        IASName name = new IASName(user.getName().getLastName(), user.getName().getFirstName());
-        iasUser.setName(name);
-
-        iasUser.setUserType(user.getType());
-
-        iasUser.setEmails(List.of(new IASEmail(user.getEmail(), true)));
-
-        iasUser.setGroups(List.of(new IASUserGroup()));
-
-        iasUser.setActive("active".equalsIgnoreCase(user.getStatus().toString()));
-
-        iasUser.setAddresses(List.of(new IASAddress(user.getCompanyInfo().getCountry(),
-                user.getCompanyInfo().getCity(),
-                "work")));
-
-        SAPExtensionHelper ext = new SAPExtensionHelper(user.getValidFrom(),
-                user.getValidTo(),
-                user.getStatus());
-        iasUser.setExtension(ext);
-
-        iasUser.setEnterpriseExtension(new EnterpriseExtensionHelper(user.getCompanyInfo().getCompany()));
-
-        return iasUser;
     }
 
 }

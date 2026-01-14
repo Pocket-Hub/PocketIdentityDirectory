@@ -36,11 +36,10 @@ public class IASUsersFeignService {
         return client.updateUser(user, id);
     }
 
-    public void assignGroup(Bulk bulk){
+    public void assignGroup(Bulk bulk) {
         client.bulkOp(bulk);
 
     }
-
 
 
 }

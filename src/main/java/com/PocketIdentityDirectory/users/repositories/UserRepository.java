@@ -14,17 +14,17 @@ import java.util.UUID;
 @Repository
 public interface UserRepository extends JpaRepository<User, UUID> {
     @Query("""
-    SELECT DISTINCT u FROM User u
-    LEFT JOIN u.groups g
-    WHERE (:lastName IS NULL 
-           OR LOWER(u.name.lastName) LIKE LOWER(CONCAT('%', :lastName, '%')))
-      AND (:type IS NULL 
-           OR u.type = :type)
-      AND (:status IS NULL 
-           OR u.status = :status)
-      AND (:groupName IS NULL 
-           OR LOWER(g.name) LIKE LOWER(CONCAT('%', :groupName, '%')))
-""")
+                SELECT DISTINCT u FROM User u
+                LEFT JOIN u.groups g
+                WHERE (:lastName IS NULL 
+                       OR LOWER(u.name.lastName) LIKE LOWER(CONCAT('%', :lastName, '%')))
+                  AND (:type IS NULL 
+                       OR u.type = :type)
+                  AND (:status IS NULL 
+                       OR u.status = :status)
+                  AND (:groupName IS NULL 
+                       OR LOWER(g.name) LIKE LOWER(CONCAT('%', :groupName, '%')))
+            """)
     List<User> filterUsersByUserStatusOrUserTypeOrLastNameOrGroupName(
             @Param("type") UserType type,
             @Param("lastName") String lastName,

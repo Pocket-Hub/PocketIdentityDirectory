@@ -6,13 +6,16 @@ import com.PocketIdentityDirectory.users.models.helpers.Name;
 import com.PocketIdentityDirectory.users.models.helpers.Status;
 import com.PocketIdentityDirectory.users.models.helpers.UserType;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 import java.time.Instant;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "users")
@@ -27,6 +30,7 @@ public class User {
     private String email;
 
     @Embedded
+    @Valid
     private Name name;
 
     @NotBlank(message = "Login name cannot be blank!")
@@ -144,7 +148,7 @@ public class User {
         this.validTo = validTo;
     }
 
-    public void assignGroups(List<Group> groups){
+    public void assignGroups(List<Group> groups) {
         this.groups.addAll(groups);
     }
 }

@@ -1,13 +1,11 @@
 package com.PocketIdentityDirectory.groups.models;
 
 import com.PocketIdentityDirectory.users.models.User;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -20,10 +18,12 @@ public class Group {
     @Id
     private UUID id;
 
-    @Column
+    @Column(unique = true)
+    @NotBlank(message = "Name cannot be blank!")
     private String name;
 
     @Column
+    @NotBlank(message = "Display Name cannot be blank!")
     private String displayName;
 
     @Column

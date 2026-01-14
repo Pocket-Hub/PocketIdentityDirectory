@@ -13,10 +13,10 @@ import java.util.UUID;
 public interface GroupRepository extends JpaRepository<Group, UUID> {
 
     @Query("""
-    SELECT DISTINCT g FROM Group g
-    WHERE (:name IS NULL OR LOWER(g.name) LIKE LOWER(CONCAT('%', :name, '%')))
-      AND (:displayName IS NULL OR LOWER(g.displayName) LIKE LOWER(CONCAT('%', :displayName, '%')))
-""")
+                SELECT DISTINCT g FROM Group g
+                WHERE (:name IS NULL OR LOWER(g.name) LIKE LOWER(CONCAT('%', :name, '%')))
+                  AND (:displayName IS NULL OR LOWER(g.displayName) LIKE LOWER(CONCAT('%', :displayName, '%')))
+            """)
     List<Group> filterGroupsByNameAndDisplayName(
             @Param("name") String name,
             @Param("displayName") String displayName

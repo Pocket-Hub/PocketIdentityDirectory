@@ -1,5 +1,6 @@
 package com.PocketIdentityDirectory.users.services;
 
+import com.PocketIdentityDirectory.exceptions.EntityNotFoundException;
 import com.PocketIdentityDirectory.feign.dtos.models.specialRequests.*;
 import com.PocketIdentityDirectory.feign.dtos.models.users.IASUser;
 import com.PocketIdentityDirectory.feign.service.IASUsersFeignService;
@@ -49,7 +50,11 @@ public class UserService {
     public User getUserById(UUID id) {
         Optional<User> optUser = repository.findById(id);
 
-        return optUser.orElseThrow();
+        if (optUser.isEmpty()){
+            throw new EntityNotFoundException("User with this ID does not exist.");
+        }
+
+        return optUser.get();
     }
 
     public User createUser(User user) {
@@ -70,15 +75,13 @@ public class UserService {
         return repository.save(mapper.mapIASUserToUser(iasUserService.updateUser(iasUser, id)));
     }
 
-    public void assignGroups(UUID id, List<UUID> groupIDs, String action){
+    public void assignGroups(UUID id, List<UUID> groupIDs, String action) {
         PatchOp patch = new PatchOp();
         Bulk bulk = new Bulk();
         List<BulkOp> bulkOperations = new ArrayList<>();
 
-            patch.setOperations(List.of(new Operations(action,
-                    "add".equalsIgnoreCase(action)? "members" : "members[value eq \"" + id + "\"]", "add".equalsIgnoreCase(action)? List.of(new PatchValue(id.toString())) : null)));
-
-
+        patch.setOperations(List.of(new Operations(action,
+                "add".equalsIgnoreCase(action) ? "members" : "members[value eq \"" + id + "\"]", "add".equalsIgnoreCase(action) ? List.of(new PatchValue(id.toString())) : null)));
 
         for (UUID groupID : groupIDs) {
             BulkOp bulkOp = new BulkOp("PATCH", UUID.randomUUID(), "/Groups/" + groupID, patch);

@@ -23,7 +23,7 @@ public class GroupService {
         this.feignService = feignService;
     }
 
-    public List<Group> filterGroups(String name, String displayName){
+    public List<Group> filterGroups(String name, String displayName) {
         return repository.filterGroupsByNameAndDisplayName(name, displayName);
     }
 
@@ -41,8 +41,7 @@ public class GroupService {
 
     public Group createGroup(Group group) {
         IASGroup iasGroup = IASGroupDTOMapper.mapGroupToIASGroup(group);
-
-        return IASGroupDTOMapper.mapIASGroupToGroup(feignService.createGroup(iasGroup));
+        return repository.save(IASGroupDTOMapper.mapIASGroupToGroup(feignService.createGroup(iasGroup)));
     }
 
     public void deleteGroup(UUID id) {
@@ -56,14 +55,14 @@ public class GroupService {
         savedGroup.setDisplayName(group.getDisplayName());
         IASGroup iasGroup = IASGroupDTOMapper.mapGroupToIASGroup(savedGroup);
 
-        return IASGroupDTOMapper.mapIASGroupToGroup(feignService.updateGroup(iasGroup, id));
+        return repository.save(IASGroupDTOMapper.mapIASGroupToGroup(feignService.updateGroup(iasGroup, id)));
     }
 
-    public List<Group> getGroupsByIds(List<UUID> ids){
+    public List<Group> getGroupsByIds(List<UUID> ids) {
         return repository.findAllById(ids);
     }
 
-    public void addMembers(UUID groupId, List<UUID> memberIds, String action){
+    public void addMembers(UUID groupId, List<UUID> memberIds, String action) {
         PatchOp patch = new PatchOp();
         List<Operations> ops = new ArrayList<>();
         List<PatchValue> ids = new ArrayList<>();
@@ -72,7 +71,7 @@ public class GroupService {
             ids.add(new PatchValue(memberId.toString()));
         }
 
-        ops.add(new Operations(action, "members", "add".equalsIgnoreCase(action)? ids : null));
+        ops.add(new Operations(action, "members", "add".equalsIgnoreCase(action) ? ids : null));
         patch.setOperations(ops);
 
         Bulk bulk = new Bulk();

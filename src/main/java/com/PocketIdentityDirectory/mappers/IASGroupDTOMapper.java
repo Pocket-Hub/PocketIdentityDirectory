@@ -30,13 +30,18 @@ public class IASGroupDTOMapper {
         iasGroup.setExtension(new ExtensionHelper(group.getName(), group.getDescription()));
         iasGroup.setDisplayName(group.getDisplayName());
         Set<User> users = group.getMembers();
-        List<Member> members = new ArrayList<>();
 
+
+        if (users == null || users.isEmpty()){
+            return iasGroup;
+        }
+
+        List<Member> members = new ArrayList<>();
         for (User user : users) {
             members.add(new Member(user.getId(), "User", "https://aztcpjece.trial-accounts.ondemand.com/scim/Users/" + user.getId()));
         }
-
         iasGroup.setMembers(members);
+
 
         return iasGroup;
     }
