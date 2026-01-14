@@ -34,12 +34,12 @@ public class RestExceptionHandler {
 
     @ExceptionHandler(FeignException.class)
     public ResponseEntity<ErrorResponse> handleFeignExceptions(FeignException ex){
-        return new ResponseEntity<>(new ErrorResponse(ex.status(), ex.getMessage().substring(ex.getMessage().lastIndexOf("\":") + 3, ex.getMessage().length() - 3)), HttpStatusCode.valueOf(ex.status()));
+        return new ResponseEntity<>(new ErrorResponse(ex.status(), "There was an issue with the API Request. " + ex.getMessage().substring(ex.getMessage().lastIndexOf("\":") + 3, ex.getMessage().length() - 3)), HttpStatusCode.valueOf(ex.status()));
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleEverythingElse(Exception ex){
-        return new ResponseEntity<>(new ErrorResponse(500, "Hi, this is an exception I haven't thought of. That was unexpected :("), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(new ErrorResponse(500, "Hi, this is an exception I haven't thought of. That was unexpected :( " + ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }
