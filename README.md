@@ -1,7 +1,8 @@
 
 # Pocket Identity Directory
 
-Pocket Identity Directory is my first Onboarding Dev Task for ROIABLE
+Pocket Identity Directory is my first Onboarding Dev Task for ROIABLE.
+It's idea is to use SAP Identity Authentication Service Identity Directory API to manage data from IAS Tenant.
 
 
 ## Tech Stack
