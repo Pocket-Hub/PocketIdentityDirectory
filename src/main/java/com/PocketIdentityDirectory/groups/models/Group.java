@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
+import java.time.Instant;
 import java.util.Set;
 import java.util.UUID;
 
@@ -32,6 +33,17 @@ public class Group {
     @JsonIgnore
     @ManyToMany(mappedBy = "groups")
     private Set<User> members;
+
+    @Column
+    private Instant lastUpdate;
+
+    public Instant getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(Instant lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
 
     public Set<User> getMembers() {
         return members;

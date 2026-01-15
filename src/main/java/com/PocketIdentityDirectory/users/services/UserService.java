@@ -10,8 +10,12 @@ import com.PocketIdentityDirectory.users.models.helpers.Status;
 import com.PocketIdentityDirectory.users.models.helpers.UserType;
 import com.PocketIdentityDirectory.users.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,7 +35,9 @@ public class UserService {
         this.mapper = mapper;
     }
 
-    public List<User> syncUsers() {
+    @Async
+    @Scheduled(fixedRate = 100_000, initialDelay = 10_000)
+    public void syncUsers() {
         List<IASUser> iasUsers = iasUserService.getIASUsers();
         List<User> users = new ArrayList<>();
 
@@ -39,7 +45,11 @@ public class UserService {
             users.add(mapper.mapIASUserToUser(iasUser));
         }
 
-        return repository.saveAll(users);
+        repository.saveAll(users);
+
+        List<User> deletion = repository.findAllByLastUpdate(Instant.now().minus(Duration.ofMinutes(3)));
+
+        repository.deleteAll(deletion);
     }
 
     public List<User> getUsersWithOptionalFilters(String lastName, Status status, UserType type, String groupName) {
@@ -91,7 +101,6 @@ public class UserService {
         bulk.setOperations(bulkOperations);
 
         iasUserService.assignGroup(bulk);
-
     }
 
 }

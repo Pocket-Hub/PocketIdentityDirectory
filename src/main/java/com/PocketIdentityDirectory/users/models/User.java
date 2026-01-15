@@ -60,6 +60,17 @@ public class User {
     @ManyToMany
     private Set<Group> groups = new HashSet<>();
 
+    @Column
+    private Instant lastUpdate;
+
+    public Instant getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(Instant lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
     public Set<Group> getGroups() {
         return groups;
     }

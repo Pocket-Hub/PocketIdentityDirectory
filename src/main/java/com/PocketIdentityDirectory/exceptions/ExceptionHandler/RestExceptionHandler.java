@@ -28,7 +28,6 @@ public class RestExceptionHandler {
                         errors.add(error.getDefaultMessage())
                 );
 
-
         return new ResponseEntity<>(new ErrorResponse(400, errors.toString()), HttpStatus.BAD_REQUEST);
     }
 
@@ -41,5 +40,4 @@ public class RestExceptionHandler {
     public ResponseEntity<ErrorResponse> handleEverythingElse(Exception ex){
         return new ResponseEntity<>(new ErrorResponse(500, "Hi, this is an exception I haven't thought of. That was unexpected :( " + ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
 }

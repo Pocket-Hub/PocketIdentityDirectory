@@ -6,8 +6,12 @@ import com.PocketIdentityDirectory.feign.service.IASGroupFeignService;
 import com.PocketIdentityDirectory.groups.models.Group;
 import com.PocketIdentityDirectory.groups.repositories.GroupRepository;
 import com.PocketIdentityDirectory.mappers.IASGroupDTOMapper;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -27,8 +31,9 @@ public class GroupService {
         return repository.filterGroupsByNameAndDisplayName(name, displayName);
     }
 
-
-    public List<Group> syncGroups() {
+    @Async
+    @Scheduled(fixedRate =100_000)
+    public void syncGroups() {
         List<IASGroup> iasGroups = feignService.getAllGroups();
         List<Group> groups = new ArrayList<>();
 
@@ -36,7 +41,11 @@ public class GroupService {
             groups.add(IASGroupDTOMapper.mapIASGroupToGroup(iasGroup));
         }
 
-        return repository.saveAll(groups);
+        repository.saveAll(groups);
+
+        List<Group> deletion = repository.findAllByLastUpdate(Instant.now().minus(Duration.ofMinutes(3)));
+
+        repository.deleteAll(deletion);
     }
 
     public Group createGroup(Group group) {

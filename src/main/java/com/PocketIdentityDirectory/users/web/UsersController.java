@@ -68,16 +68,6 @@ public class UsersController {
         return ResponseEntity.ok(userService.updateUser(user, id));
     }
 
-    @GetMapping("/sync")
-    public ResponseEntity<GetAllUsersResponse> syncUsers() {
-
-        List<User> users = new ArrayList<>(userService.syncUsers());
-
-        GetAllUsersResponse dto = new GetAllUsersResponse(users, users.size());
-
-        return ResponseEntity.ok(dto);
-    }
-
     @PatchMapping("/{id}")
     public ResponseEntity<Void> assignGroups(@RequestBody AssignGroupsRequest dto, @PathVariable UUID id) {
         userService.assignGroups(id, dto.getGroups(), dto.getAction());

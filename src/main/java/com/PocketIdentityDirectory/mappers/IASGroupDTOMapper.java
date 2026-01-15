@@ -6,6 +6,7 @@ import com.PocketIdentityDirectory.feign.dtos.models.groups.helpers.Member;
 import com.PocketIdentityDirectory.groups.models.Group;
 import com.PocketIdentityDirectory.users.models.User;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -19,6 +20,8 @@ public class IASGroupDTOMapper {
         group.setName(iasGroup.getExtension().getName());
         group.setDisplayName(iasGroup.getDisplayName());
         group.setDescription(iasGroup.getExtension().getDescription());
+
+        group.setLastUpdate(Instant.now());
 
         return group;
     }

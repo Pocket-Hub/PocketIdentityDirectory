@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,5 +32,8 @@ public interface UserRepository extends JpaRepository<User, UUID> {
             @Param("status") Status status,
             @Param("groupName") String groupName
     );
+
+    @Query("SELECT u FROM User u WHERE u.lastUpdate < :cutoff")
+    List<User> findAllByLastUpdate(Instant cutoff);
 
 }
