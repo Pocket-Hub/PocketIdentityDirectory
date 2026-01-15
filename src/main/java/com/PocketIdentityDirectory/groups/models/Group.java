@@ -7,6 +7,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -32,10 +34,14 @@ public class Group {
 
     @JsonIgnore
     @ManyToMany(mappedBy = "groups")
-    private Set<User> members;
+    private Set<User> members = new HashSet<>();
 
     @Column
     private Instant lastUpdate;
+
+    public void assignMembers(List<User> users){
+        members.addAll(users);
+    }
 
     public Instant getLastUpdate() {
         return lastUpdate;

@@ -16,6 +16,9 @@ public interface IASFeignClient {
     @GetMapping("/Users")
     IASUserResponseList getUsers(@RequestParam(required = false) int count, @RequestParam(required = false) int startIndex);
 
+    @GetMapping("/Users/{id}")
+    IASUser getSpecificUser(@PathVariable UUID id);
+
     @PostMapping(value = "/Users", consumes = "application/scim+json")
     IASUser createUser(@RequestBody IASUser dto);
 
@@ -27,6 +30,9 @@ public interface IASFeignClient {
 
     @GetMapping("/Groups")
     IASGroupResponseList getGroups(@RequestParam(required = false) int count, @RequestParam(required = false) int startIndex);
+
+    @GetMapping("/Groups/{id}")
+    IASGroup getSpecificGroup(@PathVariable UUID id);
 
     @PostMapping(value = "/Groups", consumes = "application/scim+json")
     IASGroup createGroup(IASGroup group);

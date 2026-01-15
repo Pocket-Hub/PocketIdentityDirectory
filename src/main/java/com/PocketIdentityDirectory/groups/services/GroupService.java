@@ -6,6 +6,7 @@ import com.PocketIdentityDirectory.feign.service.IASGroupFeignService;
 import com.PocketIdentityDirectory.groups.models.Group;
 import com.PocketIdentityDirectory.groups.repositories.GroupRepository;
 import com.PocketIdentityDirectory.mappers.IASGroupDTOMapper;
+import com.PocketIdentityDirectory.users.models.User;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -21,10 +22,12 @@ public class GroupService {
 
     private final GroupRepository repository;
     private final IASGroupFeignService feignService;
+    private final IASGroupDTOMapper mapper;
 
-    public GroupService(GroupRepository repository, IASGroupFeignService feignService) {
+    public GroupService(GroupRepository repository, IASGroupFeignService feignService, IASGroupDTOMapper mapper) {
         this.repository = repository;
         this.feignService = feignService;
+        this.mapper = mapper;
     }
 
     public List<Group> filterGroups(String name, String displayName) {
@@ -38,7 +41,7 @@ public class GroupService {
         List<Group> groups = new ArrayList<>();
 
         for (IASGroup iasGroup : iasGroups) {
-            groups.add(IASGroupDTOMapper.mapIASGroupToGroup(iasGroup));
+            groups.add(mapper.mapIASGroupToGroup(iasGroup));
         }
 
         repository.saveAll(groups);
@@ -50,7 +53,7 @@ public class GroupService {
 
     public Group createGroup(Group group) {
         IASGroup iasGroup = IASGroupDTOMapper.mapGroupToIASGroup(group);
-        return repository.save(IASGroupDTOMapper.mapIASGroupToGroup(feignService.createGroup(iasGroup)));
+        return repository.save(mapper.mapIASGroupToGroup(feignService.createGroup(iasGroup)));
     }
 
     public void deleteGroup(UUID id) {
@@ -64,14 +67,14 @@ public class GroupService {
         savedGroup.setDisplayName(group.getDisplayName());
         IASGroup iasGroup = IASGroupDTOMapper.mapGroupToIASGroup(savedGroup);
 
-        return repository.save(IASGroupDTOMapper.mapIASGroupToGroup(feignService.updateGroup(iasGroup, id)));
+        return repository.save(mapper.mapIASGroupToGroup(feignService.updateGroup(iasGroup, id)));
     }
 
     public List<Group> getGroupsByIds(List<UUID> ids) {
         return repository.findAllById(ids);
     }
 
-    public void addMembers(UUID groupId, List<UUID> memberIds, String action) {
+    public Group addMembers(UUID groupId, List<UUID> memberIds, String action) {
         PatchOp patch = new PatchOp();
         List<Operations> ops = new ArrayList<>();
         List<PatchValue> ids = new ArrayList<>();
@@ -88,6 +91,9 @@ public class GroupService {
         bulk.setOperations(List.of(bulkOp));
 
         feignService.addUsers(bulk);
+
+        return repository.save(mapper.mapIASGroupToGroup(feignService.getSpecificGroup(groupId)));
+
     }
 
 }

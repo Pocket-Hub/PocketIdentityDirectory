@@ -1,10 +1,11 @@
 package com.PocketIdentityDirectory.feign.dtos.models.groups;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class IASGroupResponseList {
 
-    private List<IASGroup> Resources;
+    private List<IASGroup> Resources = new ArrayList<>();
 
     private int totalResults;
 

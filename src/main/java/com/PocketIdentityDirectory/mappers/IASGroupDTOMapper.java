@@ -4,16 +4,30 @@ import com.PocketIdentityDirectory.feign.dtos.models.groups.IASGroup;
 import com.PocketIdentityDirectory.feign.dtos.models.groups.helpers.ExtensionHelper;
 import com.PocketIdentityDirectory.feign.dtos.models.groups.helpers.Member;
 import com.PocketIdentityDirectory.groups.models.Group;
+import com.PocketIdentityDirectory.groups.repositories.GroupRepository;
 import com.PocketIdentityDirectory.users.models.User;
+import com.PocketIdentityDirectory.users.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
+@Component
 public class IASGroupDTOMapper {
 
-    public static Group mapIASGroupToGroup(IASGroup iasGroup) {
+    private final UserService userService;
+
+    @Autowired
+    public IASGroupDTOMapper(@Lazy UserService userService) {
+        this.userService = userService;
+    }
+
+    public Group mapIASGroupToGroup(IASGroup iasGroup) {
         Group group = new Group();
 
         group.setId(iasGroup.getId());
@@ -23,6 +37,13 @@ public class IASGroupDTOMapper {
 
         group.setLastUpdate(Instant.now());
 
+        List<UUID> ids = new ArrayList<>();
+
+        for (Member member : iasGroup.getMembers()) {
+            ids.add(member.getValue());
+        }
+
+        group.assignMembers(userService.getUsersWithIDList(ids));
         return group;
     }
 

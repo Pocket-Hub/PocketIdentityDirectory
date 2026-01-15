@@ -6,11 +6,11 @@ import java.util.List;
 
 public class GetAllGroupsResponse {
 
-    private List<Group> resources;
+    private List<GetGroupResponse> resources;
 
     private int resourceCount;
 
-    public GetAllGroupsResponse(List<Group> resources, int resourceCount) {
+    public GetAllGroupsResponse(List<GetGroupResponse> resources, int resourceCount) {
         this.resources = resources;
         this.resourceCount = resourceCount;
     }
@@ -23,11 +23,11 @@ public class GetAllGroupsResponse {
         this.resourceCount = resourceCount;
     }
 
-    public List<Group> getResources() {
+    public List<GetGroupResponse> getResources() {
         return resources;
     }
 
-    public void setResources(List<Group> resources) {
+    public void setResources(List<GetGroupResponse> resources) {
         this.resources = resources;
     }
 }

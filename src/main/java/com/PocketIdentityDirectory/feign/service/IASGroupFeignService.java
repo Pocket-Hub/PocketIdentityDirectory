@@ -55,5 +55,9 @@ public class IASGroupFeignService {
         client.bulkOp(bulk);
     }
 
+    public IASGroup getSpecificGroup(UUID id){
+        return client.getSpecificGroup(id);
+    }
+
 
 }

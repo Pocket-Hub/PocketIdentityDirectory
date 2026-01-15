@@ -51,4 +51,8 @@ public class IASUsersFeignService {
     public void assignGroup(Bulk bulk) {
         client.bulkOp(bulk);
     }
+
+    public IASUser getSpecificUser(UUID id){
+        return client.getSpecificUser(id);
+    }
 }

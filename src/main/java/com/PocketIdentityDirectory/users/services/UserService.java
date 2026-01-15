@@ -67,6 +67,10 @@ public class UserService {
         return optUser.get();
     }
 
+    public List<User> getUsersWithIDList(List<UUID> ids){
+        return repository.findAllById(ids);
+    }
+
     public User createUser(User user) {
         user.setStatus(Status.ACTIVE);
         IASUser iasUser = IASUsersDTOMapper.mapUserToIASUser(user);
@@ -85,7 +89,7 @@ public class UserService {
         return repository.save(mapper.mapIASUserToUser(iasUserService.updateUser(iasUser, id)));
     }
 
-    public void assignGroups(UUID id, List<UUID> groupIDs, String action) {
+    public User assignGroups(UUID id, List<UUID> groupIDs, String action) {
         PatchOp patch = new PatchOp();
         Bulk bulk = new Bulk();
         List<BulkOp> bulkOperations = new ArrayList<>();
@@ -98,9 +102,15 @@ public class UserService {
             bulkOperations.add(bulkOp);
         }
 
+
+
         bulk.setOperations(bulkOperations);
 
         iasUserService.assignGroup(bulk);
+
+
+        return mapper.mapIASUserToUser(iasUserService.getSpecificUser(id));
+
     }
 
 }

@@ -7,6 +7,7 @@ import com.PocketIdentityDirectory.users.models.User;
 import com.PocketIdentityDirectory.users.models.helpers.CompanyInfo;
 import com.PocketIdentityDirectory.users.models.helpers.Name;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
@@ -20,7 +21,7 @@ public class IASUsersDTOMapper {
     private final GroupService groupService;
 
     @Autowired
-    public IASUsersDTOMapper(GroupService groupService) {
+    public IASUsersDTOMapper(@Lazy GroupService groupService) {
         this.groupService = groupService;
     }
 

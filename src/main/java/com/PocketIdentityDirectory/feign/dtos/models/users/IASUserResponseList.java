@@ -2,12 +2,13 @@ package com.PocketIdentityDirectory.feign.dtos.models.users;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 public class IASUserResponseList {
 
-    private List<IASUser> Resources;
+    private List<IASUser> Resources = new ArrayList<>();
 
     private int totalResults;
 

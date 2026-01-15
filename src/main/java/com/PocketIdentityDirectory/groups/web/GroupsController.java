@@ -2,14 +2,17 @@ package com.PocketIdentityDirectory.groups.web;
 
 import com.PocketIdentityDirectory.groups.models.Group;
 import com.PocketIdentityDirectory.groups.services.GroupService;
+import com.PocketIdentityDirectory.groups.web.dtoMappers.GroupMapper;
 import com.PocketIdentityDirectory.groups.web.dtos.AddUsersRequest;
 import com.PocketIdentityDirectory.groups.web.dtos.GetAllGroupsResponse;
+import com.PocketIdentityDirectory.groups.web.dtos.GetGroupResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,7 +30,11 @@ public class GroupsController {
     @GetMapping
     public ResponseEntity<GetAllGroupsResponse> getGroups(@RequestParam(required = false) String name, @RequestParam(required = false) String displayName) {
         List<Group> groups = groupService.filterGroups(name, displayName);
-        GetAllGroupsResponse dto = new GetAllGroupsResponse(groups, groups.size());
+        List<GetGroupResponse> responses = new ArrayList<>();
+        for (Group group : groups) {
+            responses.add(GroupMapper.mapGroupToGetGroupResponse(group));
+        }
+        GetAllGroupsResponse dto = new GetAllGroupsResponse(responses, groups.size());
         return ResponseEntity.ok(dto);
     }
 
@@ -51,9 +58,8 @@ public class GroupsController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Void> addMembers(@PathVariable UUID id, @RequestBody AddUsersRequest dto) {
-        groupService.addMembers(id, dto.getUsers(), dto.getAction());
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<GetGroupResponse> addMembers(@PathVariable UUID id, @RequestBody AddUsersRequest dto) {
+        return new ResponseEntity<>(GroupMapper.mapGroupToGetGroupResponse(groupService.addMembers(id, dto.getUsers(), dto.getAction())), HttpStatus.OK);
     }
 
 }
