@@ -24,15 +24,16 @@ public class IASGroupFeignService {
     }
 
     public List<IASGroup> getAllGroups() {
-        IASGroupResponseList response = client.getGroups(10, 1);
+        int count = 10;
+        IASGroupResponseList response = client.getGroups(count, 1);
         List<IASGroup> groups = response.getResources();
         int total = response.getTotalResults();
-        int startIndex = response.getStartIndex() + 10;
+        int startIndex = response.getStartIndex() + count;
 
         while (startIndex <= total){
-            response = client.getGroups(10, startIndex);
+            response = client.getGroups(count, startIndex);
             groups.addAll(response.getResources());
-            startIndex += 10;
+            startIndex += count;
         }
 
         return groups;

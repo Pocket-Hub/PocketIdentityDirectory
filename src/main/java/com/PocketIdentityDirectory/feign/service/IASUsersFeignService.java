@@ -21,15 +21,16 @@ public class IASUsersFeignService {
     }
 
     public List<IASUser> getIASUsers() {
-        IASUserResponseList response = client.getUsers(10, 1);
+        int count = 10;
+        IASUserResponseList response = client.getUsers(count, 1);
         List<IASUser> users = response.getResources();
         int total = response.getTotalResults();
-        int startIndex = response.getStartIndex() + 10;
+        int startIndex = response.getStartIndex() + count;
 
         while (startIndex <= total){
-            response = client.getUsers(10, startIndex);
+            response = client.getUsers(count, startIndex);
             users.addAll(response.getResources());
-            startIndex += 10;
+            startIndex += count;
         }
 
         return users;
