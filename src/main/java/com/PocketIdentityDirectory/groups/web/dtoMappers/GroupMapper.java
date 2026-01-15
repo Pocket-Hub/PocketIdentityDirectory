@@ -10,7 +10,10 @@ public class GroupMapper {
 
     public static GetGroupResponse mapGroupToGetGroupResponse(Group group){
         GetGroupResponse dto = new GetGroupResponse();
-        dto.setGroup(group);
+        dto.setId(group.getId());
+        dto.setName(group.getName());
+        dto.setDisplayName(group.getDisplayName());
+        dto.setDescription(group.getDescription());
 
         for (User user : group.getMembers()) {
             Member member = new Member();

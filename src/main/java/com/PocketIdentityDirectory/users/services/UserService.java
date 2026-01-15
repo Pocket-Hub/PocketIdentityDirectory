@@ -109,7 +109,7 @@ public class UserService {
         iasUserService.assignGroup(bulk);
 
 
-        return mapper.mapIASUserToUser(iasUserService.getSpecificUser(id));
+        return repository.save(mapper.mapIASUserToUser(iasUserService.getSpecificUser(id)));
 
     }
 

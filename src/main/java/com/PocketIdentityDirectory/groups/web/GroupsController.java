@@ -39,9 +39,9 @@ public class GroupsController {
     }
 
     @PostMapping
-    public ResponseEntity<Group> createGroup(@RequestBody @Validated Group group) {
+    public ResponseEntity<GetGroupResponse> createGroup(@RequestBody @Validated Group group) {
 
-        return new ResponseEntity<>(groupService.createGroup(group), HttpStatus.CREATED);
+        return new ResponseEntity<>(GroupMapper.mapGroupToGetGroupResponse(groupService.createGroup(group)), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
@@ -52,9 +52,9 @@ public class GroupsController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Group> updateGroup(@PathVariable UUID id, @RequestBody @Validated Group group) {
+    public ResponseEntity<GetGroupResponse> updateGroup(@PathVariable UUID id, @RequestBody @Validated Group group) {
 
-        return ResponseEntity.ok(groupService.updateGroup(group, id));
+        return ResponseEntity.ok(GroupMapper.mapGroupToGetGroupResponse(groupService.updateGroup(group, id)));
     }
 
     @PatchMapping("/{id}")
