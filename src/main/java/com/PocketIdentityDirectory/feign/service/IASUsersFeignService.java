@@ -2,6 +2,7 @@ package com.PocketIdentityDirectory.feign.service;
 
 import com.PocketIdentityDirectory.feign.dtos.models.specialRequests.Bulk;
 import com.PocketIdentityDirectory.feign.dtos.models.users.IASUser;
+import com.PocketIdentityDirectory.feign.dtos.models.users.IASUserResponseList;
 import com.PocketIdentityDirectory.feign.feignClient.IASFeignClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,8 +21,18 @@ public class IASUsersFeignService {
     }
 
     public List<IASUser> getIASUsers() {
+        IASUserResponseList response = client.getUsers(10, 1);
+        List<IASUser> users = response.getResources();
+        int total = response.getTotalResults();
+        int startIndex = response.getStartIndex() + 10;
 
-        return client.getUsers().getResources();
+        while (startIndex <= total){
+            response = client.getUsers(10, startIndex);
+            users.addAll(response.getResources());
+            startIndex += 10;
+        }
+
+        return users;
     }
 
     public IASUser createIASUser(IASUser dto) {
@@ -38,8 +49,5 @@ public class IASUsersFeignService {
 
     public void assignGroup(Bulk bulk) {
         client.bulkOp(bulk);
-
     }
-
-
 }

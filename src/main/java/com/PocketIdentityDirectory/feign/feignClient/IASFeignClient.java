@@ -14,7 +14,7 @@ import java.util.UUID;
 public interface IASFeignClient {
 
     @GetMapping("/Users")
-    IASUserResponseList getUsers();
+    IASUserResponseList getUsers(@RequestParam(required = false) int count, @RequestParam(required = false) int startIndex);
 
     @PostMapping(value = "/Users", consumes = "application/scim+json")
     IASUser createUser(@RequestBody IASUser dto);
@@ -26,7 +26,7 @@ public interface IASFeignClient {
     IASUser updateUser(@RequestBody IASUser dto, @PathVariable UUID id);
 
     @GetMapping("/Groups")
-    IASGroupResponseList getGroups();
+    IASGroupResponseList getGroups(@RequestParam(required = false) int count, @RequestParam(required = false) int startIndex);
 
     @PostMapping(value = "/Groups", consumes = "application/scim+json")
     IASGroup createGroup(IASGroup group);

@@ -2,7 +2,10 @@ package com.PocketIdentityDirectory.feign.service;
 
 
 import com.PocketIdentityDirectory.feign.dtos.models.groups.IASGroup;
+import com.PocketIdentityDirectory.feign.dtos.models.groups.IASGroupResponseList;
 import com.PocketIdentityDirectory.feign.dtos.models.specialRequests.Bulk;
+import com.PocketIdentityDirectory.feign.dtos.models.users.IASUser;
+import com.PocketIdentityDirectory.feign.dtos.models.users.IASUserResponseList;
 import com.PocketIdentityDirectory.feign.feignClient.IASFeignClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +24,18 @@ public class IASGroupFeignService {
     }
 
     public List<IASGroup> getAllGroups() {
-        return client.getGroups().getResources();
+        IASGroupResponseList response = client.getGroups(10, 1);
+        List<IASGroup> groups = response.getResources();
+        int total = response.getTotalResults();
+        int startIndex = response.getStartIndex() + 10;
+
+        while (startIndex <= total){
+            response = client.getGroups(10, startIndex);
+            groups.addAll(response.getResources());
+            startIndex += 10;
+        }
+
+        return groups;
     }
 
     public IASGroup createGroup(IASGroup group) {
