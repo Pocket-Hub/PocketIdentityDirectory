@@ -1,0 +1,20 @@
+ias:
+  id: ${IAS_ID}
+  secret: ${IAS_SECRET}
+
+
+spring:
+  cloud:
+    cloudfoundry:
+      enabled: false
+
+  datasource:
+    driver-class-name: com.sap.db.jdbc.Driver
+    url: ${DB_URL}
+    username: ${DB_ID}
+    password: ${DB_SECRET}
+
+  jpa:
+    database-platform:
+      org.hibernate.dialect.HANADialect
+
