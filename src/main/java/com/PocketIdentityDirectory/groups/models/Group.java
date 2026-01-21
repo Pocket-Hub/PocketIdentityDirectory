@@ -90,4 +90,12 @@ public class Group {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @PreRemove
+    private void removeGroupsFromUsers() {
+        for (User u : members) {
+            u.getGroups().remove(this);
+        }
+    }
+
 }

@@ -34,7 +34,6 @@ public class GroupService {
         return repository.filterGroupsByNameAndDisplayName(name, displayName);
     }
 
-    @Async
     @Scheduled(fixedRate =100_000)
     public void syncGroups() {
         List<IASGroup> iasGroups = feignService.getAllGroups();
@@ -75,20 +74,18 @@ public class GroupService {
     }
 
     public Group addMembers(UUID groupId, List<UUID> memberIds, String action) {
-        PatchOp patch = new PatchOp();
-        List<Operations> ops = new ArrayList<>();
-        List<PatchValue> ids = new ArrayList<>();
+        Bulk bulk = new Bulk();
+        List<BulkOp> bulkOperations = new ArrayList<>();
 
         for (UUID memberId : memberIds) {
-            ids.add(new PatchValue(memberId.toString()));
+            PatchOp patch = new PatchOp();
+            patch.setOperations(List.of(new Operations(action,
+                    "add".equalsIgnoreCase(action) ? "members" : "members[value eq \"" + memberId + "\"]", "add".equalsIgnoreCase(action) ? List.of(new PatchValue(memberId.toString())) : null)));
+
+            BulkOp bulkOp = new BulkOp("PATCH", UUID.randomUUID(), "/Groups/" + groupId, patch);
+            bulkOperations.add(bulkOp);
         }
-
-        ops.add(new Operations(action, "members", "add".equalsIgnoreCase(action) ? ids : null));
-        patch.setOperations(ops);
-
-        Bulk bulk = new Bulk();
-        BulkOp bulkOp = new BulkOp("PATCH", UUID.randomUUID(), "/Groups/" + groupId, patch);
-        bulk.setOperations(List.of(bulkOp));
+        bulk.setOperations(bulkOperations);
 
         feignService.addUsers(bulk);
 

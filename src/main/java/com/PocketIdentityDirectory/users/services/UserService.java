@@ -35,7 +35,6 @@ public class UserService {
         this.mapper = mapper;
     }
 
-    @Async
     @Scheduled(fixedRate = 100_000, initialDelay = 10_000)
     public void syncUsers() {
         List<IASUser> iasUsers = iasUserService.getIASUsers();

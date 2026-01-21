@@ -33,7 +33,13 @@ public class RestExceptionHandler {
 
     @ExceptionHandler(FeignException.class)
     public ResponseEntity<ErrorResponse> handleFeignExceptions(FeignException ex){
-        return new ResponseEntity<>(new ErrorResponse(ex.status(), "There was an issue with the API Request. " + ex.getMessage().substring(ex.getMessage().lastIndexOf("\":") + 3, ex.getMessage().length() - 3)), HttpStatusCode.valueOf(ex.status()));
+        int status = ex.status();
+
+        if (status < 100 || status > 599) {
+            status = HttpStatus.SERVICE_UNAVAILABLE.value();
+        }
+
+        return new ResponseEntity<>(new ErrorResponse(status, "There was an issue with the API Request. " + ex.getMessage().substring(ex.getMessage().lastIndexOf("\":") + 3, ex.getMessage().length() - 3)), HttpStatusCode.valueOf(ex.status()));
     }
 
     @ExceptionHandler(Exception.class)
