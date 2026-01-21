@@ -6,6 +6,7 @@ import com.PocketIdentityDirectory.groups.web.dtoMappers.GroupMapper;
 import com.PocketIdentityDirectory.groups.web.dtos.AddUsersRequest;
 import com.PocketIdentityDirectory.groups.web.dtos.GetAllGroupsResponse;
 import com.PocketIdentityDirectory.groups.web.dtos.GetGroupResponse;
+import com.PocketIdentityDirectory.users.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -60,7 +61,14 @@ public class GroupsController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<GetGroupResponse> addMembers(@PathVariable UUID id, @RequestBody AddUsersRequest dto) {
-        return new ResponseEntity<>(GroupMapper.mapGroupToGetGroupResponse(groupService.addMembers(id, dto.getUsers(), dto.getAction())), HttpStatus.OK);
+        Group grp = groupService.addMembers(id, dto.getUsers(), dto.getAction());
+
+        return new ResponseEntity<>(GroupMapper.mapGroupToGetGroupResponse(grp), HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<GetGroupResponse> getSpecificGroup(@PathVariable UUID id){
+        return new ResponseEntity<>(GroupMapper.mapGroupToGetGroupResponse(groupService.getGroupById(id)), HttpStatus.OK);
     }
 
 }

@@ -36,10 +36,10 @@ public class RestExceptionHandler {
         int status = ex.status();
 
         if (status < 100 || status > 599) {
-            status = HttpStatus.SERVICE_UNAVAILABLE.value();
+            status = 503;
         }
 
-        return new ResponseEntity<>(new ErrorResponse(status, "There was an issue with the API Request. " + ex.getMessage().substring(ex.getMessage().lastIndexOf("\":") + 3, ex.getMessage().length() - 3)), HttpStatusCode.valueOf(ex.status()));
+        return new ResponseEntity<>(new ErrorResponse(status, "There was an issue with the API Request. " + ex.getMessage().substring(ex.getMessage().lastIndexOf("\":") + 3, ex.getMessage().length() - 3)), HttpStatusCode.valueOf(status));
     }
 
     @ExceptionHandler(Exception.class)

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
-@FeignClient(url = "https://anwcftbpd.trial-accounts.ondemand.com/scim", configuration = FeignAuthConfig.class, name = "IAS")
+@FeignClient(url = "https://anwcftbpd.trial-accounts.ondemand.com/scim", configuration = FeignConfig.class, name = "IAS")
 public interface IASFeignClient {
 
     @GetMapping("/Users")
@@ -45,6 +45,9 @@ public interface IASFeignClient {
 
     @PostMapping(value = "/Bulk", consumes = "application/scim+json")
     void bulkOp(@RequestBody Bulk bulk);
+
+    @GetMapping("/Users")
+    IASUserResponseList getSpecificUsers(@RequestParam String filter);
 
 
 }

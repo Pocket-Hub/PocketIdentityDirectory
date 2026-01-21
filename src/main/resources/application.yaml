@@ -15,5 +15,17 @@ spring:
     password: ${DB_SECRET}
 
   jpa:
+    hibernate:
+      ddl-auto: update
     database-platform:
       org.hibernate.dialect.HANADialect
+
+logging:
+  level:
+    com.PocketIdentityDirectory.feign: DEBUG
+
+feign:
+  client:
+    config:
+      default:
+        loggerLevel: full

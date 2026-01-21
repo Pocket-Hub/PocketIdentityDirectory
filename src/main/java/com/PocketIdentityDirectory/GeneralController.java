@@ -1,6 +1,5 @@
 package com.PocketIdentityDirectory;
 
-
 import com.PocketIdentityDirectory.groups.services.GroupService;
 import com.PocketIdentityDirectory.users.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +23,8 @@ public class GeneralController {
 
     @PostMapping("/sync")
     public ResponseEntity<Void> sync(){
-        userService.syncUsers();
         groupService.syncGroups();
+        userService.syncUsers();
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

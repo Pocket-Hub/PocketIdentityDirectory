@@ -1,6 +1,8 @@
 package com.PocketIdentityDirectory.feign.feignClient;
 
+import feign.Logger;
 import feign.RequestInterceptor;
+import feign.Retryer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,7 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 @Configuration
-public class FeignAuthConfig {
+public class FeignConfig {
 
     @Value("${ias.id}")
     private String clientId;
@@ -26,4 +28,17 @@ public class FeignAuthConfig {
             requestTemplate.header("Authorization", "Basic " + encodedAuth);
         };
     }
+
+    @Bean
+    public Retryer feignRetryer() {
+        return new Retryer.Default(100, 1000, 3); // initial interval, max interval, max attempts
+    }
+
+
+        @Bean
+        Logger.Level feignLoggerLevel() {
+            return Logger.Level.FULL;
+        }
+
+
 }

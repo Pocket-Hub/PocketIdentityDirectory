@@ -40,10 +40,13 @@ public class IASGroupDTOMapper {
         List<UUID> ids = new ArrayList<>();
 
         for (Member member : iasGroup.getMembers()) {
-            ids.add(member.getValue());
+            if (member != null){
+                ids.add(member.getValue());
+            }
         }
 
         group.assignMembers(userService.getUsersWithIDList(ids));
+
         return group;
     }
 

@@ -15,6 +15,10 @@ public class GroupMapper {
         dto.setDisplayName(group.getDisplayName());
         dto.setDescription(group.getDescription());
 
+        for (User member : group.getMembers()) {
+            System.out.println("ResponseMapper Member: " + member.getId().toString());
+        }
+
         for (User user : group.getMembers()) {
             Member member = new Member();
             member.setEmail(user.getEmail());

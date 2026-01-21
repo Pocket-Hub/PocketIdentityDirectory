@@ -57,7 +57,7 @@ public class User {
     @Column
     private Instant validTo;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     private Set<Group> groups = new HashSet<>();
 
     @Column

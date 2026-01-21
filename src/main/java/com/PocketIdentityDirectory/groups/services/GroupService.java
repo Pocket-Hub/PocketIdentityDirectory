@@ -7,6 +7,7 @@ import com.PocketIdentityDirectory.groups.models.Group;
 import com.PocketIdentityDirectory.groups.repositories.GroupRepository;
 import com.PocketIdentityDirectory.mappers.IASGroupDTOMapper;
 import com.PocketIdentityDirectory.users.models.User;
+import com.PocketIdentityDirectory.users.services.UserService;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -23,11 +24,13 @@ public class GroupService {
     private final GroupRepository repository;
     private final IASGroupFeignService feignService;
     private final IASGroupDTOMapper mapper;
+    private final UserService userService;
 
-    public GroupService(GroupRepository repository, IASGroupFeignService feignService, IASGroupDTOMapper mapper) {
+    public GroupService(GroupRepository repository, IASGroupFeignService feignService, IASGroupDTOMapper mapper, UserService userService) {
         this.repository = repository;
         this.feignService = feignService;
         this.mapper = mapper;
+        this.userService = userService;
     }
 
     public List<Group> filterGroups(String name, String displayName) {
@@ -74,23 +77,15 @@ public class GroupService {
     }
 
     public Group addMembers(UUID groupId, List<UUID> memberIds, String action) {
-        Bulk bulk = new Bulk();
-        List<BulkOp> bulkOperations = new ArrayList<>();
 
-        for (UUID memberId : memberIds) {
-            PatchOp patch = new PatchOp();
-            patch.setOperations(List.of(new Operations(action,
-                    "add".equalsIgnoreCase(action) ? "members" : "members[value eq \"" + memberId + "\"]", "add".equalsIgnoreCase(action) ? List.of(new PatchValue(memberId.toString())) : null)));
+        userService.assignUsersToGroup(action, groupId, memberIds);
 
-            BulkOp bulkOp = new BulkOp("PATCH", UUID.randomUUID(), "/Groups/" + groupId, patch);
-            bulkOperations.add(bulkOp);
-        }
-        bulk.setOperations(bulkOperations);
+        return repository.findById(groupId).orElseThrow();
 
-        feignService.addUsers(bulk);
+    }
 
-        return repository.save(mapper.mapIASGroupToGroup(feignService.getSpecificGroup(groupId)));
-
+    public Group getGroupById(UUID id){
+        return repository.findById(id).orElseThrow();
     }
 
 }

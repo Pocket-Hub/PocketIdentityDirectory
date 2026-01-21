@@ -55,4 +55,15 @@ public class IASUsersFeignService {
     public IASUser getSpecificUser(UUID id){
         return client.getSpecificUser(id);
     }
+
+    public List<IASUser> getSpecificUsers(List<UUID> filter){
+        StringBuilder sb = new StringBuilder();
+
+        for (UUID uuid : filter) {
+            sb.append("id eq \"").append(uuid).append("\"").append(" or ");
+        }
+
+        sb.delete(sb.lastIndexOf(" or "), sb.length());
+        return client.getSpecificUsers(sb.toString()).getResources();
+    }
 }

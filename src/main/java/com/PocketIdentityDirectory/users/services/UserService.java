@@ -4,6 +4,7 @@ import com.PocketIdentityDirectory.exceptions.EntityNotFoundException;
 import com.PocketIdentityDirectory.feign.dtos.models.specialRequests.*;
 import com.PocketIdentityDirectory.feign.dtos.models.users.IASUser;
 import com.PocketIdentityDirectory.feign.service.IASUsersFeignService;
+import com.PocketIdentityDirectory.groups.models.Group;
 import com.PocketIdentityDirectory.mappers.IASUsersDTOMapper;
 import com.PocketIdentityDirectory.users.models.User;
 import com.PocketIdentityDirectory.users.models.helpers.Status;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -110,6 +112,32 @@ public class UserService {
 
         return repository.save(mapper.mapIASUserToUser(iasUserService.getSpecificUser(id)));
 
+    }
+
+    public void assignUsersToGroup(String action, UUID groupId, List<UUID> userIds){
+        Bulk bulk = new Bulk();
+        List<BulkOp> bulkOperations = new ArrayList<>();
+        List<Operations> ops = new ArrayList<>();
+        PatchOp patch = new PatchOp();
+
+        for (UUID memberId : userIds) {
+            ops.add(new Operations(action,
+                    "add".equalsIgnoreCase(action) ? "members" : "members[value eq \"" + memberId + "\"]", "add".equalsIgnoreCase(action) ? List.of(new PatchValue(memberId.toString())) : null));
+        }
+        patch.setOperations(ops);
+        BulkOp bulkOp = new BulkOp("PATCH", UUID.randomUUID(), "/Groups/" + groupId, patch);
+        bulkOperations.add(bulkOp);
+        bulk.setOperations(bulkOperations);
+
+        iasUserService.assignGroup(bulk);
+        List<IASUser> iasUsers = iasUserService.getSpecificUsers(userIds);
+        List<User> users = new ArrayList<>();
+
+        for (IASUser iasUser : iasUsers) {
+            users.add(mapper.mapIASUserToUser(iasUser));
+        }
+
+        repository.saveAll(users);
     }
 
 }
