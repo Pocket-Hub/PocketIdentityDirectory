@@ -39,7 +39,7 @@ public class Group {
     @Column
     private Instant lastUpdate;
 
-    public void assignMembers(List<User> users){
+    public void assignMembers(List<User> users) {
         members.addAll(users);
     }
 

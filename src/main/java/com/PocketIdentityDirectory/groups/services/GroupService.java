@@ -1,14 +1,11 @@
 package com.PocketIdentityDirectory.groups.services;
 
 import com.PocketIdentityDirectory.feign.dtos.models.groups.IASGroup;
-import com.PocketIdentityDirectory.feign.dtos.models.specialRequests.*;
 import com.PocketIdentityDirectory.feign.service.IASGroupFeignService;
 import com.PocketIdentityDirectory.groups.models.Group;
 import com.PocketIdentityDirectory.groups.repositories.GroupRepository;
 import com.PocketIdentityDirectory.mappers.IASGroupDTOMapper;
-import com.PocketIdentityDirectory.users.models.User;
 import com.PocketIdentityDirectory.users.services.UserService;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +34,7 @@ public class GroupService {
         return repository.filterGroupsByNameAndDisplayName(name, displayName);
     }
 
-    @Scheduled(fixedRate =100_000)
+    @Scheduled(fixedRate = 100_000)
     public void syncGroups() {
         List<IASGroup> iasGroups = feignService.getAllGroups();
         List<Group> groups = new ArrayList<>();
@@ -84,7 +81,7 @@ public class GroupService {
 
     }
 
-    public Group getGroupById(UUID id){
+    public Group getGroupById(UUID id) {
         return repository.findById(id).orElseThrow();
     }
 

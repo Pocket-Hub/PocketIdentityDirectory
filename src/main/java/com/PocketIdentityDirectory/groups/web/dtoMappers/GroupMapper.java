@@ -8,16 +8,12 @@ import com.PocketIdentityDirectory.users.models.User;
 public class GroupMapper {
 
 
-    public static GetGroupResponse mapGroupToGetGroupResponse(Group group){
+    public static GetGroupResponse mapGroupToGetGroupResponse(Group group) {
         GetGroupResponse dto = new GetGroupResponse();
         dto.setId(group.getId());
         dto.setName(group.getName());
         dto.setDisplayName(group.getDisplayName());
         dto.setDescription(group.getDescription());
-
-        for (User member : group.getMembers()) {
-            System.out.println("ResponseMapper Member: " + member.getId().toString());
-        }
 
         for (User user : group.getMembers()) {
             Member member = new Member();

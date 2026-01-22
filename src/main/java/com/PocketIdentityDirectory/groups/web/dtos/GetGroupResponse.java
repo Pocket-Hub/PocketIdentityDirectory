@@ -1,9 +1,6 @@
 package com.PocketIdentityDirectory.groups.web.dtos;
 
-import com.PocketIdentityDirectory.groups.models.Group;
-
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -59,7 +56,7 @@ public class GetGroupResponse {
         this.members = members;
     }
 
-    public void addMembers(Member member){
+    public void addMembers(Member member) {
         members.add(member);
     }
 }

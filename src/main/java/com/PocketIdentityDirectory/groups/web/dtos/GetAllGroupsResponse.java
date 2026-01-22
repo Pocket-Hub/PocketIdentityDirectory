@@ -1,7 +1,5 @@
 package com.PocketIdentityDirectory.groups.web.dtos;
 
-import com.PocketIdentityDirectory.groups.models.Group;
-
 import java.util.List;
 
 public class GetAllGroupsResponse {

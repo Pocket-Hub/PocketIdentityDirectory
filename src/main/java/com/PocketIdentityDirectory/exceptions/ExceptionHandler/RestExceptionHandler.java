@@ -9,16 +9,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestControllerAdvice
 public class RestExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class
     )
-    public ResponseEntity<ErrorResponse> handleValidationError(MethodArgumentNotValidException ex){
+    public ResponseEntity<ErrorResponse> handleValidationError(MethodArgumentNotValidException ex) {
 
         List<String> errors = new ArrayList<>();
 
@@ -32,7 +30,7 @@ public class RestExceptionHandler {
     }
 
     @ExceptionHandler(FeignException.class)
-    public ResponseEntity<ErrorResponse> handleFeignExceptions(FeignException ex){
+    public ResponseEntity<ErrorResponse> handleFeignExceptions(FeignException ex) {
         int status = ex.status();
 
         if (status < 100 || status > 599) {
@@ -43,7 +41,7 @@ public class RestExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponse> handleEverythingElse(Exception ex){
+    public ResponseEntity<ErrorResponse> handleEverythingElse(Exception ex) {
         return new ResponseEntity<>(new ErrorResponse(500, "Hi, this is an exception I haven't thought of. That was unexpected :( " + ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

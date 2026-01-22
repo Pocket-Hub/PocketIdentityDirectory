@@ -4,17 +4,14 @@ import com.PocketIdentityDirectory.exceptions.EntityNotFoundException;
 import com.PocketIdentityDirectory.feign.dtos.models.specialRequests.*;
 import com.PocketIdentityDirectory.feign.dtos.models.users.IASUser;
 import com.PocketIdentityDirectory.feign.service.IASUsersFeignService;
-import com.PocketIdentityDirectory.groups.models.Group;
 import com.PocketIdentityDirectory.mappers.IASUsersDTOMapper;
 import com.PocketIdentityDirectory.users.models.User;
 import com.PocketIdentityDirectory.users.models.helpers.Status;
 import com.PocketIdentityDirectory.users.models.helpers.UserType;
 import com.PocketIdentityDirectory.users.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -61,14 +58,14 @@ public class UserService {
     public User getUserById(UUID id) {
         Optional<User> optUser = repository.findById(id);
 
-        if (optUser.isEmpty()){
+        if (optUser.isEmpty()) {
             throw new EntityNotFoundException("User with this ID does not exist.");
         }
 
         return optUser.get();
     }
 
-    public List<User> getUsersWithIDList(List<UUID> ids){
+    public List<User> getUsersWithIDList(List<UUID> ids) {
         return repository.findAllById(ids);
     }
 
@@ -103,8 +100,6 @@ public class UserService {
             bulkOperations.add(bulkOp);
         }
 
-
-
         bulk.setOperations(bulkOperations);
 
         iasUserService.assignGroup(bulk);
@@ -114,7 +109,7 @@ public class UserService {
 
     }
 
-    public void assignUsersToGroup(String action, UUID groupId, List<UUID> userIds){
+    public void assignUsersToGroup(String action, UUID groupId, List<UUID> userIds) {
         Bulk bulk = new Bulk();
         List<BulkOp> bulkOperations = new ArrayList<>();
         List<Operations> ops = new ArrayList<>();

@@ -27,7 +27,7 @@ public class IASUsersFeignService {
         int total = response.getTotalResults();
         int startIndex = response.getStartIndex() + count;
 
-        while (startIndex <= total){
+        while (startIndex <= total) {
             response = client.getUsers(count, startIndex);
             users.addAll(response.getResources());
             startIndex += count;
@@ -52,11 +52,11 @@ public class IASUsersFeignService {
         client.bulkOp(bulk);
     }
 
-    public IASUser getSpecificUser(UUID id){
+    public IASUser getSpecificUser(UUID id) {
         return client.getSpecificUser(id);
     }
 
-    public List<IASUser> getSpecificUsers(List<UUID> filter){
+    public List<IASUser> getSpecificUsers(List<UUID> filter) {
         StringBuilder sb = new StringBuilder();
 
         for (UUID uuid : filter) {
