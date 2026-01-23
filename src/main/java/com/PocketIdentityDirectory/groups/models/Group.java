@@ -21,11 +21,11 @@ public class Group {
     @Id
     private UUID id;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     @NotBlank(message = "Name cannot be blank!")
     private String name;
 
-    @Column
+    @Column(nullable = false)
     @NotBlank(message = "Display Name cannot be blank!")
     private String displayName;
 

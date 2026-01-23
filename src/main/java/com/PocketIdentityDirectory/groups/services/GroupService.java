@@ -34,7 +34,7 @@ public class GroupService {
         return repository.filterGroupsByNameAndDisplayName(name, displayName);
     }
 
-    @Scheduled(fixedRate = 100_000)
+//    @Scheduled(fixedRate = 100_000)
     public void syncGroups() {
         List<IASGroup> iasGroups = feignService.getAllGroups();
         List<Group> groups = new ArrayList<>();

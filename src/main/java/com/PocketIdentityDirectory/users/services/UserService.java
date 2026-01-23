@@ -9,9 +9,12 @@ import com.PocketIdentityDirectory.users.models.User;
 import com.PocketIdentityDirectory.users.models.helpers.Status;
 import com.PocketIdentityDirectory.users.models.helpers.UserType;
 import com.PocketIdentityDirectory.users.repositories.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mapping.AccessOptions;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -34,7 +37,7 @@ public class UserService {
         this.mapper = mapper;
     }
 
-    @Scheduled(fixedRate = 100_000, initialDelay = 10_000)
+//    @Scheduled(fixedRate = 100_000, initialDelay = 10_000)
     public void syncUsers() {
         List<IASUser> iasUsers = iasUserService.getIASUsers();
         List<User> users = new ArrayList<>();

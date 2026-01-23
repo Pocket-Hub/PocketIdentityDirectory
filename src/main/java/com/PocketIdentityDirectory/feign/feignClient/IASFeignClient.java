@@ -13,7 +13,7 @@ import java.util.UUID;
 @FeignClient(url = "https://anwcftbpd.trial-accounts.ondemand.com/scim", configuration = FeignConfig.class, name = "IAS")
 public interface IASFeignClient {
 
-    @GetMapping("/Users")
+    @GetMapping("/Users?filter=userName ne \"\"")
     IASUserResponseList getUsers(@RequestParam(required = false) int count, @RequestParam(required = false) int startIndex);
 
     @GetMapping("/Users/{id}")
