@@ -42,6 +42,6 @@ public class RestExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleEverythingElse(Exception ex) {
-        return new ResponseEntity<>(new ErrorResponse(500, "Hi, this is an exception I haven't thought of. That was unexpected :( " + ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(new ErrorResponse(500, ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

@@ -57,7 +57,7 @@ public class User {
     @Column
     private Instant validTo;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany
     private Set<Group> groups = new HashSet<>();
 
     @Column
@@ -161,5 +161,9 @@ public class User {
 
     public void assignGroups(List<Group> groups) {
         this.groups.addAll(groups);
+    }
+
+    public void unassignGroups(List<Group> groups){
+        groups.forEach(this.groups::remove);
     }
 }

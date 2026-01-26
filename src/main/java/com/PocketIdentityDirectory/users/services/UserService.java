@@ -18,10 +18,12 @@ import org.springframework.transaction.annotation.Propagation;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -76,6 +78,7 @@ public class UserService {
         user.setStatus(Status.ACTIVE);
         IASUser iasUser = IASUsersDTOMapper.mapUserToIASUser(user);
 
+
         return repository.save(mapper.mapIASUserToUser(iasUserService.createIASUser(iasUser)));
     }
 
@@ -113,6 +116,7 @@ public class UserService {
     }
 
     public void assignUsersToGroup(String action, UUID groupId, List<UUID> userIds) {
+        System.out.println("UserService: " + LocalDateTime.now());
         Bulk bulk = new Bulk();
         List<BulkOp> bulkOperations = new ArrayList<>();
         List<Operations> ops = new ArrayList<>();
@@ -128,14 +132,26 @@ public class UserService {
         bulk.setOperations(bulkOperations);
 
         iasUserService.assignGroup(bulk);
+        System.out.println("Assign: " + LocalDateTime.now());
         List<IASUser> iasUsers = iasUserService.getSpecificUsers(userIds);
+        System.out.println("GET USERS: " + LocalDateTime.now());
         List<User> users = new ArrayList<>();
+
+        long mapStart = System.currentTimeMillis();
 
         for (IASUser iasUser : iasUsers) {
             users.add(mapper.mapIASUserToUser(iasUser));
         }
+        long mapEnd = System.currentTimeMillis();
+        System.out.println("Mapping took: " + (mapEnd-mapStart));
 
+        long start = System.currentTimeMillis();
         repository.saveAll(users);
+        long end = System.currentTimeMillis();
+        System.out.println("SAVE USERS took: " + (end - start) + "ms");
+        System.out.println("SAVE USERS: " + LocalDateTime.now());
     }
+
+
 
 }

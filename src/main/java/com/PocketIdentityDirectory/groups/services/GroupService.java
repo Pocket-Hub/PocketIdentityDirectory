@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -75,10 +76,16 @@ public class GroupService {
 
     public Group addMembers(UUID groupId, List<UUID> memberIds, String action) {
 
+        long start = System.currentTimeMillis();
+        System.out.println("GroupService: " + LocalDateTime.now());
         userService.assignUsersToGroup(action, groupId, memberIds);
 
-        return repository.findById(groupId).orElseThrow();
+        Group group = repository.findById(groupId).orElseThrow();
 
+        System.out.println("FINISH: " + LocalDateTime.now());
+        long end = System.currentTimeMillis();
+        System.out.println("Time: " + (end - start));
+        return group;
     }
 
     public Group getGroupById(UUID id) {

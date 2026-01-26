@@ -19,7 +19,6 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/users")
-@CrossOrigin
 public class UsersController {
 
     private final UserService userService;
@@ -33,10 +32,10 @@ public class UsersController {
     public ResponseEntity<GetAllUsersResponse> getUsers(@RequestParam(required = false) String status, @RequestParam(required = false) String userType, @RequestParam(required = false) String lastName, @RequestParam(required = false) String groupName) {
 
         Status statusEnum =
-                status == null ? null : Status.valueOf(status.toUpperCase());
+                status == null || status.isBlank() ? null : Status.valueOf(status.toUpperCase());
 
         UserType userTypeEnum =
-                userType == null ? null : UserType.valueOf(userType.toUpperCase());
+                userType == null || userType.isBlank() ? null : UserType.valueOf(userType.toUpperCase());
 
         List<User> users = new ArrayList<>(userService.getUsersWithOptionalFilters(lastName, statusEnum, userTypeEnum, groupName));
 
@@ -65,7 +64,6 @@ public class UsersController {
 
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@RequestBody @Validated User user, @PathVariable UUID id) {
-
         return ResponseEntity.ok(userService.updateUser(user, id));
     }
 
