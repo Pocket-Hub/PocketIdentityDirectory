@@ -6,11 +6,11 @@ import java.util.List;
 
 public class GetAllUsersResponse {
 
-    private List<User> resources;
+    private List<GetUserResponse> resources;
 
     private int resourceCount;
 
-    public GetAllUsersResponse(List<User> resources, int resourceCount) {
+    public GetAllUsersResponse(List<GetUserResponse> resources, int resourceCount) {
         this.resources = resources;
         this.resourceCount = resourceCount;
     }
@@ -23,11 +23,11 @@ public class GetAllUsersResponse {
         this.resourceCount = resourceCount;
     }
 
-    public List<User> getResources() {
+    public List<GetUserResponse> getResources() {
         return resources;
     }
 
-    public void setResources(List<User> resources) {
+    public void setResources(List<GetUserResponse> resources) {
         this.resources = resources;
     }
 }

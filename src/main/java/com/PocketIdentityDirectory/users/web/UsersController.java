@@ -6,6 +6,7 @@ import com.PocketIdentityDirectory.users.models.helpers.UserType;
 import com.PocketIdentityDirectory.users.services.UserService;
 import com.PocketIdentityDirectory.users.web.dtos.AssignGroupsRequest;
 import com.PocketIdentityDirectory.users.web.dtos.GetAllUsersResponse;
+import com.PocketIdentityDirectory.users.web.mapper.UsersControllerDTOMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +40,7 @@ public class UsersController {
 
         List<User> users = new ArrayList<>(userService.getUsersWithOptionalFilters(lastName, statusEnum, userTypeEnum, groupName));
 
-        GetAllUsersResponse dto = new GetAllUsersResponse(users, users.size());
+        GetAllUsersResponse dto = new GetAllUsersResponse(users.stream().map(UsersControllerDTOMapper::mapUserToGetUserResponse).toList(), users.size());
 
         return ResponseEntity.ok(dto);
     }

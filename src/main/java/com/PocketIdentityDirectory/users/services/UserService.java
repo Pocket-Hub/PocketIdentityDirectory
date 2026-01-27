@@ -116,7 +116,6 @@ public class UserService {
     }
 
     public void assignUsersToGroup(String action, UUID groupId, List<UUID> userIds) {
-        System.out.println("UserService: " + LocalDateTime.now());
         Bulk bulk = new Bulk();
         List<BulkOp> bulkOperations = new ArrayList<>();
         List<Operations> ops = new ArrayList<>();
@@ -126,30 +125,21 @@ public class UserService {
             ops.add(new Operations(action,
                     "add".equalsIgnoreCase(action) ? "members" : "members[value eq \"" + memberId + "\"]", "add".equalsIgnoreCase(action) ? List.of(new PatchValue(memberId.toString())) : null));
         }
+
         patch.setOperations(ops);
         BulkOp bulkOp = new BulkOp("PATCH", UUID.randomUUID(), "/Groups/" + groupId, patch);
         bulkOperations.add(bulkOp);
         bulk.setOperations(bulkOperations);
 
         iasUserService.assignGroup(bulk);
-        System.out.println("Assign: " + LocalDateTime.now());
         List<IASUser> iasUsers = iasUserService.getSpecificUsers(userIds);
-        System.out.println("GET USERS: " + LocalDateTime.now());
         List<User> users = new ArrayList<>();
-
-        long mapStart = System.currentTimeMillis();
 
         for (IASUser iasUser : iasUsers) {
             users.add(mapper.mapIASUserToUser(iasUser));
         }
-        long mapEnd = System.currentTimeMillis();
-        System.out.println("Mapping took: " + (mapEnd-mapStart));
 
-        long start = System.currentTimeMillis();
         repository.saveAll(users);
-        long end = System.currentTimeMillis();
-        System.out.println("SAVE USERS took: " + (end - start) + "ms");
-        System.out.println("SAVE USERS: " + LocalDateTime.now());
     }
 
 

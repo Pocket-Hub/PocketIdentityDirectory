@@ -76,15 +76,10 @@ public class GroupService {
 
     public Group addMembers(UUID groupId, List<UUID> memberIds, String action) {
 
-        long start = System.currentTimeMillis();
-        System.out.println("GroupService: " + LocalDateTime.now());
         userService.assignUsersToGroup(action, groupId, memberIds);
 
         Group group = repository.findById(groupId).orElseThrow();
 
-        System.out.println("FINISH: " + LocalDateTime.now());
-        long end = System.currentTimeMillis();
-        System.out.println("Time: " + (end - start));
         return group;
     }
 
