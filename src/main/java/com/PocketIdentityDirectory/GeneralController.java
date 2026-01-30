@@ -5,7 +5,6 @@ import com.PocketIdentityDirectory.users.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,10 +23,10 @@ public class GeneralController {
     }
 
     @PostMapping("/sync")
-    public ResponseEntity<Void> sync() {
+    public ResponseEntity<Void> sync() throws InterruptedException {
+        Thread.sleep(10000);
         groupService.syncGroups();
         userService.syncUsers();
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
 }

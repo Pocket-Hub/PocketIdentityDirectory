@@ -163,7 +163,7 @@ public class User {
         this.groups.addAll(groups);
     }
 
-    public void unassignGroups(List<Group> groups){
+    public void unassignGroups(List<Group> groups) {
         groups.forEach(this.groups::remove);
     }
 }

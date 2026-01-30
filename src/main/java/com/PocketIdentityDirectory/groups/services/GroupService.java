@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -35,7 +34,11 @@ public class GroupService {
         return repository.filterGroupsByNameAndDisplayName(name, displayName);
     }
 
-//    @Scheduled(fixedRate = 100_000)
+    public long getResourceCount() {
+        return repository.count();
+    }
+
+    @Scheduled(fixedRate = 100_000)
     public void syncGroups() {
         List<IASGroup> iasGroups = feignService.getAllGroups();
         List<Group> groups = new ArrayList<>();
@@ -46,7 +49,7 @@ public class GroupService {
 
         repository.saveAll(groups);
 
-        List<Group> deletion = repository.findAllByLastUpdate(Instant.now().minus(Duration.ofMinutes(3)));
+        List<Group> deletion = repository.findAllByLastUpdate(Instant.now().minus(Duration.ofMillis(10000)));
 
         repository.deleteAll(deletion);
     }

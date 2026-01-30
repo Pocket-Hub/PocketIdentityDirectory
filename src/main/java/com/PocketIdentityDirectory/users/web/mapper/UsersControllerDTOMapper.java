@@ -5,7 +5,7 @@ import com.PocketIdentityDirectory.users.web.dtos.GetUserResponse;
 
 public class UsersControllerDTOMapper {
 
-    public static GetUserResponse mapUserToGetUserResponse(User user){
+    public static GetUserResponse mapUserToGetUserResponse(User user) {
         GetUserResponse dto = new GetUserResponse();
 
         dto.setId(user.getId());

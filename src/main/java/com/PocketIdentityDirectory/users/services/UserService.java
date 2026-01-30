@@ -9,21 +9,16 @@ import com.PocketIdentityDirectory.users.models.User;
 import com.PocketIdentityDirectory.users.models.helpers.Status;
 import com.PocketIdentityDirectory.users.models.helpers.UserType;
 import com.PocketIdentityDirectory.users.repositories.UserRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mapping.AccessOptions;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -39,7 +34,7 @@ public class UserService {
         this.mapper = mapper;
     }
 
-//    @Scheduled(fixedRate = 100_000, initialDelay = 10_000)
+        @Scheduled(fixedRate = 100_000, initialDelay = 10_000)
     public void syncUsers() {
         List<IASUser> iasUsers = iasUserService.getIASUsers();
         List<User> users = new ArrayList<>();
@@ -50,7 +45,7 @@ public class UserService {
 
         repository.saveAll(users);
 
-        List<User> deletion = repository.findAllByLastUpdate(Instant.now().minus(Duration.ofMinutes(3)));
+        List<User> deletion = repository.findAllByLastUpdate(Instant.now().minus(Duration.ofMillis(10000)));
 
         repository.deleteAll(deletion);
     }
@@ -141,7 +136,6 @@ public class UserService {
 
         repository.saveAll(users);
     }
-
 
 
 }

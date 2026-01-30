@@ -4,7 +4,6 @@ import com.PocketIdentityDirectory.users.models.User;
 import com.PocketIdentityDirectory.users.models.helpers.Status;
 import com.PocketIdentityDirectory.users.models.helpers.UserType;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -25,7 +24,7 @@ public interface UserRepository extends JpaRepository<User, UUID> {
                   AND (:status IS NULL 
                        OR u.status = :status)
                   AND (:groupName IS NULL 
-                       OR LOWER(g.name) LIKE LOWER(CONCAT('%', :groupName, '%')))
+                       OR LOWER(g.name) = LOWER(:groupName))
             """)
     List<User> filterUsersByUserStatusOrUserTypeOrLastNameOrGroupName(
             @Param("type") UserType type,

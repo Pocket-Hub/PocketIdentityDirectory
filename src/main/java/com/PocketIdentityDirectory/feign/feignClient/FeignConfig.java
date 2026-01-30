@@ -1,6 +1,5 @@
 package com.PocketIdentityDirectory.feign.feignClient;
 
-import feign.Logger;
 import feign.RequestInterceptor;
 import feign.Retryer;
 import org.springframework.beans.factory.annotation.Value;

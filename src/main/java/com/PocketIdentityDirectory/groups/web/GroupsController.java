@@ -34,7 +34,7 @@ public class GroupsController {
         for (Group group : groups) {
             responses.add(GroupMapper.mapGroupToGetGroupResponse(group));
         }
-        GetAllGroupsResponse dto = new GetAllGroupsResponse(responses, groups.size());
+        GetAllGroupsResponse dto = new GetAllGroupsResponse(responses, groupService.getResourceCount());
         return ResponseEntity.ok(dto);
     }
 

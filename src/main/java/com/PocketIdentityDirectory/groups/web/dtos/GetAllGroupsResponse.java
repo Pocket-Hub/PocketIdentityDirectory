@@ -6,19 +6,19 @@ public class GetAllGroupsResponse {
 
     private List<GetGroupResponse> resources;
 
-    private int resourceCount;
+    private long totalResourceCount;
 
-    public GetAllGroupsResponse(List<GetGroupResponse> resources, int resourceCount) {
+    public GetAllGroupsResponse(List<GetGroupResponse> resources, long resourceCount) {
         this.resources = resources;
-        this.resourceCount = resourceCount;
+        this.totalResourceCount = resourceCount;
     }
 
-    public int getResourceCount() {
-        return resourceCount;
+    public long getTotalResourceCount() {
+        return totalResourceCount;
     }
 
-    public void setResourceCount(int resourceCount) {
-        this.resourceCount = resourceCount;
+    public void setTotalResourceCount(long totalResourceCount) {
+        this.totalResourceCount = totalResourceCount;
     }
 
     public List<GetGroupResponse> getResources() {
