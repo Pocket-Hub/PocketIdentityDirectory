@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
-@FeignClient(url = "https://anwcftbpd.trial-accounts.ondemand.com/scim", configuration = FeignConfig.class, name = "IAS")
+@FeignClient(url = "https://anwcftbpd.trial-accounts.ondemand.com/scim", configuration = FeignConfig.class, name = "ias")
 public interface IASFeignClient {
 
     @GetMapping("/Users?filter=userName ne \"\"")

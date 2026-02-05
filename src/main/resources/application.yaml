@@ -8,6 +8,15 @@ spring:
     cloudfoundry:
       enabled: false
 
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://anwcftbpd.trial-accounts.ondemand.com
+          audiences:
+            - 5acaf16b-f3e5-4880-a6a7-13b497bc275b
+
   datasource:
     driver-class-name: com.sap.db.jdbc.Driver
     url: ${DB_URL}

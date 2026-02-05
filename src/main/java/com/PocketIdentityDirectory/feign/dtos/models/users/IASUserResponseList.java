@@ -1,6 +1,7 @@
 package com.PocketIdentityDirectory.feign.dtos.models.users;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +9,8 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 public class IASUserResponseList {
 
-    private List<IASUser> Resources = new ArrayList<>();
+    @JsonProperty("Resources")
+    private List<IASUser> resources = new ArrayList<>();
 
     private int totalResults;
 
@@ -41,10 +43,10 @@ public class IASUserResponseList {
     }
 
     public List<IASUser> getResources() {
-        return Resources;
+        return resources;
     }
 
     public void setResources(List<IASUser> resources) {
-        this.Resources = resources;
+        this.resources = resources;
     }
 }

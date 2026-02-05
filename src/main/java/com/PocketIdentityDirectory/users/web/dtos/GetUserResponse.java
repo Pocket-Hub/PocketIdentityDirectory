@@ -1,14 +1,14 @@
 package com.PocketIdentityDirectory.users.web.dtos;
 
+import com.PocketIdentityDirectory.users.models.helpers.Name;
+
 import java.util.UUID;
 
 public class GetUserResponse {
 
     private UUID id;
 
-    private String firstName;
-
-    private String lastName;
+    private Name name;
 
     private String email;
 
@@ -22,20 +22,12 @@ public class GetUserResponse {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public Name getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setName(Name name) {
+        this.name = name;
     }
 
     public String getEmail() {

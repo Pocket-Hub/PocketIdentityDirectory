@@ -1,11 +1,14 @@
 package com.PocketIdentityDirectory.feign.dtos.models.groups;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class IASGroupResponseList {
 
-    private List<IASGroup> Resources = new ArrayList<>();
+    @JsonProperty("Resources")
+    private List<IASGroup> resources = new ArrayList<>();
 
     private int totalResults;
 
@@ -28,10 +31,10 @@ public class IASGroupResponseList {
     }
 
     public List<IASGroup> getResources() {
-        return Resources;
+        return resources;
     }
 
     public void setResources(List<IASGroup> resources) {
-        Resources = resources;
+        this.resources = resources;
     }
 }

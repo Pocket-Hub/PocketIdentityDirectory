@@ -10,8 +10,7 @@ public class UsersControllerDTOMapper {
 
         dto.setId(user.getId());
         dto.setEmail(user.getEmail());
-        dto.setFirstName(user.getName().getFirstName());
-        dto.setLastName(user.getName().getLastName());
+        dto.setName(user.getName());
         dto.setLoginName(user.getLoginName());
 
         return dto;
