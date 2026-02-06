@@ -25,6 +25,20 @@ To run this project, you will need to add the following environment variables to
 
 `IAS_SECRET` - IAS System as Admin Secret
 
+## Build The Project
+
+Build the application:
+
+    mvn clean package
+
+Deploy with target:
+
+    PocketIdentityDirectory-0.0.1.jar
+
+## SAP Instances
+
+ - Cloud Identity Services application instance
+ - SAP Hana DB instance
 
 ## Authors
 
