@@ -2,13 +2,12 @@
 # Pocket Identity Directory
 
 Pocket Identity Directory is my first Onboarding Dev Task for ROIABLE.
-It's idea is to use SAP Identity Authentication Service Identity Directory API to manage data from IAS Tenant.
+It's purpose is to use SAP Identity Authentication Service Identity Directory API to manage data from IAS Tenant.
 
 
 ## Tech Stack
 
-**Server:** Java 17, Spring Boot 4.0.1, MySQL(Dev Profile), HANA(Prod Profile)
-
+**Server:** Java 17, Spring Boot 3.5.0, HANA(Prod Profile)DB
 
 ## Environment Variables
 
