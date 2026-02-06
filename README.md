@@ -7,7 +7,9 @@ It's purpose is to use SAP Identity Authentication Service Identity Directory AP
 
 ## Tech Stack
 
-**Server:** Java 17, Spring Boot 3.5.0, HANA(Prod Profile)DB
+**Server:** Java 17, Spring Boot 3.5.0, HANADB
+
+**Frontend:** https://github.com/Pocket-Hub/PocketIdentityDirectoryFrontend
 
 ## Environment Variables
 
