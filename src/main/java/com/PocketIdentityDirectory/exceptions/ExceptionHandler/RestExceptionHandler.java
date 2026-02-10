@@ -26,7 +26,7 @@ public class RestExceptionHandler {
                         errors.add(error.getDefaultMessage())
                 );
 
-        return new ResponseEntity<>(new ErrorResponse(400, errors.size() == 1? errors.get(0) : errors.toString()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ErrorResponse(400, errors.size() == 1 ? errors.get(0) : errors.toString()), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(FeignException.Conflict.class)
@@ -36,11 +36,11 @@ public class RestExceptionHandler {
 
         if (ex.getMessage().contains("email")) {
             res.setMessage("A user with the same primary email already exists!");
-        } else if(ex.getMessage().contains(" name ")) {
+        } else if (ex.getMessage().contains(" name ")) {
             res.setMessage("A group with the same name already exists!");
-        }else if (ex.getMessage().contains("User with same unique attribute already exists")){
+        } else if (ex.getMessage().contains("User with same unique attribute already exists")) {
             res.setMessage("A user with the same username already exists!");
-        }else {
+        } else {
             res.setMessage(ex.getMessage());
         }
 

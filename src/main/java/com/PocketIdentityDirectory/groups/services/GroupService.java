@@ -6,7 +6,6 @@ import com.PocketIdentityDirectory.groups.models.Group;
 import com.PocketIdentityDirectory.groups.repositories.GroupRepository;
 import com.PocketIdentityDirectory.mappers.IASGroupDTOMapper;
 import com.PocketIdentityDirectory.users.services.UserService;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -38,7 +37,6 @@ public class GroupService {
         return repository.count();
     }
 
-    @Scheduled(fixedRate = 100_000)
     public void syncGroups() {
         List<IASGroup> iasGroups = feignService.getAllGroups();
         List<Group> groups = new ArrayList<>();

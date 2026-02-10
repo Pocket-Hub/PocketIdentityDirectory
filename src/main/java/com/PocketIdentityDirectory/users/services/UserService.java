@@ -10,7 +10,6 @@ import com.PocketIdentityDirectory.users.models.helpers.Status;
 import com.PocketIdentityDirectory.users.models.helpers.UserType;
 import com.PocketIdentityDirectory.users.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -34,7 +33,6 @@ public class UserService {
         this.mapper = mapper;
     }
 
-        @Scheduled(fixedRate = 100_000, initialDelay = 10_000)
     public void syncUsers() {
         List<IASUser> iasUsers = iasUserService.getIASUsers();
         List<User> users = new ArrayList<>();
