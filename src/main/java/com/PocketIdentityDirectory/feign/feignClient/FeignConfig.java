@@ -32,4 +32,5 @@ public class FeignConfig {
     public Retryer feignRetryer() {
         return new Retryer.Default(100, 1000, 3); // initial interval, max interval, max attempts
     }
+
 }

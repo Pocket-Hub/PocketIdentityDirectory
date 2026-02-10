@@ -1,5 +1,8 @@
 package com.PocketIdentityDirectory.feign.dtos.models.users.helpers;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class IASName {
 
     private String familyName;

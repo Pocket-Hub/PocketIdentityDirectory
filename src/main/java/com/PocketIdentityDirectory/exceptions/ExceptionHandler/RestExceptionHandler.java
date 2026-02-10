@@ -1,6 +1,8 @@
 package com.PocketIdentityDirectory.exceptions.ExceptionHandler;
 
 import feign.FeignException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,8 @@ import java.util.List;
 @RestControllerAdvice
 public class RestExceptionHandler {
 
+    private static final Logger log = LoggerFactory.getLogger(RestExceptionHandler.class);
+
     @ExceptionHandler(MethodArgumentNotValidException.class
     )
     public ResponseEntity<ErrorResponse> handleValidationError(MethodArgumentNotValidException ex) {
@@ -25,7 +29,7 @@ public class RestExceptionHandler {
                 .forEach(error ->
                         errors.add(error.getDefaultMessage())
                 );
-
+        log.error("Validation Exception", ex);
         return new ResponseEntity<>(new ErrorResponse(400, errors.size() == 1 ? errors.get(0) : errors.toString()), HttpStatus.BAD_REQUEST);
     }
 
@@ -44,6 +48,8 @@ public class RestExceptionHandler {
             res.setMessage(ex.getMessage());
         }
 
+        log.error("Conflict in unique attribute", ex);
+
         return new ResponseEntity<>(res, HttpStatus.CONFLICT);
     }
 
@@ -54,12 +60,14 @@ public class RestExceptionHandler {
         if (status < 100 || status > 599) {
             status = 503;
         }
+        log.error("Exception in API call to IAS", ex);
 
         return new ResponseEntity<>(new ErrorResponse(status, ex.getMessage()), HttpStatusCode.valueOf(status));
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleEverythingElse(Exception ex) {
+        log.error("Unexpected Exception", ex);
         return new ResponseEntity<>(new ErrorResponse(500, ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

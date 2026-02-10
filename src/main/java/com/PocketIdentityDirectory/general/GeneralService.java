@@ -20,13 +20,11 @@ public class GeneralService {
         this.groupService = groupService;
     }
 
-
     @Transactional
     @Scheduled(fixedRate = 100_000)
     public void sync() {
         groupService.syncGroups();
         userService.syncUsers();
     }
-
 
 }

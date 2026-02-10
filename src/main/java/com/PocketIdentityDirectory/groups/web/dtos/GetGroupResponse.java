@@ -1,5 +1,6 @@
 package com.PocketIdentityDirectory.groups.web.dtos;
 
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -14,7 +15,17 @@ public class GetGroupResponse {
 
     private String description;
 
+    private Instant lastUpdate;
+
     private Set<Member> members = new HashSet<>();
+
+    public Instant getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(Instant lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
 
     public UUID getId() {
         return id;
