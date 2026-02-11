@@ -12,25 +12,22 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @RestControllerAdvice
 public class RestExceptionHandler {
 
+    private static final Logger log = LoggerFactory.getLogger(RestExceptionHandler.class);
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    private static final Logger log = LoggerFactory.getLogger(RestExceptionHandler.class);
-
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleEntityNotFoundException(EntityNotFoundException ex){
+    public ResponseEntity<ErrorResponse> handleEntityNotFoundException(EntityNotFoundException ex) {
         return new ResponseEntity<>(new ErrorResponse(404, ex.getMessage()), HttpStatus.NOT_FOUND);
     }
 
@@ -39,7 +36,6 @@ public class RestExceptionHandler {
         log.error("Could not deserialize JSON", ex);
         return new ResponseEntity<>(new ErrorResponse(400, "Could not deserialize JSON"), HttpStatus.BAD_REQUEST);
     }
-
 
 
     @ExceptionHandler(MethodArgumentNotValidException.class
@@ -87,7 +83,7 @@ public class RestExceptionHandler {
 
         Optional<ByteBuffer> body = ex.responseBody();
         String str = "";
-        if (body.isPresent()){
+        if (body.isPresent()) {
             str = new String(body.get().array(), StandardCharsets.UTF_8);
         }
 

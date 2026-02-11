@@ -9,8 +9,6 @@ import com.PocketIdentityDirectory.mappers.IASGroupDTOMapper;
 import com.PocketIdentityDirectory.users.services.UserService;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -42,7 +40,7 @@ public class GroupService {
 
     public void syncGroups() {
         version++;
-        if (version < 0){
+        if (version < 0) {
             version = 0;
         }
 
@@ -94,7 +92,7 @@ public class GroupService {
 
     public Group getGroupById(UUID id) {
         Optional<Group> optGroup = repository.findById(id);
-        if (optGroup.isEmpty()){
+        if (optGroup.isEmpty()) {
             throw new EntityNotFoundException("Group with this ID does not exist.");
         }
         return optGroup.get();

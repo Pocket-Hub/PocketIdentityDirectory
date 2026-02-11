@@ -35,7 +35,7 @@ public class UserService {
     public void syncUsers() {
         version++;
 
-        if (version < 0){
+        if (version < 0) {
             version = 0;
         }
 

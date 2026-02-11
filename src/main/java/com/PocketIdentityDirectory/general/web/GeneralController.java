@@ -29,7 +29,7 @@ public class GeneralController {
     }
 
     @GetMapping("/enums")
-    public ResponseEntity<GetEnumsResponse> getEnums(){
+    public ResponseEntity<GetEnumsResponse> getEnums() {
         GetEnumsResponse dto = new GetEnumsResponse();
         dto.setCountries(generalService.getCountries());
         dto.setUserTypes(generalService.getUserTypes());

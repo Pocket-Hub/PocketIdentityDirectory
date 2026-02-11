@@ -2,7 +2,6 @@ package com.PocketIdentityDirectory.users.models.helpers;
 
 import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum Country {
     @JsonEnumDefaultValue

@@ -30,15 +30,15 @@ public class GeneralService {
         userService.syncUsers();
     }
 
-    public Country[] getCountries(){
+    public Country[] getCountries() {
         return Country.values();
     }
 
-    public UserType[] getUserTypes(){
+    public UserType[] getUserTypes() {
         return UserType.values();
     }
 
-    public Status[] getStatuses(){
+    public Status[] getStatuses() {
         return Status.values();
     }
 

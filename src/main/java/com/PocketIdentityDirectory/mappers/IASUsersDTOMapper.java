@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -44,7 +43,7 @@ public class IASUsersDTOMapper {
 
         iasUser.setActive("active".equalsIgnoreCase(user.getStatus().toString()));
 
-        iasUser.setAddresses(List.of(new IASAddress(user.getCompanyInfo().getCountry() == Country.NULL? null : user.getCompanyInfo().getCountry().name() ,
+        iasUser.setAddresses(List.of(new IASAddress(user.getCompanyInfo().getCountry() == Country.NULL ? null : user.getCompanyInfo().getCountry().name(),
                 user.getCompanyInfo().getCity(),
                 "work")));
 
@@ -82,7 +81,7 @@ public class IASUsersDTOMapper {
 
         if (dto.getAddresses() != null) {
             IASAddress address = dto.getAddresses().stream().filter(e -> e.getType().equals("work")).toList().get(0);
-            companyInfo.setCountry(address.getCountry() == null? null : Country.valueOf(address.getCountry()));
+            companyInfo.setCountry(address.getCountry() == null ? null : Country.valueOf(address.getCountry()));
             companyInfo.setCity(address.getLocality());
         }
 
