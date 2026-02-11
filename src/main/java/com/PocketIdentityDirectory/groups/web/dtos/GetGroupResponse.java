@@ -15,16 +15,16 @@ public class GetGroupResponse {
 
     private String description;
 
-    private Instant lastUpdate;
+    private long version;
 
     private Set<Member> members = new HashSet<>();
 
-    public Instant getLastUpdate() {
-        return lastUpdate;
+    public long getVersion() {
+        return version;
     }
 
-    public void setLastUpdate(Instant lastUpdate) {
-        this.lastUpdate = lastUpdate;
+    public void setVersion(long version) {
+        this.version = version;
     }
 
     public UUID getId() {

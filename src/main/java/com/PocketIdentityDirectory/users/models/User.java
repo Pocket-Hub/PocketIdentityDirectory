@@ -61,14 +61,14 @@ public class User {
     private Set<Group> groups = new HashSet<>();
 
     @Column
-    private Instant lastUpdate;
+    private long version;
 
-    public Instant getLastUpdate() {
-        return lastUpdate;
+    public long getVersion() {
+        return version;
     }
 
-    public void setLastUpdate(Instant lastUpdate) {
-        this.lastUpdate = lastUpdate;
+    public void setVersion(long version) {
+        this.version = version;
     }
 
     public Set<Group> getGroups() {

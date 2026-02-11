@@ -58,7 +58,7 @@ public class IASUsersDTOMapper {
         return iasUser;
     }
 
-    public User mapIASUserToUser(IASUser dto) {
+    public User mapIASUserToUser(IASUser dto, long version) {
         User user = new User();
         Name name = new Name(dto.getName().getGivenName(), dto.getName().getFamilyName());
 
@@ -92,7 +92,7 @@ public class IASUsersDTOMapper {
 
         user.setCompanyInfo(companyInfo);
 
-        user.setLastUpdate(Instant.now());
+        user.setVersion(version);
 
         return user;
     }

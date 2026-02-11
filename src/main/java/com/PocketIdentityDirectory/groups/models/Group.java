@@ -39,18 +39,18 @@ public class Group {
     private Set<User> members = new HashSet<>();
 
     @Column
-    private Instant lastUpdate;
+    private long version;
 
     public void assignMembers(List<User> users) {
         members.addAll(users);
     }
 
-    public Instant getLastUpdate() {
-        return lastUpdate;
+    public long getVersion() {
+        return version;
     }
 
-    public void setLastUpdate(Instant lastUpdate) {
-        this.lastUpdate = lastUpdate;
+    public void setVersion(long version) {
+        this.version = version;
     }
 
     public Set<User> getMembers() {

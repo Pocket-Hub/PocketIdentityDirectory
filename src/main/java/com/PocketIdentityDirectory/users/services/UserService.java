@@ -9,6 +9,7 @@ import com.PocketIdentityDirectory.users.models.User;
 import com.PocketIdentityDirectory.users.models.helpers.Status;
 import com.PocketIdentityDirectory.users.models.helpers.UserType;
 import com.PocketIdentityDirectory.users.repositories.UserRepository;
+import org.bouncycastle.jcajce.provider.asymmetric.mldsa.MLDSAKeyFactorySpi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,7 @@ public class UserService {
     private final UserRepository repository;
     private final IASUsersFeignService iasUserService;
     private final IASUsersDTOMapper mapper;
+    private long version = 0;
 
     @Autowired
     public UserService(UserRepository repository, IASUsersFeignService iasUserService, IASUsersDTOMapper mapper) {
@@ -37,15 +39,17 @@ public class UserService {
         List<IASUser> iasUsers = iasUserService.getIASUsers();
         List<User> users = new ArrayList<>();
 
+
         for (IASUser iasUser : iasUsers) {
-            users.add(mapper.mapIASUserToUser(iasUser));
+            users.add(mapper.mapIASUserToUser(iasUser, version));
         }
 
         repository.saveAll(users);
 
-        List<User> deletion = repository.findAllByLastUpdate(Instant.now().minus(Duration.ofMillis(99000)));
+        List<User> deletion = repository.findAllByVersionNotEqualTo(version);
 
         repository.deleteAll(deletion);
+        version++;
     }
 
     public List<User> getUsersWithOptionalFilters(String lastName, Status status, UserType type, String groupName) {
@@ -72,7 +76,7 @@ public class UserService {
         IASUser iasUser = IASUsersDTOMapper.mapUserToIASUser(user);
 
 
-        return repository.save(mapper.mapIASUserToUser(iasUserService.createIASUser(iasUser)));
+        return repository.save(mapper.mapIASUserToUser(iasUserService.createIASUser(iasUser), version));
     }
 
     public void deleteUser(UUID id) {
@@ -83,7 +87,7 @@ public class UserService {
     public User updateUser(User user, UUID id) {
         IASUser iasUser = IASUsersDTOMapper.mapUserToIASUser(user);
 
-        return repository.save(mapper.mapIASUserToUser(iasUserService.updateUser(iasUser, id)));
+        return repository.save(mapper.mapIASUserToUser(iasUserService.updateUser(iasUser, id), version));
     }
 
     public User assignGroups(UUID id, List<UUID> groupIDs, String action) {
@@ -104,7 +108,7 @@ public class UserService {
         iasUserService.assignGroup(bulk);
 
 
-        return repository.save(mapper.mapIASUserToUser(iasUserService.getSpecificUser(id)));
+        return repository.save(mapper.mapIASUserToUser(iasUserService.getSpecificUser(id), version));
 
     }
 
@@ -129,7 +133,7 @@ public class UserService {
         List<User> users = new ArrayList<>();
 
         for (IASUser iasUser : iasUsers) {
-            users.add(mapper.mapIASUserToUser(iasUser));
+            users.add(mapper.mapIASUserToUser(iasUser, version));
         }
 
         repository.saveAll(users);

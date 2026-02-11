@@ -21,6 +21,7 @@ public class GroupService {
     private final IASGroupFeignService feignService;
     private final IASGroupDTOMapper mapper;
     private final UserService userService;
+    private long version = 0;
 
     public GroupService(GroupRepository repository, IASGroupFeignService feignService, IASGroupDTOMapper mapper, UserService userService) {
         this.repository = repository;
@@ -42,19 +43,21 @@ public class GroupService {
         List<Group> groups = new ArrayList<>();
 
         for (IASGroup iasGroup : iasGroups) {
-            groups.add(mapper.mapIASGroupToGroup(iasGroup));
+            groups.add(mapper.mapIASGroupToGroup(iasGroup, version));
         }
 
         repository.saveAll(groups);
 
-        List<Group> deletion = repository.findAllByLastUpdate(Instant.now().minus(Duration.ofMillis(99000)));
+        List<Group> deletion = repository.findAllByVersionNotEqualTo(version);
 
         repository.deleteAll(deletion);
+
+        version++;
     }
 
     public Group createGroup(Group group) {
         IASGroup iasGroup = IASGroupDTOMapper.mapGroupToIASGroup(group);
-        return repository.save(mapper.mapIASGroupToGroup(feignService.createGroup(iasGroup)));
+        return repository.save(mapper.mapIASGroupToGroup(feignService.createGroup(iasGroup), version));
     }
 
     public void deleteGroup(UUID id) {
@@ -68,7 +71,7 @@ public class GroupService {
         savedGroup.setDisplayName(group.getDisplayName());
         IASGroup iasGroup = IASGroupDTOMapper.mapGroupToIASGroup(savedGroup);
 
-        return repository.save(mapper.mapIASGroupToGroup(feignService.updateGroup(iasGroup, id)));
+        return repository.save(mapper.mapIASGroupToGroup(feignService.updateGroup(iasGroup, id), version));
     }
 
     public List<Group> getGroupsByIds(List<UUID> ids) {

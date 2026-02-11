@@ -49,7 +49,7 @@ public class IASGroupDTOMapper {
         return iasGroup;
     }
 
-    public Group mapIASGroupToGroup(IASGroup iasGroup) {
+    public Group mapIASGroupToGroup(IASGroup iasGroup, long version) {
         Group group = new Group();
 
         group.setId(iasGroup.getId());
@@ -57,7 +57,7 @@ public class IASGroupDTOMapper {
         group.setDisplayName(iasGroup.getDisplayName());
         group.setDescription(iasGroup.getExtension().getDescription());
 
-        group.setLastUpdate(Instant.now());
+        group.setVersion(version);
 
         List<UUID> ids = new ArrayList<>();
 

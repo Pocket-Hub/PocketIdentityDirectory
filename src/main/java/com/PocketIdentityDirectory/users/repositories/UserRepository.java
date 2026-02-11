@@ -33,6 +33,7 @@ public interface UserRepository extends JpaRepository<User, UUID> {
             @Param("groupName") String groupName
     );
 
-    @Query("SELECT u FROM User u WHERE u.lastUpdate < :cutoff")
-    List<User> findAllByLastUpdate(Instant cutoff);
+
+    @Query("SELECT u FROM User u WHERE u.version != :version")
+    List<User> findAllByVersionNotEqualTo(@Param("version") long version);
 }

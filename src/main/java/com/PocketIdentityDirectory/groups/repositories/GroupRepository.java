@@ -23,7 +23,7 @@ public interface GroupRepository extends JpaRepository<Group, UUID> {
             @Param("displayName") String displayName
     );
 
-    @Query("SELECT g FROM Group g WHERE g.lastUpdate < :cutoff")
-    List<Group> findAllByLastUpdate(@Param("cutoff") Instant cutoff);
+    @Query("SELECT g FROM Group g WHERE g.version != :version")
+    List<Group> findAllByVersionNotEqualTo(@Param("version") long version);
 
 }

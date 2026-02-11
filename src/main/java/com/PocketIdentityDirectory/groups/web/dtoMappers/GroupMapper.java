@@ -14,7 +14,7 @@ public class GroupMapper {
         dto.setName(group.getName());
         dto.setDisplayName(group.getDisplayName());
         dto.setDescription(group.getDescription());
-        dto.setLastUpdate(group.getLastUpdate());
+        dto.setVersion(group.getVersion());
 
         for (User user : group.getMembers()) {
             Member member = new Member();
