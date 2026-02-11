@@ -9,12 +9,9 @@ import com.PocketIdentityDirectory.users.models.User;
 import com.PocketIdentityDirectory.users.models.helpers.Status;
 import com.PocketIdentityDirectory.users.models.helpers.UserType;
 import com.PocketIdentityDirectory.users.repositories.UserRepository;
-import org.bouncycastle.jcajce.provider.asymmetric.mldsa.MLDSAKeyFactorySpi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -36,6 +33,7 @@ public class UserService {
     }
 
     public void syncUsers() {
+        version++;
         List<IASUser> iasUsers = iasUserService.getIASUsers();
         List<User> users = new ArrayList<>();
 
@@ -46,10 +44,9 @@ public class UserService {
 
         repository.saveAll(users);
 
-        List<User> deletion = repository.findAllByVersionNotEqualTo(version);
+        List<User> deletion = repository.findAllSetForDeletion(version);
 
         repository.deleteAll(deletion);
-        version++;
     }
 
     public List<User> getUsersWithOptionalFilters(String lastName, Status status, UserType type, String groupName) {

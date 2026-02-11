@@ -1,5 +1,6 @@
 package com.PocketIdentityDirectory.groups.services;
 
+import com.PocketIdentityDirectory.exceptions.EntityNotFoundException;
 import com.PocketIdentityDirectory.feign.dtos.models.groups.IASGroup;
 import com.PocketIdentityDirectory.feign.service.IASGroupFeignService;
 import com.PocketIdentityDirectory.groups.models.Group;
@@ -12,6 +13,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -39,6 +41,8 @@ public class GroupService {
     }
 
     public void syncGroups() {
+        version++;
+
         List<IASGroup> iasGroups = feignService.getAllGroups();
         List<Group> groups = new ArrayList<>();
 
@@ -51,8 +55,6 @@ public class GroupService {
         List<Group> deletion = repository.findAllByVersionNotEqualTo(version);
 
         repository.deleteAll(deletion);
-
-        version++;
     }
 
     public Group createGroup(Group group) {
@@ -88,7 +90,11 @@ public class GroupService {
     }
 
     public Group getGroupById(UUID id) {
-        return repository.findById(id).orElseThrow();
+        Optional<Group> optGroup = repository.findById(id);
+        if (optGroup.isEmpty()){
+            throw new EntityNotFoundException("Group with this ID does not exist.");
+        }
+        return optGroup.get();
     }
 
 }

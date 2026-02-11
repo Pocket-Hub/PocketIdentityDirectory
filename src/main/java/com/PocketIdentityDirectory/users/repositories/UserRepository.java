@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,6 +33,6 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     );
 
 
-    @Query("SELECT u FROM User u WHERE u.version != :version")
-    List<User> findAllByVersionNotEqualTo(@Param("version") long version);
+    @Query("SELECT u FROM User u WHERE u.version < :version - 1")
+    List<User> findAllSetForDeletion(@Param("version") long version);
 }
