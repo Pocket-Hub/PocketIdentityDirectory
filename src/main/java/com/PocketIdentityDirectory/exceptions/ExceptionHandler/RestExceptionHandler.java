@@ -1,6 +1,8 @@
 package com.PocketIdentityDirectory.exceptions.ExceptionHandler;
 
 import com.PocketIdentityDirectory.exceptions.EntityNotFoundException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.FeignException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,11 +15,17 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @RestControllerAdvice
 public class RestExceptionHandler {
+
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     private static final Logger log = LoggerFactory.getLogger(RestExceptionHandler.class);
 
@@ -70,15 +78,30 @@ public class RestExceptionHandler {
     }
 
     @ExceptionHandler(FeignException.class)
-    public ResponseEntity<ErrorResponse> handleFeignExceptions(FeignException ex) {
+    public ResponseEntity<ErrorResponse> handleFeignExceptions(FeignException ex) throws JsonProcessingException {
         int status = ex.status();
 
         if (status < 100 || status > 599) {
             status = 503;
         }
+
+        Optional<ByteBuffer> body = ex.responseBody();
+        String str = "";
+        if (body.isPresent()){
+            str = new String(body.get().array(), StandardCharsets.UTF_8);
+        }
+
+        IASErrorResponse errorRes = objectMapper.readValue(str, IASErrorResponse.class);
+
+        ErrorResponse res = new ErrorResponse();
+        res.setMessage(errorRes.getDetail());
+        res.setStatus(status);
+
+        System.out.println(str);
+
         log.error("Exception in API call to IAS", ex);
 
-        return new ResponseEntity<>(new ErrorResponse(status, "API Responded with an error."), HttpStatusCode.valueOf(status));
+        return new ResponseEntity<>(res, HttpStatusCode.valueOf(status));
     }
 
     @ExceptionHandler(Exception.class)

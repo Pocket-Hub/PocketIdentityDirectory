@@ -42,6 +42,9 @@ public class GroupService {
 
     public void syncGroups() {
         version++;
+        if (version < 0){
+            version = 0;
+        }
 
         List<IASGroup> iasGroups = feignService.getAllGroups();
         List<Group> groups = new ArrayList<>();

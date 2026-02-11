@@ -34,6 +34,11 @@ public class UserService {
 
     public void syncUsers() {
         version++;
+
+        if (version < 0){
+            version = 0;
+        }
+
         List<IASUser> iasUsers = iasUserService.getIASUsers();
         List<User> users = new ArrayList<>();
 
