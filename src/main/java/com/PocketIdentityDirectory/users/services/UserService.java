@@ -43,7 +43,7 @@ public class UserService {
 
         repository.saveAll(users);
 
-        List<User> deletion = repository.findAllByLastUpdate(Instant.now().minus(Duration.ofMillis(10000)));
+        List<User> deletion = repository.findAllByLastUpdate(Instant.now().minus(Duration.ofMillis(99000)));
 
         repository.deleteAll(deletion);
     }

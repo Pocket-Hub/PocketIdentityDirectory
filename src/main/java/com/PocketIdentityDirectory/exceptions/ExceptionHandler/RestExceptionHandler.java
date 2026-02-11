@@ -6,8 +6,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.ArrayList;
@@ -17,6 +19,14 @@ import java.util.List;
 public class RestExceptionHandler {
 
     private static final Logger log = LoggerFactory.getLogger(RestExceptionHandler.class);
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ErrorResponse> handleException(HttpMessageNotReadableException ex) {
+        log.error("Could not deserialize JSON", ex);
+        return new ResponseEntity<>(new ErrorResponse(400, "Could not deserialize JSON"), HttpStatus.BAD_REQUEST);
+    }
+
+
 
     @ExceptionHandler(MethodArgumentNotValidException.class
     )
@@ -62,7 +72,7 @@ public class RestExceptionHandler {
         }
         log.error("Exception in API call to IAS", ex);
 
-        return new ResponseEntity<>(new ErrorResponse(status, ex.getMessage()), HttpStatusCode.valueOf(status));
+        return new ResponseEntity<>(new ErrorResponse(status, "API Responded with an error."), HttpStatusCode.valueOf(status));
     }
 
     @ExceptionHandler(Exception.class)

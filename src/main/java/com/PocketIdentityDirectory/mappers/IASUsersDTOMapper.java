@@ -5,6 +5,7 @@ import com.PocketIdentityDirectory.feign.dtos.models.users.helpers.*;
 import com.PocketIdentityDirectory.groups.services.GroupService;
 import com.PocketIdentityDirectory.users.models.User;
 import com.PocketIdentityDirectory.users.models.helpers.CompanyInfo;
+import com.PocketIdentityDirectory.users.models.helpers.Country;
 import com.PocketIdentityDirectory.users.models.helpers.Name;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -43,7 +44,7 @@ public class IASUsersDTOMapper {
 
         iasUser.setActive("active".equalsIgnoreCase(user.getStatus().toString()));
 
-        iasUser.setAddresses(List.of(new IASAddress(user.getCompanyInfo().getCountry(),
+        iasUser.setAddresses(List.of(new IASAddress(user.getCompanyInfo().getCountry() == Country.NULL? null : user.getCompanyInfo().getCountry().name() ,
                 user.getCompanyInfo().getCity(),
                 "work")));
 
@@ -81,7 +82,7 @@ public class IASUsersDTOMapper {
 
         if (dto.getAddresses() != null) {
             IASAddress address = dto.getAddresses().stream().filter(e -> e.getType().equals("work")).toList().get(0);
-            companyInfo.setCountry(address.getCountry());
+            companyInfo.setCountry(address.getCountry() == null? null : Country.valueOf(address.getCountry()));
             companyInfo.setCity(address.getLocality());
         }
 

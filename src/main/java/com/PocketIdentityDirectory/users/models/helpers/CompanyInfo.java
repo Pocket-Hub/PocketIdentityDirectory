@@ -7,14 +7,14 @@ public class CompanyInfo {
 
     private String company;
 
-    private String country;
+    private Country country;
 
     private String city;
 
     public CompanyInfo() {
     }
 
-    public CompanyInfo(String company, String country, String city) {
+    public CompanyInfo(String company, Country country, String city) {
         this.company = company;
         this.country = country;
         this.city = city;
@@ -28,11 +28,11 @@ public class CompanyInfo {
         this.company = company;
     }
 
-    public String getCountry() {
+    public Country getCountry() {
         return country;
     }
 
-    public void setCountry(String country) {
+    public void setCountry(Country country) {
         this.country = country;
     }
 

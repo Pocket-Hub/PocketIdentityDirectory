@@ -1,6 +1,9 @@
-package com.PocketIdentityDirectory.general;
+package com.PocketIdentityDirectory.general.services;
 
 import com.PocketIdentityDirectory.groups.services.GroupService;
+import com.PocketIdentityDirectory.users.models.helpers.Country;
+import com.PocketIdentityDirectory.users.models.helpers.Status;
+import com.PocketIdentityDirectory.users.models.helpers.UserType;
 import com.PocketIdentityDirectory.users.services.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,18 @@ public class GeneralService {
     public void sync() {
         groupService.syncGroups();
         userService.syncUsers();
+    }
+
+    public Country[] getCountries(){
+        return Country.values();
+    }
+
+    public UserType[] getUserTypes(){
+        return UserType.values();
+    }
+
+    public Status[] getStatuses(){
+        return Status.values();
     }
 
 }

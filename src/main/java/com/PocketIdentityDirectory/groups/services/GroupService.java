@@ -47,7 +47,7 @@ public class GroupService {
 
         repository.saveAll(groups);
 
-        List<Group> deletion = repository.findAllByLastUpdate(Instant.now().minus(Duration.ofMillis(10000)));
+        List<Group> deletion = repository.findAllByLastUpdate(Instant.now().minus(Duration.ofMillis(99000)));
 
         repository.deleteAll(deletion);
     }
