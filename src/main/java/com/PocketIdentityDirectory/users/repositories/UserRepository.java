@@ -16,13 +16,13 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     @Query("""
                 SELECT DISTINCT u FROM User u
                 LEFT JOIN u.groups g
-                WHERE (:lastName IS NULL 
+                WHERE (:lastName IS NULL
                        OR LOWER(u.name.lastName) LIKE LOWER(CONCAT('%', :lastName, '%')))
-                  AND (:type IS NULL 
+                  AND (:type IS NULL
                        OR u.type = :type)
-                  AND (:status IS NULL 
+                  AND (:status IS NULL
                        OR u.status = :status)
-                  AND (:groupName IS NULL 
+                  AND (:groupName IS NULL
                        OR LOWER(g.name) = LOWER(:groupName))
             """)
     List<User> filterUsersByUserStatusOrUserTypeOrLastNameOrGroupName(
@@ -33,6 +33,6 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     );
 
 
-    @Query("SELECT u FROM User u WHERE u.version < :version - 1")
-    List<User> findAllSetForDeletion(@Param("version") long version);
+    @Query("SELECT u FROM User u WHERE u.version != :version")
+    List<User> findAllByVersionNotEqualTo(@Param("version") long version);
 }

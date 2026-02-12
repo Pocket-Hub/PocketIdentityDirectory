@@ -14,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,6 +40,8 @@ public class UsersController {
                 userType == null || userType.isBlank() ? null : UserType.valueOf(userType.toUpperCase());
 
         List<User> users = new ArrayList<>(userService.getUsersWithOptionalFilters(lastName, statusEnum, userTypeEnum, groupName));
+
+        users.sort(Comparator.comparing(User::getEmail));
 
         GetAllUsersResponse dto = new GetAllUsersResponse(users.stream().map(UsersControllerDTOMapper::mapUserToGetUserResponse).toList(), users.size());
 

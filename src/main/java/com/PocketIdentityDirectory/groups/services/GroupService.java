@@ -7,6 +7,7 @@ import com.PocketIdentityDirectory.groups.models.Group;
 import com.PocketIdentityDirectory.groups.repositories.GroupRepository;
 import com.PocketIdentityDirectory.mappers.IASGroupDTOMapper;
 import com.PocketIdentityDirectory.users.services.UserService;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ public class GroupService {
         return repository.count();
     }
 
+    @Transactional
     public void syncGroups() {
         version++;
         if (version < 0) {

@@ -13,6 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,6 +35,9 @@ public class GroupsController {
         for (Group group : groups) {
             responses.add(GroupMapper.mapGroupToGetGroupResponse(group));
         }
+
+        responses.sort(Comparator.comparing(GetGroupResponse::getName));
+
         GetAllGroupsResponse dto = new GetAllGroupsResponse(responses, groupService.getResourceCount());
         return ResponseEntity.ok(dto);
     }

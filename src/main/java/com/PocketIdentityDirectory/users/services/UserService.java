@@ -9,6 +9,7 @@ import com.PocketIdentityDirectory.users.models.User;
 import com.PocketIdentityDirectory.users.models.helpers.Status;
 import com.PocketIdentityDirectory.users.models.helpers.UserType;
 import com.PocketIdentityDirectory.users.repositories.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +33,7 @@ public class UserService {
         this.mapper = mapper;
     }
 
+    @Transactional
     public void syncUsers() {
         version++;
 
@@ -49,7 +51,7 @@ public class UserService {
 
         repository.saveAll(users);
 
-        List<User> deletion = repository.findAllSetForDeletion(version);
+        List<User> deletion = repository.findAllByVersionNotEqualTo(version);
 
         repository.deleteAll(deletion);
     }

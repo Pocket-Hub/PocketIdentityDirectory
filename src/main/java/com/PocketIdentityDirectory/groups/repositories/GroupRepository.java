@@ -22,7 +22,7 @@ public interface GroupRepository extends JpaRepository<Group, UUID> {
             @Param("displayName") String displayName
     );
 
-    @Query("SELECT g FROM Group g WHERE g.version < :version - 1")
+    @Query("SELECT g FROM Group g WHERE g.version != :version")
     List<Group> findAllByVersionNotEqualTo(@Param("version") long version);
 
 }

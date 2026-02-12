@@ -75,11 +75,6 @@ public class RestExceptionHandler {
 
     @ExceptionHandler(FeignException.class)
     public ResponseEntity<ErrorResponse> handleFeignExceptions(FeignException ex) throws JsonProcessingException {
-        int status = ex.status();
-
-        if (status < 100 || status > 599) {
-            status = 503;
-        }
 
         Optional<ByteBuffer> body = ex.responseBody();
         String str = "";
@@ -89,6 +84,7 @@ public class RestExceptionHandler {
 
         IASErrorResponse errorRes = objectMapper.readValue(str, IASErrorResponse.class);
 
+        int status = errorRes.getStatus();
         ErrorResponse res = new ErrorResponse();
         res.setMessage(errorRes.getDetail());
         res.setStatus(status);

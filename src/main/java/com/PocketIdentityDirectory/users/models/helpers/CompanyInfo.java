@@ -1,12 +1,15 @@
 package com.PocketIdentityDirectory.users.models.helpers;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class CompanyInfo {
 
     private String company;
 
+    @Enumerated(EnumType.STRING)
     private Country country;
 
     private String city;
