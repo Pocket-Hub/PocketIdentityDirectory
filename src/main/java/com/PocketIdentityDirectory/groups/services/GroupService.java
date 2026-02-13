@@ -47,6 +47,7 @@ public class GroupService {
             version = 0;
         }
 
+
         List<IASGroup> iasGroups = feignService.getAllGroups();
         List<Group> groups = new ArrayList<>();
 

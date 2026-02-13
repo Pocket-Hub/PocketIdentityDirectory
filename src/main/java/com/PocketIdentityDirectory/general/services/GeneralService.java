@@ -33,13 +33,18 @@ public class GeneralService {
         if (isRunning.get()){
             throw new RuntimeException("Sync is currently being executed");
         }
-        isRunning.set(true);
-        Thread.sleep(10000);
-        System.out.println("Started: " + System.currentTimeMillis());
-        groupService.syncGroups();
-        userService.syncUsers();
-        System.out.println("Ended: " + System.currentTimeMillis());
-        isRunning.set(false);
+        try {
+            isRunning.set(true);
+            Thread.sleep(10000);
+            System.out.println("Started: " + System.currentTimeMillis());
+            groupService.syncGroups();
+            userService.syncUsers();
+            System.out.println("Ended: " + System.currentTimeMillis());
+            isRunning.set(false);
+        } catch (Exception e) {
+            isRunning.set(false);
+            throw e;
+        }
     }
 
     public Country[] getCountries() {
