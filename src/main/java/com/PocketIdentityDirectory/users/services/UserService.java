@@ -24,7 +24,7 @@ public class UserService {
     private final UserRepository repository;
     private final IASUsersFeignService iasUserService;
     private final IASUsersDTOMapper mapper;
-    private long version = 0;
+    private volatile long version = 0;
 
     @Autowired
     public UserService(UserRepository repository, IASUsersFeignService iasUserService, IASUsersDTOMapper mapper) {
@@ -35,7 +35,8 @@ public class UserService {
 
     @Transactional
     public void syncUsers() {
-        version++;
+        long temp = version + 1;
+        version = temp;
 
         if (version < 0) {
             version = 0;
@@ -138,9 +139,12 @@ public class UserService {
 
         for (IASUser iasUser : iasUsers) {
             users.add(mapper.mapIASUserToUser(iasUser, version));
+            //1. Group is present in one of the iterations
         }
 
-        repository.saveAll(users);
+        //Group gets deleted between 1 and 2
+
+        repository.saveAll(users); //2. throws foreign key constraint violation
     }
 
 

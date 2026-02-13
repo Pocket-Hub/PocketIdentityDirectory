@@ -10,12 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 @Service
 public class GeneralService {
 
     private final UserService userService;
 
     private final GroupService groupService;
+
+    private final AtomicBoolean isRunning = new AtomicBoolean(false);
 
     @Autowired
     public GeneralService(UserService userService, GroupService groupService) {
@@ -25,9 +29,17 @@ public class GeneralService {
 
     @Transactional
     @Scheduled(fixedRate = 100_000)
-    public void sync() {
+    public void sync() throws InterruptedException {
+        if (isRunning.get()){
+            throw new RuntimeException("Sync is currently being executed");
+        }
+        isRunning.set(true);
+        Thread.sleep(10000);
+        System.out.println("Started: " + System.currentTimeMillis());
         groupService.syncGroups();
         userService.syncUsers();
+        System.out.println("Ended: " + System.currentTimeMillis());
+        isRunning.set(false);
     }
 
     public Country[] getCountries() {

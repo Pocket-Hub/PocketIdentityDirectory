@@ -21,7 +21,7 @@ public class IASUsersFeignService {
     }
 
     public List<IASUser> getIASUsers() {
-        int count = 10;
+        int count = 2;
         IASUserResponseList response = client.getUsers(count, 1);
         List<IASUser> users = response.getResources();
         int total = response.getTotalResults();

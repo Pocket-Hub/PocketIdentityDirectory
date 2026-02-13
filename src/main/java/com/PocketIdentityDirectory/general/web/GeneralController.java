@@ -23,7 +23,6 @@ public class GeneralController {
 
     @PostMapping("/sync")
     public ResponseEntity<Void> sync() throws InterruptedException {
-        Thread.sleep(10000);
         generalService.sync();
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

@@ -22,7 +22,7 @@ public class GroupService {
     private final IASGroupFeignService feignService;
     private final IASGroupDTOMapper mapper;
     private final UserService userService;
-    private long version = 0;
+    private volatile long version = 0;
 
     public GroupService(GroupRepository repository, IASGroupFeignService feignService, IASGroupDTOMapper mapper, UserService userService) {
         this.repository = repository;
@@ -41,7 +41,8 @@ public class GroupService {
 
     @Transactional
     public void syncGroups() {
-        version++;
+        long temp = version + 1;
+        version = temp;
         if (version < 0) {
             version = 0;
         }
@@ -83,11 +84,12 @@ public class GroupService {
         return repository.findAllById(ids);
     }
 
-    public Group addMembers(UUID groupId, List<UUID> memberIds, String action) {
+    public Group addMembers(UUID groupId, List<UUID> memberIds, String action) throws InterruptedException {
 
         userService.assignUsersToGroup(action, groupId, memberIds);
 
         Group group = repository.findById(groupId).orElseThrow();
+
 
         return group;
     }

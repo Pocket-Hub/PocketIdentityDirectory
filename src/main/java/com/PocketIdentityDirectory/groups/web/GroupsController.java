@@ -62,7 +62,7 @@ public class GroupsController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<GetGroupResponse> addMembers(@PathVariable UUID id, @RequestBody AddUsersRequest dto) {
+    public ResponseEntity<GetGroupResponse> addMembers(@PathVariable UUID id, @RequestBody AddUsersRequest dto) throws InterruptedException {
         Group grp = groupService.addMembers(id, dto.getUsers(), dto.getAction());
 
         return new ResponseEntity<>(GroupMapper.mapGroupToGetGroupResponse(grp), HttpStatus.OK);
